@@ -1,144 +1,493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>nothing</title>
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7176221127189774"
-     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoGuardian Games</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:url('https://i.pinimg.com/736x/8e/d9/33/8ed93366a95da86f13ae3e50582944f3.jpg') center/cover fixed;
+    color:white;
+    min-height:100vh;
+}
+.nav{
+    padding:20px;
+    background:rgba(17,17,17,0.9);
+    display:flex;
+    align-items:center;
+    backdrop-filter:blur(10px);
+}
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#e50914;
+}
+.topbar{
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(34,34,34,0.8);
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(5px);
+}
+#search{
+    padding:8px 15px;
+    border-radius:20px;
+    border:none;
+    background:rgba(34,34,34,0.9);
+    color:white;
+    width:200px;
+}
+.games-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:25px;
+    padding:30px;
+    max-width:1400px;
+    margin:0 auto;
+}
+@media (max-width: 1200px) {
+    .games-grid{grid-template-columns:repeat(4, 1fr);}
+}
+@media (max-width: 900px) {
+    .games-grid{grid-template-columns:repeat(3, 1fr);}
+}
+@media (max-width: 600px) {
+    .games-grid{grid-template-columns:repeat(2, 1fr);}
+}
+.game-card{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:12px;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:space-between;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 4px 15px rgba(0,0,0,.6);
+    position:relative;
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,0.1);
+}
+.game-card:hover{
+    transform:scale(1.05);
+    box-shadow:0 8px 25px rgba(0,0,0,.8);
+    border-color:rgba(229,9,20,0.5);
+}
+.game-name{
+    background:rgba(0,0,0,.85);
+    width:100%;
+    text-align:center;
+    font-size:13px;
+    padding:8px 0;
+    font-weight:bold;
+}
+.fullscreen-btn{
+    background:#00ff00;
+    color:#000;
+    border:none;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    font-size:14px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:8px;
+    z-index:10;
+    transition:all 0.2s ease;
+    box-shadow:0 2px 8px rgba(0,255,0,0.4);
+}
+.fullscreen-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 4px 12px rgba(0,255,0,0.6);
+}
+.close-btn{
+    position:fixed;
+    top:10px;
+    right:10px;
+    z-index:9999;
+    background:#e50914;
+    color:white;
+    border:none;
+    border-radius:50%;
+    width:40px;
+    height:40px;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,0.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial,sans-serif;
+}
+
+/* Preview Overlay Styles */
+.preview-overlay{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#000;
+    z-index:10000;
+    flex-direction:column;
+}
+.preview-overlay.active{display:flex}
+.preview-header{
+    background:#111;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #222;
+    height:50px;
+    box-sizing:border-box;
+}
+.preview-title{font-size:18px;font-weight:bold;color:#e50914}
+.preview-close{
+    background:#e50914;
+    color:white;
+    border:none;
+    border-radius:50%;
+    width:35px;
+    height:35px;
+    font-size:18px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.preview-content{
+    flex:1;
+    position:relative;
+    width:100%;
+    height:calc(100% - 50px);
+    overflow:hidden;
+}
+.preview-frame{
+    width:100%;
+    height:100%;
+    border:none;
+    background:#000;
+}
+.preview-loader{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:#e50914;
+    font-size:24px;
+    display:none;
+}
+</style>
 </head>
 <body>
-     <input style="background: rgba(0,0,0,0.4);  
- 
-" type="text" id="searchBar" placeholder="Search apps by name...">
 
+<button onclick="closeWindow()" class="close-btn">✕</button>
 
-     <h1 class="gtext"></h1>
+<!-- Preview Overlay -->
+<div id="previewOverlay" class="preview-overlay">
+    <div class="preview-header">
+        <span class="preview-title" id="previewTitle">Game Preview</span>
+        <button class="preview-close" onclick="closePreview()">✕</button>
+    </div>
+    <div class="preview-content" id="previewContent">
+        <div class="preview-loader" id="previewLoader">Loading...</div>
+        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-fullscreen"></iframe>
+    </div>
+</div>
 
- 
+<nav class="nav">
+  <span class="logo">NoGuardian Games</span>
+</nav>
 
-     <div id="imageContainer">
-  
+<div class="topbar">
+  <span id="total">Total games: 5</span>
+  <input id="search" placeholder="Search games…">
+</div>
 
-    <a href='/nogaurdian/g/gta.html'>
-    <img class="btn" src="/nogaurdian/img/gta.png" alt="Gta vice city">
-         </a>
-    
-    
-          
-
-<style>
-      .btn {
-    width: 200px;
-    height: 200px;
-    border-radius: 20px ; /* Add !important to ensure it overrides other styles */
-    gap: 125px;
-    transition: transform 0.2s ease-in-out;
-    font-family: sans-serif;
-      transition: all 0.2s ease;   /* smooth hover */
-    font-size: 15px;
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: none;
-    border-radius: 50px !important; /* Ensure hover state also has the same border-radius */
-
-}
-#searchBar{
-  text-align:center;
-  background: rgba(0, 0, 0, 0.3); 
-border: 1px solid rgba(255, 255, 255, 0.15);  
-  color: white;
-  border-radius: 15px;
-  left:43%;
-  padding: 10px 20px;
-  border-style: solid;
-  border-width: 2px;
-  border-color:rgb(255, 255, 255);
-    position: fixed; 
-  top: 10px;       
-  left: 50%;
-  transform: translateX(-50%); 
-  z-index: 1000; 
-
-}
-#searchBar:focus{
-       border-color: #8fdcff;
-  box-shadow: 0 0 18px rgba(140,220,255,0.45);
-}
-#imageContainer {
-  margin-top: 70px; 
-}
-    .gtext{
-          text-align:center;
-          font-family: sans-serif;
-background:none;  
-border-radius: 20px;           
-          color:#ffffff;
-                  
-     }
-      img {
-    width: 35px;
-    padding: 10px 20px;
-    border-radius: 25px;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  img:hover {
-    transform: translateY(-3px);
-    box-shadow: none;
-    border-radius: 15px;
-    opacity:50%;
-  }
-  a{
-     outline:none;
-  }
-  a:focus{
-     outline:none;
-  }
-/* Hide scrollbar on the whole page but keep scrolling */
-html, body {
-  height: 100%;
-  overflow: hidden; /* hide the scrollbar container */
-}
-
-body {
-   overflow: auto; /* still allow scrolling */
-  width: 100vw; /* prevent extra space from scrollbar */
-    background:url('https://i.pinimg.com/736x/8e/d9/33/8ed93366a95da86f13ae3e50582944f3.jpg') center/cover fixed;
-    background-repeat: no-repeat;
-  background-size: cover;   /* make sure images cover the whole screen */
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  text-decoration: none;
-}
-
-/* Hide scrollbar for Webkit browsers */
-body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-
- 
-</style>
+<div id="games" class="games-grid"></div>
 
 <script>
-  document.getElementById('searchBar').addEventListener('input', function () {
-    const searchTerm = this.value.toLowerCase();
-    const images = document.querySelectorAll('#imageContainer img');
+const gamesEl = document.getElementById("games");
+const search = document.getElementById("search");
+const previewOverlay = document.getElementById("previewOverlay");
+const previewFrame = document.getElementById("previewFrame");
+const previewTitle = document.getElementById("previewTitle");
+const previewLoader = document.getElementById("previewLoader");
+const previewContent = document.getElementById("previewContent");
 
-    images.forEach(image => {
-      const altText = image.getAttribute('alt') || '';
-      if (altText.toLowerCase().includes(searchTerm)) {
-        image.style.display = 'inline-block';
-      } else {
-        image.style.display = 'none';
-      }
-    });
-  });
+let isFullscreen = false;
+
+// Game images
+const GAME_IMAGES = {
+    roblox: "https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
+    gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
+    sonic: "https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    leveldevil: "https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+};
+
+// Safe window handling
+const isInIframe = window !== window.parent;
+const closeWindow = () => {
+    if (isInIframe && typeof parent.closeWindow === 'function') {
+        parent.closeWindow();
+    } else {
+        window.close();
+    }
+};
+
+// Fullscreen functions
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        previewContent.requestFullscreen().then(() => {
+            isFullscreen = true;
+            document.querySelector('.preview-header').style.display = 'none';
+            previewContent.style.height = '100vh';
+        }).catch(err => {
+            console.log('Fullscreen error:', err);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// Listen for fullscreen changes
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        isFullscreen = false;
+        document.querySelector('.preview-header').style.display = 'flex';
+        previewContent.style.height = 'calc(100% - 50px)';
+    }
+});
+
+// Preview functions
+function openPreview(htmlContent, title) {
+    previewTitle.textContent = title || "Game Preview";
+    previewOverlay.classList.add('active');
+    previewLoader.style.display = 'block';
+    previewFrame.style.opacity = '0';
+    
+    previewFrame.srcdoc = htmlContent;
+    
+    previewFrame.onload = function() {
+        previewLoader.style.display = 'none';
+        previewFrame.style.opacity = '1';
+    };
+    
+    setTimeout(() => {
+        previewLoader.style.display = 'none';
+        previewFrame.style.opacity = '1';
+    }, 1000);
+}
+
+function closePreview() {
+    previewOverlay.classList.remove('active');
+    previewFrame.srcdoc = '';
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    }
+}
+
+// Close on escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else if (previewOverlay.classList.contains('active')) {
+            closePreview();
+        }
+    }
+});
+
+// HTML content for games
+const ROBLOX_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>roblox - Truffled</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
+</style>
+</head>
+<body>
+<iframe src="https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149" allowfullscreen></iframe>
+<a href="https://nevertraveling.thepresenttraveller.com" target="_blank">
+    <img id="truffled-logo" src="https://nevertraveling.thepresenttraveller.com/png/logo.png" alt="Logo">
+</a>
+</body>
+</html>`;
+
+const SONIC_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sonic - Truffled</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
+</style>
+</head>
+<body>
+<iframe src="https://classlink.com.de/games/sonic/index.html" allowfullscreen></iframe>
+<a href="https://classlink.com.de" target="_blank">
+    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
+</a>
+</body>
+</html>`;
+
+const LEVELDEVIL_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lvldevil - Truffled</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
+</style>
+</head>
+<body>
+<iframe src="https://classlink.com.de/games/lvldevil/index.html" allowfullscreen></iframe>
+<a href="https://classlink.com.de" target="_blank">
+    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
+</a>
+</body>
+</html>`;
+
+const SUBWAYSURFERS_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>subway-surfers - Truffled</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
+</style>
+</head>
+<body>
+<iframe src="https://classlink.com.de/games/subway-surfers/index.html" allowfullscreen></iframe>
+<a href="https://classlink.com.de" target="_blank">
+    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
+</a>
+</body>
+</html>`;
+
+function createGameCard(name, imageUrl, onClick) {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.style.backgroundImage = "url(" + imageUrl + ")";
+    
+    const fsBtn = document.createElement("button");
+    fsBtn.className = "fullscreen-btn";
+    fsBtn.innerHTML = "⛶";
+    fsBtn.title = "Fullscreen";
+    fsBtn.onclick = (e) => {
+        e.stopPropagation();
+        onClick();
+        setTimeout(toggleFullscreen, 100);
+    };
+    card.appendChild(fsBtn);
+    
+    const label = document.createElement("div");
+    label.className = "game-name";
+    label.textContent = name;
+    card.appendChild(label);
+    
+    card.onclick = () => onClick();
+    return card;
+}
+
+function addRoblox(){
+    const card = createGameCard("Roblox", GAME_IMAGES.roblox, () => openPreview(ROBLOX_HTML, "Roblox"));
+    gamesEl.appendChild(card);
+}
+
+function addGTAViceCity(){
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.style.backgroundImage = "url(" + GAME_IMAGES.gta + ")";
+    
+    const fsBtn = document.createElement("button");
+    fsBtn.className = "fullscreen-btn";
+    fsBtn.innerHTML = "⛶";
+    fsBtn.title = "Fullscreen";
+    fsBtn.onclick = (e) => {
+        e.stopPropagation();
+        window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1", "_blank");
+    };
+    card.appendChild(fsBtn);
+    
+    const label = document.createElement("div");
+    label.className = "game-name";
+    label.textContent = "GTA Vice City";
+    card.appendChild(label);
+    
+    card.onclick = () => window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1", "_blank");
+    gamesEl.appendChild(card);
+}
+
+function addSonic(){
+    const card = createGameCard("Sonic", GAME_IMAGES.sonic, () => openPreview(SONIC_HTML, "Sonic"));
+    gamesEl.appendChild(card);
+}
+
+function addLevelDevil(){
+    const card = createGameCard("Level Devil", GAME_IMAGES.leveldevil, () => openPreview(LEVELDEVIL_HTML, "Level Devil"));
+    gamesEl.appendChild(card);
+}
+
+function addSubwaySurfers(){
+    const card = createGameCard("Subway Surfers", GAME_IMAGES.subwaysurfers, () => openPreview(SUBWAYSURFERS_HTML, "Subway Surfers"));
+    gamesEl.appendChild(card);
+}
+
+// Add all 5 games
+function initGames() {
+    gamesEl.innerHTML = "";
+    addRoblox();
+    addGTAViceCity();
+    addSonic();
+    addLevelDevil();
+    addSubwaySurfers();
+}
+
+// Search functionality
+search.oninput = () => {
+    const q = search.value.toLowerCase();
+    const allGames = [
+        {name: "Roblox", add: addRoblox},
+        {name: "GTA Vice City", add: addGTAViceCity},
+        {name: "Sonic", add: addSonic},
+        {name: "Level Devil", add: addLevelDevil},
+        {name: "Subway Surfers", add: addSubwaySurfers}
+    ];
+    
+    gamesEl.innerHTML = "";
+    const filtered = allGames.filter(g => g.name.toLowerCase().includes(q));
+    filtered.forEach(g => g.add());
+};
+
+// Initialize
+initGames();
 </script>
 
 </body>
