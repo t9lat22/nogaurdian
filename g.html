@@ -210,7 +210,7 @@ body{
 </nav>
 
 <div class="topbar">
-  <span id="total">Total games: 5</span>
+  <span id="total">Total games: 16</span>
   <input id="search" placeholder="Search games…">
 </div>
 
@@ -233,7 +233,18 @@ const GAME_IMAGES = {
     gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
     sonic: "https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
     leveldevil: "https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
+    slope: "https://www.bing.com/th/id/OIP.QdGX2PGxPzeZDTxizb5DOwHaDl?w=235&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    flappy: "https://www.bing.com/th/id/OIP.Vn5yYlroJGjlEWzpLcJL3gHaHa?w=226&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    sm64: "https://www.bing.com/th/id/OIP.5ts3jBQ9iMbitz2WxBvePQHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    run3: "https://www.bing.com/th/id/OIP.2MCJFTF30qp63QBJVZTbpgHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    crossy: "https://tse2.mm.bing.net/th/id/OIP.g_0cjaKQTHUf0cFtbYo6NwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain&o=7&rm=3",
+    eaglercraft: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png",
+    cookieclicker: "https://pizza-clicker.com/wp-content/uploads/2024/12/Cookie-Clicker--150x150.webp",
+    templerun2: "https://th.bing.com/th/id/OIP.L38fbUWeHDJCAvcI3RsT9gHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7&rm=3",
+    jetpack: "https://tse3.mm.bing.net/th/id/OIP.okzWNhg-I0noPToN2c_VkQHaHa?pid=ImgDet&w=474&h=474&rs=1&o=7&rm=3",
+    retrobowl: "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
+    fruitninja: "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/c4dc286c30b8fbde45a0b5d4fe6f2146/fruit-ninja.png"
 };
 
 // Safe window handling
@@ -390,6 +401,182 @@ iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: 
 </body>
 </html>`;
 
+const SLOPE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slope - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/slope/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const FLAPPY_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flappy Bird - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/flappy/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const SM64_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Mario 64 - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/sm64/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const RUN3_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Run 3 - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/run3/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const CROSSY_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crossy Road - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/crossy/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const EAGLERCRAFT_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eaglercraft - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/mc/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const COOKIE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Clicker - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/cookieclicker/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const TEMPLERUN2_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temple Run 2 - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/templerun2/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const JETPACK_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jetpack Joyride - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const RETROBOWL_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro Bowl - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/retrobowl/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
+const FRUITNINJA_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fruit Ninja - NoGuardian</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+</style>
+</head>
+<body>
+<iframe src="https://seraph-embeds.vercel.app/games/fruitninja/index.html" allowfullscreen></iframe>
+</body>
+</html>`;
+
 function createGameCard(name, imageUrl, onClick) {
     const card = document.createElement("div");
     card.className = "game-card";
@@ -459,7 +646,62 @@ function addSubwaySurfers(){
     gamesEl.appendChild(card);
 }
 
-// Add all 5 games
+function addSlope(){
+    const card = createGameCard("Slope", GAME_IMAGES.slope, () => openPreview(SLOPE_HTML, "Slope"));
+    gamesEl.appendChild(card);
+}
+
+function addFlappy(){
+    const card = createGameCard("Flappy Bird", GAME_IMAGES.flappy, () => openPreview(FLAPPY_HTML, "Flappy Bird"));
+    gamesEl.appendChild(card);
+}
+
+function addSM64(){
+    const card = createGameCard("Super Mario 64", GAME_IMAGES.sm64, () => openPreview(SM64_HTML, "Super Mario 64"));
+    gamesEl.appendChild(card);
+}
+
+function addRun3(){
+    const card = createGameCard("Run 3", GAME_IMAGES.run3, () => openPreview(RUN3_HTML, "Run 3"));
+    gamesEl.appendChild(card);
+}
+
+function addCrossy(){
+    const card = createGameCard("Crossy Road", GAME_IMAGES.crossy, () => openPreview(CROSSY_HTML, "Crossy Road"));
+    gamesEl.appendChild(card);
+}
+
+function addEaglercraft(){
+    const card = createGameCard("Eaglercraft", GAME_IMAGES.eaglercraft, () => openPreview(EAGLERCRAFT_HTML, "Eaglercraft"));
+    gamesEl.appendChild(card);
+}
+
+function addCookieClicker(){
+    const card = createGameCard("Cookie Clicker", GAME_IMAGES.cookieclicker, () => openPreview(COOKIE_HTML, "Cookie Clicker"));
+    gamesEl.appendChild(card);
+}
+
+function addTempleRun2(){
+    const card = createGameCard("Temple Run 2", GAME_IMAGES.templerun2, () => openPreview(TEMPLERUN2_HTML, "Temple Run 2"));
+    gamesEl.appendChild(card);
+}
+
+function addJetpackJoyride(){
+    const card = createGameCard("Jetpack Joyride", GAME_IMAGES.jetpack, () => openPreview(JETPACK_HTML, "Jetpack Joyride"));
+    gamesEl.appendChild(card);
+}
+
+function addRetroBowl(){
+    const card = createGameCard("Retro Bowl", GAME_IMAGES.retrobowl, () => openPreview(RETROBOWL_HTML, "Retro Bowl"));
+    gamesEl.appendChild(card);
+}
+
+function addFruitNinja(){
+    const card = createGameCard("Fruit Ninja", GAME_IMAGES.fruitninja, () => openPreview(FRUITNINJA_HTML, "Fruit Ninja"));
+    gamesEl.appendChild(card);
+}
+
+// Add all games
 function initGames() {
     gamesEl.innerHTML = "";
     addRoblox();
@@ -467,6 +709,17 @@ function initGames() {
     addSonic();
     addLevelDevil();
     addSubwaySurfers();
+    addSlope();
+    addFlappy();
+    addSM64();
+    addRun3();
+    addCrossy();
+    addEaglercraft();
+    addCookieClicker();
+    addTempleRun2();
+    addJetpackJoyride();
+    addRetroBowl();
+    addFruitNinja();
 }
 
 // Search functionality
@@ -477,7 +730,18 @@ search.oninput = () => {
         {name: "GTA Vice City", add: addGTAViceCity},
         {name: "Sonic", add: addSonic},
         {name: "Level Devil", add: addLevelDevil},
-        {name: "Subway Surfers", add: addSubwaySurfers}
+        {name: "Subway Surfers", add: addSubwaySurfers},
+        {name: "Slope", add: addSlope},
+        {name: "Flappy Bird", add: addFlappy},
+        {name: "Super Mario 64", add: addSM64},
+        {name: "Run 3", add: addRun3},
+        {name: "Crossy Road", add: addCrossy},
+        {name: "Eaglercraft", add: addEaglercraft},
+        {name: "Cookie Clicker", add: addCookieClicker},
+        {name: "Temple Run 2", add: addTempleRun2},
+        {name: "Jetpack Joyride", add: addJetpackJoyride},
+        {name: "Retro Bowl", add: addRetroBowl},
+        {name: "Fruit Ninja", add: addFruitNinja}
     ];
     
     gamesEl.innerHTML = "";
