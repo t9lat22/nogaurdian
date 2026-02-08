@@ -183,32 +183,13 @@ background:rgb(8, 44, 90);
    
 <div id="navbar" class="navbar sidebar">
   
-  <a onclick="window.location.href='b.html'">
+  <a onclick="document.getElementById('frame2').src = 'b.html';">
     <img src="/nogaurdian/img/b.png">
   </a>
-  <a onclick="window.location.href='g.html'">
-    <img src="terminal.png">
-  </a>
-   <a onclick="ai()">
-    <img src="ai.png">
-  </a>
-  <a onclick="movie()">
-    <img src="movie2.png">
-  </a>
-   <a onclick="music()">
-    <img src="music3.png">
-  </a>
-  <a onclick="s()">
-    <img  src="search.png">
-  </a>
-  
-  <a onclick="emulator()">
-    <img src="apps1.png">
+  <a onclick="document.getElementById('frame2').src = 'g.html';">
+    <img src="/nogaurdian/img/g.png">
   </a>
 
-    <a onclick="Chat()">
-    <img src="chat2.png">
-  </a>
   
 
 
@@ -216,7 +197,7 @@ background:rgb(8, 44, 90);
   
 
 
-    <iframe src="start.html"></iframe>
+    <iframe id="frame2" src="start.html"></iframe>
     
 </body>
 </html>
