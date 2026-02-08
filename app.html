@@ -312,12 +312,7 @@ const TIKTOK_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discord</title>
-
-<script src="/uv/uv.bundle.js"></script>
-<script src="/uv/uv.config.js"></script>
-<script src="/baremux/index.js"></script>
-
+<title>TikTok</title>
 <style>
 html, body {
   margin: 0;
@@ -339,19 +334,25 @@ iframe {
 
 <iframe id="app" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"></iframe>
 
+<script src="/uv/uv.bundle.js"><\/script>
+<script src="/uv/uv.config.js"><\/script>
+<script src="/baremux/index.js"><\/script>
+
 <script>
-navigator.serviceWorker?.register("/uv/sw.js")
+(async () => {
+  await navigator.serviceWorker?.register("/uv/sw.js");
 
-const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
-connection.setTransport("/libcurl/index.mjs", [
-  { websocket: "wss://wisp.rhw.one/" }
-])
+  const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+  await connection.setTransport("/libcurl/index.mjs", [
+    { websocket: "wss://wisp.rhw.one/" }
+  ]);
 
-const url = "https://tiktok.com"
-const proxied = __uv$config.prefix + __uv$config.encodeUrl(url)
+  const url = "https://tiktok.com";
+  const proxied = __uv$config.prefix + __uv$config.encodeUrl(url);
 
-document.getElementById("app").src = proxied
-</script>
+  document.getElementById("app").src = proxied;
+})();
+<\/script>
 
 </body>
 </html>
@@ -362,11 +363,7 @@ const INSTAGRAM_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script src="/uv/uv.bundle.js"></script>
-<script src="/uv/uv.config.js"></script>
-<script src="/baremux/index.js"></script>
-
+<title>Instagram</title>
 <style>
 html, body {
   margin: 0;
@@ -388,23 +385,28 @@ iframe {
 
 <iframe id="app" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"></iframe>
 
+<script src="/uv/uv.bundle.js"><\/script>
+<script src="/uv/uv.config.js"><\/script>
+<script src="/baremux/index.js"><\/script>
+
 <script>
-navigator.serviceWorker?.register("/uv/sw.js")
+(async () => {
+  await navigator.serviceWorker?.register("/uv/sw.js");
 
-const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
-connection.setTransport("/libcurl/index.mjs", [
-  { websocket: "wss://wisp.rhw.one/" }
-])
+  const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+  await connection.setTransport("/libcurl/index.mjs", [
+    { websocket: "wss://wisp.rhw.one/" }
+  ]);
 
-const url = "https://instagram.com"
-const proxied = __uv$config.prefix + __uv$config.encodeUrl(url)
+  const url = "https://instagram.com";
+  const proxied = __uv$config.prefix + __uv$config.encodeUrl(url);
 
-document.getElementById("app").src = proxied
-</script>
+  document.getElementById("app").src = proxied;
+})();
+<\/script>
 
 </body>
 </html>
-
 `;
 
 function createGameCard(name, imageUrl, onClick) {
