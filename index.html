@@ -5,11 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brainy</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            /* Background will be set by JavaScript */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Background layer that covers everything */
+        #wallpaperLayer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 0.5s ease;
+        }
+
         .navbar {
             position: fixed;
             top: 50%;
             left: 12px;
-            bottom: auto;
             transform: translateY(-50%);
             width: 64px;
             height: auto;
@@ -41,8 +76,9 @@
 
         .nav-item {
             width: 48px;
-            height: 48px;
+            min-height: 48px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
@@ -50,10 +86,9 @@
             transition: all 0.2s ease;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            font-size: 20px;
-            color: white;
             text-decoration: none;
             position: relative;
+            padding: 6px;
         }
 
         .nav-item:hover {
@@ -64,6 +99,21 @@
 
         .nav-item:active {
             transform: scale(0.95);
+        }
+
+        .nav-emoji {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .nav-text {
+            font-size: 9px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            margin-top: 4px;
+            line-height: 1.2;
+            font-family: Arial, sans-serif;
         }
 
         .nav-label {
@@ -79,6 +129,7 @@
             transition: all 0.2s;
             pointer-events: none;
             font-family: Arial, sans-serif;
+            color: white;
         }
 
         .nav-item:hover .nav-label {
@@ -86,51 +137,28 @@
             visibility: visible;
         }
 
-        .nav-text {
-            font-size: 11px;
-            font-weight: bold;
-            text-align: center;
-            line-height: 1.2;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-image: url('https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif');
-            color: white;
-            min-height: 100vh;
-            text-decoration: none;
-        }
-
-        .container {
-            display: grid;
-            place-items: center;
-        }
-
-        iframe {
-            display: block;
-            height: 100vh;
-            width: 100vw;
+        /* Content iframe - transparent to show wallpaper behind */
+        #contentFrame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
-            background: lightyellow;
+            background: transparent;
+            z-index: 1;
         }
 
-        /* Settings Panel Styles */
+        /* Settings Panel - Glassmorphism to show wallpaper behind */
         .settings-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.4);
             z-index: 9998;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(3px);
         }
 
         .settings-overlay.active {
@@ -143,19 +171,19 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: linear-gradient(160deg, rgba(30,30,30,0.95), rgba(10,10,10,0.98));
+            background: rgba(20,20,20,0.85);
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 24px;
             padding: 40px;
-            backdrop-filter: blur(30px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
             box-shadow: 0 25px 50px rgba(0,0,0,0.8);
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s cubic-bezier(.2,.8,.2,1);
-            min-width: 600px;
-            max-width: 800px;
-            max-height: 80vh;
+            min-width: 700px;
+            max-width: 900px;
+            max-height: 85vh;
             overflow-y: auto;
         }
 
@@ -220,8 +248,8 @@
 
         .wallpaper-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
         }
 
         .wallpaper-option {
@@ -237,12 +265,12 @@
 
         .wallpaper-option:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,180,255,0.3);
+            box-shadow: 0 15px 35px rgba(0,180,255,0.4);
         }
 
         .wallpaper-option.active {
             border-color: #00b4ff;
-            box-shadow: 0 0 0 4px rgba(0,180,255,0.3), 0 10px 30px rgba(0,180,255,0.4);
+            box-shadow: 0 0 0 4px rgba(0,180,255,0.3), 0 15px 35px rgba(0,180,255,0.5);
         }
 
         .wallpaper-option img {
@@ -260,8 +288,8 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             background: #00b4ff;
             border-radius: 50%;
             display: flex;
@@ -270,7 +298,9 @@
             opacity: 0;
             transform: scale(0);
             transition: all 0.2s;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
         }
 
         .wallpaper-option.active .wallpaper-check {
@@ -283,13 +313,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 8px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            font-size: 11px;
+            padding: 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            font-size: 12px;
             text-align: center;
             opacity: 0;
             transition: opacity 0.2s;
             font-family: Arial, sans-serif;
+            font-weight: 600;
         }
 
         .wallpaper-option:hover .wallpaper-label {
@@ -315,10 +346,9 @@
         }
 
         .add-icon {
-            font-size: 24px;
+            font-size: 28px;
         }
 
-        /* Custom URL Input */
         .custom-url-section {
             margin-top: 20px;
             padding: 20px;
@@ -363,45 +393,74 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0,180,255,0.4);
         }
+
+        /* Preview text */
+        .current-wallpaper {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,180,255,0.1);
+            border-radius: 8px;
+            border-left: 4px solid #00b4ff;
+        }
+
+        .current-wallpaper-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
+    <!-- Wallpaper Background Layer -->
+    <div id="wallpaperLayer"></div>
+
+    <!-- Navigation Sidebar -->
     <div id="navbar" class="navbar">
-        <a onclick="document.getElementById('frame2').src = 'g.html';" class="nav-item">
-            <span class="nav-text">G</span>
+        <a onclick="loadPage('g.html')" class="nav-item">
+            <span class="nav-emoji">🎮</span>
+            <span class="nav-text">Games</span>
             <span class="nav-label">Games</span>
         </a>
-        <a onclick="document.getElementById('frame2').src = 'b.html';" class="nav-item">
-            <span class="nav-text">B</span>
+        <a onclick="loadPage('b.html')" class="nav-item">
+            <span class="nav-emoji">🌐</span>
+            <span class="nav-text">Browser</span>
             <span class="nav-label">Browser</span>
         </a>
-        <a onclick="document.getElementById('frame2').src = 'movies.html';" class="nav-item">
-            <span class="nav-text">🎬</span>
+        <a onclick="loadPage('movies.html')" class="nav-item">
+            <span class="nav-emoji">🎬</span>
+            <span class="nav-text">Movies & TV</span>
             <span class="nav-label">Movies & TV</span>
         </a>
         <a onclick="toggleSettings()" class="nav-item">
-            <span class="nav-text">⚙️</span>
+            <span class="nav-emoji">⚙️</span>
+            <span class="nav-text">Settings</span>
             <span class="nav-label">Settings</span>
         </a>
     </div>
 
+    <!-- Settings Overlay -->
     <div class="settings-overlay" id="settingsOverlay" onclick="toggleSettings()"></div>
 
+    <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
-            <h2 class="settings-title">Settings</h2>
+            <h2 class="settings-title">⚙️ Settings</h2>
             <button class="close-btn" onclick="toggleSettings()">×</button>
         </div>
 
         <div class="wallpaper-section">
-            <div class="section-title">Choose your wallpaper</div>
+            <div class="section-title">🖼️ Choose your wallpaper</div>
             <div class="wallpaper-grid" id="wallpaperGrid">
-                <!-- Wallpapers will be generated here -->
+                <!-- Wallpapers generated by JavaScript -->
             </div>
         </div>
 
+        <div class="current-wallpaper" id="currentWallpaperInfo">
+            <div class="current-wallpaper-text">Current: <span id="currentWpName">Default</span></div>
+        </div>
+
         <div class="custom-url-section">
-            <div class="section-title">Add custom wallpaper</div>
+            <div class="section-title">➕ Add custom wallpaper</div>
             <div class="url-input-group">
                 <input type="text" class="url-input" id="customUrl" placeholder="Enter image URL...">
                 <button class="url-btn" onclick="addCustomWallpaper()">Add</button>
@@ -409,33 +468,36 @@
         </div>
     </div>
 
-    <iframe id="frame2" src="start.html"></iframe>
+    <!-- Main Content Iframe -->
+    <iframe id="contentFrame" src="start.html"></iframe>
 
     <script>
-        // Default wallpapers
+        // Default wallpapers collection
         const wallpapers = [
-            { id: 'default', url: 'https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif', name: 'Default' },
-            { id: 'aurora', url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920', name: 'Aurora' },
+            { id: 'default', url: 'https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif', name: 'Default GIF' },
+            { id: 'aurora', url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920', name: 'Aurora Borealis' },
             { id: 'mountains', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920', name: 'Mountains' },
-            { id: 'ocean', url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920', name: 'Ocean' },
+            { id: 'ocean', url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920', name: 'Ocean Waves' },
             { id: 'forest', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920', name: 'Forest' },
-            { id: 'city', url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920', name: 'City' },
+            { id: 'city', url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920', name: 'City Night' },
             { id: 'space', url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920', name: 'Space' },
-            { id: 'abstract', url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1920', name: 'Abstract' }
+            { id: 'abstract', url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1920', name: 'Abstract' },
+            { id: 'neon', url: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=1920', name: 'Neon City' },
+            { id: 'nature', url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920', name: 'Nature' }
         ];
 
-        let currentWallpaper = localStorage.getItem('brainy_wallpaper') || 'default';
+        let currentWallpaperId = localStorage.getItem('brainy_wallpaper_id') || 'default';
 
-        // Initialize
+        // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             renderWallpapers();
-            applyWallpaper(currentWallpaper, false);
+            applyWallpaper(currentWallpaperId, false);
         });
 
         function renderWallpapers() {
             const grid = document.getElementById('wallpaperGrid');
             grid.innerHTML = wallpapers.map(wp => `
-                <div class="wallpaper-option ${wp.id === currentWallpaper ? 'active' : ''}" 
+                <div class="wallpaper-option ${wp.id === currentWallpaperId ? 'active' : ''}" 
                      onclick="selectWallpaper('${wp.id}')" 
                      data-id="${wp.id}">
                     <img src="${wp.url}" alt="${wp.name}" loading="lazy">
@@ -443,7 +505,7 @@
                     <div class="wallpaper-label">${wp.name}</div>
                 </div>
             `).join('') + `
-                <div class="wallpaper-option add-wallpaper" onclick="document.getElementById('customUrl').focus()">
+                <div class="wallpaper-option add-wallpaper" onclick="focusCustomUrl()">
                     <span class="add-icon">+</span>
                     <span>Add URL</span>
                 </div>
@@ -451,31 +513,55 @@
         }
 
         function selectWallpaper(id) {
-            currentWallpaper = id;
-            localStorage.setItem('brainy_wallpaper', id);
+            currentWallpaperId = id;
+            localStorage.setItem('brainy_wallpaper_id', id);
             applyWallpaper(id, true);
             renderWallpapers();
+            updateCurrentWallpaperText();
         }
 
-        function applyWallpaper(id, animate = false) {
+        function applyWallpaper(id, animate = true) {
             const wp = wallpapers.find(w => w.id === id);
-            if (wp) {
-                if (animate) {
-                    document.body.style.opacity = '0';
-                    setTimeout(() => {
-                        document.body.style.backgroundImage = `url('${wp.url}')`;
-                        document.body.style.opacity = '1';
-                    }, 200);
-                } else {
-                    document.body.style.backgroundImage = `url('${wp.url}')`;
-                }
+            if (!wp) return;
+
+            const layer = document.getElementById('wallpaperLayer');
+            
+            if (animate) {
+                // Fade out, change, fade in
+                layer.style.opacity = '0';
+                setTimeout(() => {
+                    layer.style.backgroundImage = `url('${wp.url}')`;
+                    layer.style.opacity = '1';
+                }, 300);
+            } else {
+                layer.style.backgroundImage = `url('${wp.url}')`;
+                layer.style.opacity = '1';
             }
+
+            // Also update body background as fallback
+            document.body.style.backgroundImage = `url('${wp.url}')`;
+        }
+
+        function updateCurrentWallpaperText() {
+            const wp = wallpapers.find(w => w.id === currentWallpaperId);
+            document.getElementById('currentWpName').textContent = wp ? wp.name : 'Unknown';
         }
 
         function addCustomWallpaper() {
             const url = document.getElementById('customUrl').value.trim();
-            if (!url) return;
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
             
+            // Validate URL
+            try {
+                new URL(url);
+            } catch {
+                alert('Please enter a valid URL');
+                return;
+            }
+
             const id = 'custom_' + Date.now();
             const name = 'Custom ' + (wallpapers.filter(w => w.id.startsWith('custom')).length + 1);
             
@@ -484,14 +570,30 @@
             document.getElementById('customUrl').value = '';
         }
 
+        function focusCustomUrl() {
+            document.getElementById('customUrl').focus();
+        }
+
+        function loadPage(url) {
+            document.getElementById('contentFrame').src = url;
+        }
+
         function toggleSettings() {
             const panel = document.getElementById('settingsPanel');
             const overlay = document.getElementById('settingsOverlay');
-            panel.classList.toggle('active');
-            overlay.classList.toggle('active');
+            const isActive = panel.classList.contains('active');
+            
+            if (isActive) {
+                panel.classList.remove('active');
+                overlay.classList.remove('active');
+            } else {
+                panel.classList.add('active');
+                overlay.classList.add('active');
+                updateCurrentWallpaperText();
+            }
         }
 
-        // Close on escape key
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.getElementById('settingsPanel').classList.remove('active');
