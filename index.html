@@ -160,28 +160,33 @@ background:rgb(8, 44, 90);
     .typewriter h1 {
   color: #ffffff;
   font-family: monospace;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
+  overflow: hidden; 
+  white-space: nowrap; 
+  margin: 0 auto; 
+  letter-spacing: .15em; 
   text-align:center;
     top:200px;
     position:relative;
     font-size:50px;
 }
+    iframe{      
+        display: block;  
+        height: 100vh;    
+        width: 100vw; 
+        border: none; 
+        background: lightyellow; 
+    }
     </style>
 </head>
 <body>
-    <div class="typewriter">
-    <h1>NoGaurdian</h1>
-</div>
+  
    
 <div id="navbar" class="navbar sidebar">
   
   <a onclick="window.location.href='b.html'">
     <img src="/nogaurdian/img/b.png">
   </a>
-  <a onclick="terminal()">
+  <a onclick="window.location.href='g.html'">
     <img src="terminal.png">
   </a>
    <a onclick="ai()">
@@ -209,11 +214,9 @@ background:rgb(8, 44, 90);
 
 </div>
   
-<div class="container">
-<a class="btn" href="g.html">Start</a>
-</div>
 
-</div>
+
+    <iframe src="startl.html"></iframe>
     
 </body>
 </html>
