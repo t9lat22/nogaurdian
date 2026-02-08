@@ -196,7 +196,7 @@ body{
 <!-- Preview Overlay -->
 <div id="previewOverlay" class="preview-overlay">
     <div class="preview-header">
-        <span class="preview-title" id="previewTitle">Game Preview</span>
+        <span class="preview-title" id="previewTitle">App Preview</span>
         <button class="preview-close" onclick="closePreview()">✕</button>
     </div>
     <div class="preview-content" id="previewContent">
@@ -210,8 +210,8 @@ body{
 </nav>
 
 <div class="topbar">
-  <span id="total">Total games: 33</span>
-  <input id="search" placeholder="Search games…">
+  <span id="total">Total apps: 2</span>
+  <input id="search" placeholder="Search apps...">
 </div>
 
 <div id="games" class="games-grid"></div>
@@ -229,38 +229,9 @@ let isFullscreen = false;
 
 // Game images
 const GAME_IMAGES = {
-    roblox: "https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
-    sonic: "https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    leveldevil: "https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    slope: "https://www.bing.com/th/id/OIP.QdGX2PGxPzeZDTxizb5DOwHaDl?w=235&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    flappy: "https://www.bing.com/th/id/OIP.Vn5yYlroJGjlEWzpLcJL3gHaHa?w=226&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    sm64: "https://www.bing.com/th/id/OIP.5ts3jBQ9iMbitz2WxBvePQHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    run3: "https://www.bing.com/th/id/OIP.2MCJFTF30qp63QBJVZTbpgHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    crossy: "https://tse2.mm.bing.net/th/id/OIP.g_0cjaKQTHUf0cFtbYo6NwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain&o=7&rm=3",
-    eaglercraft: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png",
-    cookieclicker: "https://pizza-clicker.com/wp-content/uploads/2024/12/Cookie-Clicker--150x150.webp",
-    templerun2: "https://th.bing.com/th/id/OIP.L38fbUWeHDJCAvcI3RsT9gHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7&rm=3",
-    jetpack: "https://tse3.mm.bing.net/th/id/OIP.okzWNhg-I0noPToN2c_VkQHaHa?pid=ImgDet&w=474&h=474&rs=1&o=7&rm=3",
-    retrobowl: "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
-    fruitninja: "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/c4dc286c30b8fbde45a0b5d4fe6f2146/fruit-ninja.png",
-    justfall: "https://th.bing.com/th/id/OIP.ersDkiJosBRijaGMqY0IqwHaFj?w=80&h=80&c=12&rs=1&r=0&o=6&pid=23.1",
-    snowrider: "https://tse1.mm.bing.net/th/id/OIP.sAfBrkOicv159Rfst1m_LQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    v1v1lol: "https://www.bing.com/th/id/OIP.jv6iR5gwlta2uwmJ-zoJmgHaHa?w=181&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    basketrandom: "https://tse4.mm.bing.net/th/id/OIP.ODjmdKROvha8EqUPurHRGAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    boxingrandom: "https://tse1.mm.bing.net/th/id/OIP.YIy-VT9zXUpO6d0gFEb86gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    soccerrandom: "https://tse3.mm.bing.net/th/id/OIP.ZcCDpENt03hhsqJlU5R8uwHaHa?w=512&h=512&rs=1&pid=ImgDetMain&o=7&rm=3",
-    volleyrandom: "https://www.bing.com/th/id/OIP.k79muXvF9OB_2kdO30GOBgHaHa?w=191&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    superhot: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7ybp.webp",
-    fnf: "https://tse2.mm.bing.net/th/id/OIP.PWszDPU4F1bEHCs6gpsgnAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    driftboss: "https://www.bing.com/th/id/OIP.VjI7f1Px8UIv9Ysiu0qpIQHaHa?w=204&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    timeshooter2: "https://tse4.mm.bing.net/th/id/OIP.cOZgMg4Dr9nRfMGiBH91QwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    gdlite: "https://tse1.mm.bing.net/th/id/OIP._J04MdyKvWMenHd1GU8cNAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    fnfmidfight: "https://th.bing.com/th/id/OIP.BQlG25LlI5YOwhUydk5OHwHaFj?w=236&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    newsupermariobros: "https://th.bing.com/th/id/OIP.1UMmAqIe9Y3SeDmFLj6KEgHaHa?w=176&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    mariokartds: "https://www.bing.com/th/id/OIP.kGcU1P9BOLscMj-Aoxw34QHaGp?w=225&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    amongus: "https://th.bing.com/th/id/OIP.8JkOfq65BTCs96gDsGeSnwHaHa?w=183&h=183&c=7&r=0&o=7&pid=1.7&rm=3"
+ tiktok: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
+instagram: "https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+
 };
 
 // Safe window handling
@@ -341,36 +312,100 @@ const TIKTOK_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>sonic - Truffled</title>
+<title>Discord</title>
+
+<script src="/uv/uv.bundle.js"></script>
+<script src="/uv/uv.config.js"></script>
+<script src="/baremux/index.js"></script>
+
 <style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 </style>
 </head>
+
 <body>
-<iframe src="https://classlink.com.de/games/sonic/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
+
+<iframe id="app" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"></iframe>
+
+<script>
+navigator.serviceWorker?.register("/uv/sw.js")
+
+const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
+connection.setTransport("/libcurl/index.mjs", [
+  { websocket: "wss://wisp.rhw.one/" }
+])
+
+const url = "https://tiktok.com"
+const proxied = __uv$config.prefix + __uv$config.encodeUrl(url)
+
+document.getElementById("app").src = proxied
+</script>
+
 </body>
-</html>`;
+</html>
+`;
 
 const INSTAGRAM_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Among Us - NoGuardian</title>
+
+<script src="/uv/uv.bundle.js"></script>
+<script src="/uv/uv.config.js"></script>
+<script src="/baremux/index.js"></script>
+
 <style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 </style>
 </head>
+
 <body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/amongus/index.html" allowfullscreen></iframe>
+
+<iframe id="app" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"></iframe>
+
+<script>
+navigator.serviceWorker?.register("/uv/sw.js")
+
+const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
+connection.setTransport("/libcurl/index.mjs", [
+  { websocket: "wss://wisp.rhw.one/" }
+])
+
+const url = "https://instagram.com"
+const proxied = __uv$config.prefix + __uv$config.encodeUrl(url)
+
+document.getElementById("app").src = proxied
+</script>
+
 </body>
-</html>`;
+</html>
+
+`;
 
 function createGameCard(name, imageUrl, onClick) {
     const card = document.createElement("div");
@@ -400,11 +435,11 @@ function createGameCard(name, imageUrl, onClick) {
 
 
 function addInstagram(){
-    const card = createGameCard("Tiktok", GAME_IMAGES.sonic, () => openPreview(INSTAGRAM_HTML, "Instagram"));
+    const card = createGameCard("Instagram", GAME_IMAGES.tiktok, () => openPreview(INSTAGRAM_HTML, "Instagram"));
     gamesEl.appendChild(card);
 }
 function addTiktok(){
-    const card = createGameCard("Tiktok", GAME_IMAGES.amongus, () => openPreview(TIKTOK_HTML, "Tiktok"));
+    const card = createGameCard("Tiktok", GAME_IMAGES.instagram, () => openPreview(TIKTOK_HTML, "Tiktok"));
     gamesEl.appendChild(card);
 }
 
