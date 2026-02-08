@@ -5,200 +5,327 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brainy</title>
     <style>
-            .navbar {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 56px;
-         background: linear-gradient(160deg,
-        rgba(255,255,255,0.08),
-        rgba(0,0,0,0.65)
-      );
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-      padding: 0 10px;
-      backdrop-filter: blur(2px) saturate(140%);
-       box-shadow: 
-    0 12px 28px rgba(0,0,0,0.45),
-    0 0 0 1px rgba(255,255,255,0.15) inset;
-      transition: height 0.2s ease, border-radius 0.2s ease, border-color 0.2s ease;
-      opacity: 0.92;
-      z-index: 9999;
-      will-change: height, border-radius;
+        .navbar {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 56px;
+            background: linear-gradient(160deg,
+                rgba(255,255,255,0.08),
+                rgba(0,0,0,0.65)
+            );
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px;
+            backdrop-filter: blur(2px) saturate(140%);
+            box-shadow: 
+                0 12px 28px rgba(0,0,0,0.45),
+                0 0 0 1px rgba(255,255,255,0.15) inset;
+            transition: height 0.2s ease, border-radius 0.2s ease, border-color 0.2s ease;
+            opacity: 0.92;
+            z-index: 9999;
+            will-change: height, border-radius;
+        }
 
-    }
+        .navbar:hover {
+            height: 64px;
+            border-radius: 20px;
+            border-color: rgba(0,180,255,0.6);
+        }
 
-    .navbar:hover {
-      height: 64px;
-      border-radius: 20px;
-      border-color: rgba(0,180,255,0.6);
-    }
+        .navbar::after {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%);
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
 
-    .navbar::after {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      pointer-events: none;
-      background: radial-gradient(circle at center,  rgba(255,255,255,0.08), transparent 70%);
-      opacity: 1;
-      transition: opacity 0.2s ease;
-    }
+        .navbar:hover::after {
+            opacity: 1;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
+        }
 
-    .navbar:hover::after {
-      opacity: 1;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
-    }
+        .navbar img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.15s ease;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,.6));
+            cursor: pointer;
+            will-change: transform;
+        }
 
-    .navbar img {
-      width: 30px;
-      height: 30px;
-      transition: transform 0.15s ease;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,.6));
-      cursor: pointer;
-      will-change: transform;
-    }
+        .navbar img:hover {
+            transform: scale(1.25) translateY(-3px);
+        }
 
-    .navbar img:hover {
-      transform: scale(1.25) translateY(-3px);
-    }
-    .navbar img:active{
-        transform: scale(0.97);
-    }
+        .navbar img:active {
+            transform: scale(0.97);
+        }
 
-      .navbar.sidebar {
-      position: fixed;
-      top: 50%;
-      left: 12px;
-      bottom: auto;
-      transform: translateY(-50%);
-      width: 64px;
-      height: auto;
-      flex-direction: column;
-      gap: 14px;
-      padding: 12px 0;
-      border-radius: 18px;
-      transition: width 0.25s cubic-bezier(.2,.8,.2,1), border-radius 0.25s cubic-bezier(.2,.8,.2,1), top 0.3s ease, left 0.3s ease, bottom 0.3s ease, height 0.3s ease, transform 0.3s ease;
-    }
+        .navbar.sidebar {
+            position: fixed;
+            top: 50%;
+            left: 12px;
+            bottom: auto;
+            transform: translateY(-50%);
+            width: 64px;
+            height: auto;
+            flex-direction: column;
+            gap: 14px;
+            padding: 12px 0;
+            border-radius: 18px;
+            transition: width 0.25s cubic-bezier(.2,.8,.2,1), border-radius 0.25s cubic-bezier(.2,.8,.2,1), top 0.3s ease, left 0.3s ease, bottom 0.3s ease, height 0.3s ease, transform 0.3s ease;
+        }
 
-    .navbar.sidebar:hover {
-      width: 72px;
-      height: auto;
-      border-radius: 24px;
-    }
+        .navbar.sidebar:hover {
+            width: 72px;
+            height: auto;
+            border-radius: 24px;
+        }
 
-    .navbar.sidebar img:hover {
-      transform: scale(1.25) translateX(3px);
-    }
-.navbar.sidebar img:active{
-        transform: scale(0.97);
-    }
-    .navbar.sidebar::after {
-      inset: 0;
-      box-shadow: 0 0 0 0 rgba(0,180,255,.5);
-      transition: box-shadow 0.3s;
-      background: none;
-    }
+        .navbar.sidebar img:hover {
+            transform: scale(1.25) translateX(3px);
+        }
 
-    .navbar.sidebar:hover::after {
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
-      background: none;
-    }
-     body {
-  background-repeat: no-repeat;
-  background-size: cover;  
-  padding: 0;
-  font-family: Arial, sans-serif;
- margin:0;
-    background:url('https://i.pinimg.com/736x/8e/d9/33/8ed93366a95da86f13ae3e50582944f3.jpg') center/cover fixed;
-    color:white;
-    min-height:100vh;  
-    text-decoration: none;
-  }
-   img {
-    width: 28px;
-    padding: 10px 20px;
-    border-radius: 25px;
-    transition: transform 0.3s ease-in-out;
-  }
+        .navbar.sidebar img:active {
+            transform: scale(0.97);
+        }
 
-  img:hover {
-    box-shadow: none;
-    border-radius: 15px;
-        transform: translateY(-3px);
+        .navbar.sidebar::after {
+            inset: 0;
+            box-shadow: 0 0 0 0 rgba(0,180,255,.5);
+            transition: box-shadow 0.3s;
+            background: none;
+        }
 
-  }
-   .container {
-    display: grid;
-    place-items: center; 
-  }
-  .btn{
-    padding:15px 30px;
-    width:50px;
-    border-radius: 15px;
-    text-decoration: none;
-    color:white;
-    font-family: sans-serif;
-    top:50%;
-    position:absolute;
-    font-size: 20px;
-background:rgb(8, 44, 90);
-              transition: all 0.4s ease-in-out; 
+        .navbar.sidebar:hover::after {
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
+            background: none;
+        }
 
-  }
-  .btn:hover{
+        body {
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: url('https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif') center/cover fixed;
+            color: white;
+            min-height: 100vh;
+            text-decoration: none;
+        }
+
+        img {
+            width: 28px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            box-shadow: none;
+            border-radius: 15px;
             transform: translateY(-3px);
-            border-radius:30px;
+        }
 
+        .container {
+            display: grid;
+            place-items: center;
+        }
 
-  }
-    .typewriter h1 {
-  color: #ffffff;
-  font-family: monospace;
-  overflow: hidden; 
-  white-space: nowrap; 
-  margin: 0 auto; 
-  letter-spacing: .15em; 
-  text-align:center;
-    top:200px;
-    position:relative;
-    font-size:50px;
-}
-    iframe{      
-        display: block;  
-        height: 100vh;    
-        width: 100vw; 
-        border: none; 
-        background: lightyellow; 
-    }
+        .btn {
+            padding: 15px 30px;
+            width: 50px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            font-family: sans-serif;
+            top: 50%;
+            position: absolute;
+            font-size: 20px;
+            background: rgb(8, 44, 90);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            border-radius: 30px;
+        }
+
+        .typewriter h1 {
+            color: #ffffff;
+            font-family: monospace;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            text-align: center;
+            top: 200px;
+            position: relative;
+            font-size: 50px;
+        }
+
+        iframe {
+            display: block;
+            height: 100vh;
+            width: 100vw;
+            border: none;
+            background: lightyellow;
+        }
+
+        /* Settings Panel Styles */
+        .settings-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: linear-gradient(160deg, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(.2,.8,.2,1);
+            min-width: 300px;
+        }
+
+        .settings-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .settings-panel h2 {
+            margin: 0 0 20px 0;
+            font-family: monospace;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .settings-panel .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .settings-panel .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .wallpaper-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .wallpaper-option:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(0,180,255,0.5);
+        }
+
+        .wallpaper-option.active {
+            border-color: rgba(0,180,255,0.8);
+            background: rgba(0,180,255,0.1);
+        }
+
+        .wallpaper-option img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 8px;
+            padding: 0;
+        }
+
+        .wallpaper-option span {
+            font-size: 14px;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
-  
-   
-<div id="navbar" class="navbar sidebar">
-    <a onclick="document.getElementById('frame2').src = 'g.html';">
-    <img src="/nogaurdian/img/g.png">
-  </a>
-  
-  <a onclick="document.getElementById('frame2').src = 'b.html';">
-    <img src="/nogaurdian/img/b.png">
-  </a>
+    <div id="navbar" class="navbar sidebar">
+        <a onclick="document.getElementById('frame2').src = 'g.html';">
+            <img src="/nogaurdian/img/g.png">
+        </a>
+        <a onclick="document.getElementById('frame2').src = 'b.html';">
+            <img src="/nogaurdian/img/b.png">
+        </a>
+        <a onclick="document.getElementById('frame2').src = 'movies.html';">
+            <img src="/nogaurdian/img/movie.png" alt="Movies">
+        </a>
+        <a onclick="toggleSettings()">
+            <img src="/nogaurdian/img/settings.png" alt="Settings">
+        </a>
+    </div>
 
+    <div class="overlay" id="overlay" onclick="toggleSettings()"></div>
 
-  
-
-
-</div>
-  
-
+    <div class="settings-panel" id="settingsPanel">
+        <button class="close-btn" onclick="toggleSettings()">×</button>
+        <h2>Settings</h2>
+        <div class="wallpaper-option active" onclick="changeWallpaper('https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif')">
+            <img src="https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif" alt="Default Wallpaper">
+            <span>Default Wallpaper</span>
+        </div>
+    </div>
 
     <iframe id="frame2" src="start.html"></iframe>
-    
+
+    <script>
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const overlay = document.getElementById('overlay');
+            panel.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function changeWallpaper(url) {
+            document.body.style.backgroundImage = `url('${url}')`;
+            // Update active state
+            document.querySelectorAll('.wallpaper-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
