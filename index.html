@@ -7,72 +7,6 @@
     <style>
         .navbar {
             position: fixed;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 56px;
-            background: linear-gradient(160deg,
-                rgba(255,255,255,0.08),
-                rgba(0,0,0,0.65)
-            );
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 16px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 12px;
-            padding: 0 10px;
-            backdrop-filter: blur(2px) saturate(140%);
-            box-shadow: 
-                0 12px 28px rgba(0,0,0,0.45),
-                0 0 0 1px rgba(255,255,255,0.15) inset;
-            transition: height 0.2s ease, border-radius 0.2s ease, border-color 0.2s ease;
-            opacity: 0.92;
-            z-index: 9999;
-            will-change: height, border-radius;
-        }
-
-        .navbar:hover {
-            height: 64px;
-            border-radius: 20px;
-            border-color: rgba(0,180,255,0.6);
-        }
-
-        .navbar::after {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            pointer-events: none;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%);
-            opacity: 1;
-            transition: opacity 0.2s ease;
-        }
-
-        .navbar:hover::after {
-            opacity: 1;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
-        }
-
-        .navbar img {
-            width: 30px;
-            height: 30px;
-            transition: transform 0.15s ease;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,.6));
-            cursor: pointer;
-            will-change: transform;
-        }
-
-        .navbar img:hover {
-            transform: scale(1.25) translateY(-3px);
-        }
-
-        .navbar img:active {
-            transform: scale(0.97);
-        }
-
-        .navbar.sidebar {
-            position: fixed;
             top: 50%;
             left: 12px;
             bottom: auto;
@@ -83,95 +17,100 @@
             gap: 14px;
             padding: 12px 0;
             border-radius: 18px;
-            transition: width 0.25s cubic-bezier(.2,.8,.2,1), border-radius 0.25s cubic-bezier(.2,.8,.2,1), top 0.3s ease, left 0.3s ease, bottom 0.3s ease, height 0.3s ease, transform 0.3s ease;
+            background: linear-gradient(160deg,
+                rgba(255,255,255,0.08),
+                rgba(0,0,0,0.65)
+            );
+            border: 1px solid rgba(255,255,255,0.25);
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(2px) saturate(140%);
+            box-shadow: 
+                0 12px 28px rgba(0,0,0,0.45),
+                0 0 0 1px rgba(255,255,255,0.15) inset;
+            transition: width 0.25s cubic-bezier(.2,.8,.2,1), border-radius 0.25s cubic-bezier(.2,.8,.2,1);
+            opacity: 0.92;
+            z-index: 9999;
         }
 
-        .navbar.sidebar:hover {
+        .navbar:hover {
             width: 72px;
-            height: auto;
             border-radius: 24px;
+            border-color: rgba(0,180,255,0.6);
         }
 
-        .navbar.sidebar img:hover {
-            transform: scale(1.25) translateX(3px);
+        .nav-item {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+            position: relative;
         }
 
-        .navbar.sidebar img:active {
-            transform: scale(0.97);
+        .nav-item:hover {
+            background: rgba(0,180,255,0.2);
+            border-color: rgba(0,180,255,0.5);
+            transform: scale(1.1);
         }
 
-        .navbar.sidebar::after {
-            inset: 0;
-            box-shadow: 0 0 0 0 rgba(0,180,255,.5);
-            transition: box-shadow 0.3s;
-            background: none;
+        .nav-item:active {
+            transform: scale(0.95);
         }
 
-        .navbar.sidebar:hover::after {
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
-            background: none;
+        .nav-label {
+            position: absolute;
+            left: 60px;
+            background: rgba(0,0,0,0.8);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            pointer-events: none;
+            font-family: Arial, sans-serif;
+        }
+
+        .nav-item:hover .nav-label {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-text {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
+            font-family: Arial, sans-serif;
         }
 
         body {
             background-repeat: no-repeat;
             background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             padding: 0;
             font-family: Arial, sans-serif;
             margin: 0;
-            background: url('https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif') center/cover fixed;
+            background-image: url('https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif');
             color: white;
             min-height: 100vh;
             text-decoration: none;
         }
 
-        img {
-            width: 28px;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        img:hover {
-            box-shadow: none;
-            border-radius: 15px;
-            transform: translateY(-3px);
-        }
-
         .container {
             display: grid;
             place-items: center;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            width: 50px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: white;
-            font-family: sans-serif;
-            top: 50%;
-            position: absolute;
-            font-size: 20px;
-            background: rgb(8, 44, 90);
-            transition: all 0.4s ease-in-out;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            border-radius: 30px;
-        }
-
-        .typewriter h1 {
-            color: #ffffff;
-            font-family: monospace;
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            text-align: center;
-            top: 200px;
-            position: relative;
-            font-size: 50px;
         }
 
         iframe {
@@ -183,22 +122,41 @@
         }
 
         /* Settings Panel Styles */
+        .settings-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .settings-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .settings-panel {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: linear-gradient(160deg, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(20px) saturate(180%);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            background: linear-gradient(160deg, rgba(30,30,30,0.95), rgba(10,10,10,0.98));
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(30px) saturate(180%);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s cubic-bezier(.2,.8,.2,1);
-            min-width: 300px;
+            min-width: 600px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .settings-panel.active {
@@ -207,125 +165,344 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        .settings-panel h2 {
-            margin: 0 0 20px 0;
-            font-family: monospace;
-            text-align: center;
-            font-size: 24px;
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .settings-panel .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
+        .settings-title {
+            font-family: Arial, sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0;
+            background: linear-gradient(135deg, #fff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
             font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .settings-panel .close-btn:hover {
-            transform: scale(1.2);
+        .close-btn:hover {
+            background: rgba(255,0,0,0.3);
+            border-color: rgba(255,0,0,0.5);
+            transform: rotate(90deg);
+        }
+
+        .wallpaper-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .wallpaper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
         }
 
         .wallpaper-option {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
+            position: relative;
+            aspect-ratio: 16/10;
             border-radius: 12px;
-            margin-bottom: 10px;
+            overflow: hidden;
             cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(.2,.8,.2,1);
+            border: 3px solid transparent;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .wallpaper-option:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(0,180,255,0.5);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,180,255,0.3);
         }
 
         .wallpaper-option.active {
-            border-color: rgba(0,180,255,0.8);
-            background: rgba(0,180,255,0.1);
+            border-color: #00b4ff;
+            box-shadow: 0 0 0 4px rgba(0,180,255,0.3), 0 10px 30px rgba(0,180,255,0.4);
         }
 
         .wallpaper-option img {
-            width: 60px;
-            height: 40px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 8px;
-            padding: 0;
+            transition: transform 0.3s;
         }
 
-        .wallpaper-option span {
+        .wallpaper-option:hover img {
+            transform: scale(1.1);
+        }
+
+        .wallpaper-check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            background: #00b4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s;
             font-size: 14px;
         }
 
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
+        .wallpaper-option.active .wallpaper-check {
+            opacity: 1;
+            transform: scale(1);
         }
 
-        .overlay.active {
+        .wallpaper-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            font-size: 11px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-family: Arial, sans-serif;
+        }
+
+        .wallpaper-option:hover .wallpaper-label {
             opacity: 1;
-            visibility: visible;
+        }
+
+        .add-wallpaper {
+            border: 2px dashed rgba(255,255,255,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .add-wallpaper:hover {
+            border-color: #00b4ff;
+            color: #00b4ff;
+            background: rgba(0,180,255,0.1);
+        }
+
+        .add-icon {
+            font-size: 24px;
+        }
+
+        /* Custom URL Input */
+        .custom-url-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .url-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .url-input:focus {
+            border-color: #00b4ff;
+        }
+
+        .url-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #00b4ff, #0080ff);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .url-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,180,255,0.4);
         }
     </style>
 </head>
 <body>
-    <div id="navbar" class="navbar sidebar">
-        <a onclick="document.getElementById('frame2').src = 'g.html';">
-            <img src="/nogaurdian/img/g.png">
+    <div id="navbar" class="navbar">
+        <a onclick="document.getElementById('frame2').src = 'g.html';" class="nav-item">
+            <span class="nav-text">G</span>
+            <span class="nav-label">Games</span>
         </a>
-        <a onclick="document.getElementById('frame2').src = 'b.html';">
-            <img src="/nogaurdian/img/b.png">
+        <a onclick="document.getElementById('frame2').src = 'b.html';" class="nav-item">
+            <span class="nav-text">B</span>
+            <span class="nav-label">Browser</span>
         </a>
-        <a onclick="document.getElementById('frame2').src = 'movies.html';">
-            <img src="/nogaurdian/img/movie.png" alt="Movies">
+        <a onclick="document.getElementById('frame2').src = 'movies.html';" class="nav-item">
+            <span class="nav-text">🎬</span>
+            <span class="nav-label">Movies & TV</span>
         </a>
-        <a onclick="toggleSettings()">
-            <img src="/nogaurdian/img/settings.png" alt="Settings">
+        <a onclick="toggleSettings()" class="nav-item">
+            <span class="nav-text">⚙️</span>
+            <span class="nav-label">Settings</span>
         </a>
     </div>
 
-    <div class="overlay" id="overlay" onclick="toggleSettings()"></div>
+    <div class="settings-overlay" id="settingsOverlay" onclick="toggleSettings()"></div>
 
     <div class="settings-panel" id="settingsPanel">
-        <button class="close-btn" onclick="toggleSettings()">×</button>
-        <h2>Settings</h2>
-        <div class="wallpaper-option active" onclick="changeWallpaper('https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif')">
-            <img src="https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif" alt="Default Wallpaper">
-            <span>Default Wallpaper</span>
+        <div class="settings-header">
+            <h2 class="settings-title">Settings</h2>
+            <button class="close-btn" onclick="toggleSettings()">×</button>
+        </div>
+
+        <div class="wallpaper-section">
+            <div class="section-title">Choose your wallpaper</div>
+            <div class="wallpaper-grid" id="wallpaperGrid">
+                <!-- Wallpapers will be generated here -->
+            </div>
+        </div>
+
+        <div class="custom-url-section">
+            <div class="section-title">Add custom wallpaper</div>
+            <div class="url-input-group">
+                <input type="text" class="url-input" id="customUrl" placeholder="Enter image URL...">
+                <button class="url-btn" onclick="addCustomWallpaper()">Add</button>
+            </div>
         </div>
     </div>
 
     <iframe id="frame2" src="start.html"></iframe>
 
     <script>
+        // Default wallpapers
+        const wallpapers = [
+            { id: 'default', url: 'https://i.pinimg.com/originals/b5/61/91/b56191affc21370c296a549a0f746295.gif', name: 'Default' },
+            { id: 'aurora', url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920', name: 'Aurora' },
+            { id: 'mountains', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920', name: 'Mountains' },
+            { id: 'ocean', url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920', name: 'Ocean' },
+            { id: 'forest', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920', name: 'Forest' },
+            { id: 'city', url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920', name: 'City' },
+            { id: 'space', url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920', name: 'Space' },
+            { id: 'abstract', url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1920', name: 'Abstract' }
+        ];
+
+        let currentWallpaper = localStorage.getItem('brainy_wallpaper') || 'default';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWallpapers();
+            applyWallpaper(currentWallpaper, false);
+        });
+
+        function renderWallpapers() {
+            const grid = document.getElementById('wallpaperGrid');
+            grid.innerHTML = wallpapers.map(wp => `
+                <div class="wallpaper-option ${wp.id === currentWallpaper ? 'active' : ''}" 
+                     onclick="selectWallpaper('${wp.id}')" 
+                     data-id="${wp.id}">
+                    <img src="${wp.url}" alt="${wp.name}" loading="lazy">
+                    <div class="wallpaper-check">✓</div>
+                    <div class="wallpaper-label">${wp.name}</div>
+                </div>
+            `).join('') + `
+                <div class="wallpaper-option add-wallpaper" onclick="document.getElementById('customUrl').focus()">
+                    <span class="add-icon">+</span>
+                    <span>Add URL</span>
+                </div>
+            `;
+        }
+
+        function selectWallpaper(id) {
+            currentWallpaper = id;
+            localStorage.setItem('brainy_wallpaper', id);
+            applyWallpaper(id, true);
+            renderWallpapers();
+        }
+
+        function applyWallpaper(id, animate = false) {
+            const wp = wallpapers.find(w => w.id === id);
+            if (wp) {
+                if (animate) {
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.style.backgroundImage = `url('${wp.url}')`;
+                        document.body.style.opacity = '1';
+                    }, 200);
+                } else {
+                    document.body.style.backgroundImage = `url('${wp.url}')`;
+                }
+            }
+        }
+
+        function addCustomWallpaper() {
+            const url = document.getElementById('customUrl').value.trim();
+            if (!url) return;
+            
+            const id = 'custom_' + Date.now();
+            const name = 'Custom ' + (wallpapers.filter(w => w.id.startsWith('custom')).length + 1);
+            
+            wallpapers.push({ id, url, name });
+            selectWallpaper(id);
+            document.getElementById('customUrl').value = '';
+        }
+
         function toggleSettings() {
             const panel = document.getElementById('settingsPanel');
-            const overlay = document.getElementById('overlay');
+            const overlay = document.getElementById('settingsOverlay');
             panel.classList.toggle('active');
             overlay.classList.toggle('active');
         }
 
-        function changeWallpaper(url) {
-            document.body.style.backgroundImage = `url('${url}')`;
-            // Update active state
-            document.querySelectorAll('.wallpaper-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-        }
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('settingsPanel').classList.remove('active');
+                document.getElementById('settingsOverlay').classList.remove('active');
+            }
+        });
+
+        // Enter key on input
+        document.getElementById('customUrl').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addCustomWallpaper();
+        });
     </script>
 </body>
 </html>
