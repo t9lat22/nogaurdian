@@ -225,76 +225,76 @@ const previewContent = document.getElementById("previewContent");
 let isFullscreen = false;
 
 const GAME_IMAGES = {
-    roblox: "https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
-    sonic: "https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    leveldevil: "https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    slope: "https://www.bing.com/th/id/OIP.QdGX2PGxPzeZDTxizb5DOwHaDl?w=235&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    flappy: "https://www.bing.com/th/id/OIP.Vn5yYlroJGjlEWzpLcJL3gHaHa?w=226&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    sm64: "https://www.bing.com/th/id/OIP.5ts3jBQ9iMbitz2WxBvePQHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    run3: "https://www.bing.com/th/id/OIP.2MCJFTF30qp63QBJVZTbpgHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    crossy: "https://tse2.mm.bing.net/th/id/OIP.g_0cjaKQTHUf0cFtbYo6NwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain&o=7&rm=3",
-    eaglercraft: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png",
-    cookieclicker: "https://pizza-clicker.com/wp-content/uploads/2024/12/Cookie-Clicker--150x150.webp",
-    templerun2: "https://th.bing.com/th/id/OIP.L38fbUWeHDJCAvcI3RsT9gHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7&rm=3",
-    jetpack: "https://tse3.mm.bing.net/th/id/OIP.okzWNhg-I0noPToN2c_VkQHaHa?pid=ImgDet&w=474&h=474&rs=1&o=7&rm=3",
-    retrobowl: "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
-    fruitninja: "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/c4dc286c30b8fbde45a0b5d4fe6f2146/fruit-ninja.png",
-    justfall: "https://th.bing.com/th/id/OIP.ersDkiJosBRijaGMqY0IqwHaFj?w=80&h=80&c=12&rs=1&r=0&o=6&pid=23.1",
-    snowrider: "https://tse1.mm.bing.net/th/id/OIP.sAfBrkOicv159Rfst1m_LQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    v1v1lol: "https://www.bing.com/th/id/OIP.jv6iR5gwlta2uwmJ-zoJmgHaHa?w=181&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    basketrandom: "https://tse4.mm.bing.net/th/id/OIP.ODjmdKROvha8EqUPurHRGAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    boxingrandom: "https://tse1.mm.bing.net/th/id/OIP.YIy-VT9zXUpO6d0gFEb86gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    soccerrandom: "https://tse3.mm.bing.net/th/id/OIP.ZcCDpENt03hhsqJlU5R8uwHaHa?w=512&h=512&rs=1&pid=ImgDetMain&o=7&rm=3",
-    volleyrandom: "https://www.bing.com/th/id/OIP.k79muXvF9OB_2kdO30GOBgHaHa?w=191&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    superhot: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7ybp.webp",
-    fnf: "https://tse2.mm.bing.net/th/id/OIP.PWszDPU4F1bEHCs6gpsgnAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    driftboss: "https://www.bing.com/th/id/OIP.VjI7f1Px8UIv9Ysiu0qpIQHaHa?w=204&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    timeshooter2: "https://tse4.mm.bing.net/th/id/OIP.cOZgMg4Dr9nRfMGiBH91QwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    gdlite: "https://tse1.mm.bing.net/th/id/OIP._J04MdyKvWMenHd1GU8cNAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    fnfmidfight: "https://th.bing.com/th/id/OIP.BQlG25LlI5YOwhUydk5OHwHaFj?w=236&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    newsupermariobros: "https://th.bing.com/th/id/OIP.1UMmAqIe9Y3SeDmFLj6KEgHaHa?w=176&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    mariokartds: "https://www.bing.com/th/id/OIP.kGcU1P9BOLscMj-Aoxw34QHaGp?w=225&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    amongus: "https://th.bing.com/th/id/OIP.8JkOfq65BTCs96gDsGeSnwHaHa?w=183&h=183&c=7&r=0&o=7&pid=1.7&rm=3",
-    doom: "https://www.bing.com/th/id/OIP.uGTRf6-S7y1gaN_xexSG9QHaLH?w=160&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    boxingphysics2: "https://th.bing.com/th/id/OIP.7WUKPapKlGB6Re0sfeGKTwAAAA?w=167&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    sonic2: "https://www.bing.com/th/id/OIP.B8PDK6z22HyABvgXoRzqLgHaFj?w=215&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex: "https://tse4.mm.bing.net/th/id/OIP.irCqiSdQgiQLYFSDhmI5jwHaHa?pid=ImgDet&w=201&h=201&c=7&o=7&rm=3",
-    vex2: "https://tse3.mm.bing.net/th/id/OIP.z7WLcL4b941WvDFf9uJsDgAAAA?pid=ImgDet&w=150&h=150&c=7&o=7&rm=3",
-    vex3: "https://www.bing.com/th/id/OIP.fRaMSIMs6JuIkyVHc0RtjQHaHa?w=183&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex4: "https://www.bing.com/th/id/OIP.hxYh-KA81zWC9V8cB9ItEgAAAA?w=167&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex5: "https://www.bing.com/th/id/OIP.7BAUEIbKfNaQAUepVZJtFAHaHa?w=190&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex6: "https://tse3.mm.bing.net/th/id/OIP.cXrw9OsCAC9tMHE_cA7mlwHaGg?rs=1&pid=ImgDetMain&o=7&rm=3",
-    vex7: "https://th.bing.com/th/id/OIP.sYs-7YAO_yUfe66qHYna6wAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    fireboywatergirl: "https://th.bing.com/th/id/OIP.JwTVnLrA8yUp5QzlTLi-6QHaD4?w=324&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    deathrun3d: "https://www.bing.com/th/id/OIP.Aqk0DtQD3b9IRKAwdUNtXgHaHa?w=200&h=200&c=8&rs=1&o=6&pid=3.1&rm=2",
-    simpsonsroadrage: "https://th.bing.com/th/id/OIP.zEwC5qNpl_gXyiMcyy3EXAAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    doodlejump: "https://th.bing.com/th/id/OIP.rAribFaLtd9oT2WDMzcXagHaHa?w=108&h=108&c=1&bgcl=af6d64&r=0&o=7&pid=ImgRC&rm=3",
-    shift: "https://tse2.mm.bing.net/th/id/OIP.iBTnDbODR6BW0CUT0q-ClgAAAA?pid=ImgDet&w=164&h=137&c=7&o=7&rm=3",
-    shift2: "https://tse4.mm.bing.net/th/id/OIP.wgsdX0uVUb3itzbW0ZbY3wAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    dogeminer: "https://www.bing.com/th/id/OIP.D60KTKjilfSDXDWPjr2m4AHaGH?w=196&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    riddleschool1: "https://th.bing.com/th/id/OIP.gLCNBY9qcTXJZRuGK3qh3AAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    riddleschool2: "https://th.bing.com/th/id/OIP.Gz1cSkUwmhnRzU61AdQWiQAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    riddleschool3: "https://tse1.mm.bing.net/th/id/OIP.kfBTsf4m5bgKhbHHHxcTLwAAAA?pid=ImgDet&w=199&h=150&c=7&o=7&rm=3",
-    riddleschool4: "https://images.rocketgames.io/uploads/games/r/riddle-school-4/riddle-school-4.e88bea.jpg?w=204&dpr=1",
-    riddleschool5: "https://rocketgames.imgix.net/uploads/games/r/riddle-school-5/riddle-school-5.ac6eb4.jpg?auto=format,compress,enhance&w=204&dpr=1",
-    riddletransfer: "https://www.bing.com/th/id/OIP.HLEnImAG2nERQPwUakD75wHaDy?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    riddletransfer2: "https://www.bing.com/th/id/OIP.IFnlQI-vhGZE77RZkCG_NwHaEX?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    happywheels: "https://th.bing.com/th/id/OIP.Vui68qhUBvIYG3VMgJvJQgHaHa?w=178&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    drifthunters: "https://th.bing.com/th/id/OIP.bJBJmYEGpuNUNgP90v6XTQHaHa?w=181&h=181&c=7&r=0&o=7&pid=1.7&rm=3",
-    baldisbasics: "https://th.bing.com/th/id/OIP.mVKO5R9DdbIGnXtwrgzHVwHaHa?w=170&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    basketbros: "https://th.bing.com/th/id/OIP.P3foEkf_UBvx7aDuZD3nUAHaHZ?w=173&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    eagler18: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png",
-    fnaf1: "https://th.bing.com/th/id/OIP.XW_OsPwLtSFaQrOSHEr5eAHaHa?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    fnaf2: "https://m.gjcdn.net/fireside-post-image/900/3467800-ppykcyyi-v4.jpg",
-    fnaf3: "https://assets1.ignimgs.com/2020/02/04/five-nights-at-freddys-3---button-2020-1580781479018.jpg",
-    fnaf4: "https://th.bing.com/th/id/OIP.FQBfMq9Y3PMCGyw_kC6HlgHaHa?w=177&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    motox3m: "https://tse1.mm.bing.net/th/id/OIP.ot9ulyBW2vqbzv6bNd0gRQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    stickmanhook: "https://th.bing.com/th/id/OIP.UEKMsdk-eU43lfHA0j9naQHaHa?w=162&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    bendy: "https://tse3.mm.bing.net/th/id/OIP.RTz7git_IoykZEI7Sjw2DQHaHa?w=768&h=768&rs=1&pid=ImgDetMain&o=7&rm=3",
-    angrybirds: "https://tse4.mm.bing.net/th/id/OIP.UxuhKcJ5YjBd8k8zGneZyQHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3",
-    fnafepstein: "https://th.bing.com/th/id/OIP.cmAzM1da671zoApQ5Cp8vQHaEK?w=313&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+    roblox: "https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    sonic: "https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    leveldevil: "https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    slope: "https://www.bing.com/th/id/OIP.QdGX2PGxPzeZDTxizb5DOwHaDl?w=235&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    flappy: "https://www.bing.com/th/id/OIP.Vn5yYlroJGjlEWzpLcJL3gHaHa?w=226&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    sm64: "https://www.bing.com/th/id/OIP.5ts3jBQ9iMbitz2WxBvePQHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    run3: "https://www.bing.com/th/id/OIP.2MCJFTF30qp63QBJVZTbpgHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    crossy: "https://tse2.mm.bing.net/th/id/OIP.g_0cjaKQTHUf0cFtbYo6NwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    eaglercraft: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png ",
+    cookieclicker: "https://pizza-clicker.com/wp-content/uploads/2024/12/Cookie-Clicker--150x150.webp ",
+    templerun2: "https://th.bing.com/th/id/OIP.L38fbUWeHDJCAvcI3RsT9gHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    jetpack: "https://tse3.mm.bing.net/th/id/OIP.okzWNhg-I0noPToN2c_VkQHaHa?pid=ImgDet&w=474&h=474&rs=1&o=7&rm=3 ",
+    retrobowl: "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ ",
+    fruitninja: "https://img.poki-cdn.com/cdn-cgi/image/q=78 ,scq=50,width=1200,height=1200,fit=cover,f=png/c4dc286c30b8fbde45a0b5d4fe6f2146/fruit-ninja.png",
+    justfall: "https://th.bing.com/th/id/OIP.ersDkiJosBRijaGMqY0IqwHaFj?w=80&h=80&c=12&rs=1&r=0&o=6&pid=23.1 ",
+    snowrider: "https://tse1.mm.bing.net/th/id/OIP.sAfBrkOicv159Rfst1m_LQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    v1v1lol: "https://www.bing.com/th/id/OIP.jv6iR5gwlta2uwmJ-zoJmgHaHa?w=181&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    basketrandom: "https://tse4.mm.bing.net/th/id/OIP.ODjmdKROvha8EqUPurHRGAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    boxingrandom: "https://tse1.mm.bing.net/th/id/OIP.YIy-VT9zXUpO6d0gFEb86gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    soccerrandom: "https://tse3.mm.bing.net/th/id/OIP.ZcCDpENt03hhsqJlU5R8uwHaHa?w=512&h=512&rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    volleyrandom: "https://www.bing.com/th/id/OIP.k79muXvF9OB_2kdO30GOBgHaHa?w=191&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    superhot: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7ybp.webp ",
+    fnf: "https://tse2.mm.bing.net/th/id/OIP.PWszDPU4F1bEHCs6gpsgnAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    driftboss: "https://www.bing.com/th/id/OIP.VjI7f1Px8UIv9Ysiu0qpIQHaHa?w=204&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    timeshooter2: "https://tse4.mm.bing.net/th/id/OIP.cOZgMg4Dr9nRfMGiBH91QwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    gdlite: "https://tse1.mm.bing.net/th/id/OIP._J04MdyKvWMenHd1GU8cNAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    fnfmidfight: "https://th.bing.com/th/id/OIP.BQlG25LlI5YOwhUydk5OHwHaFj?w=236&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    newsupermariobros: "https://th.bing.com/th/id/OIP.1UMmAqIe9Y3SeDmFLj6KEgHaHa?w=176&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    mariokartds: "https://www.bing.com/th/id/OIP.kGcU1P9BOLscMj-Aoxw34QHaGp?w=225&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    amongus: "https://th.bing.com/th/id/OIP.8JkOfq65BTCs96gDsGeSnwHaHa?w=183&h=183&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    doom: "https://www.bing.com/th/id/OIP.uGTRf6-S7y1gaN_xexSG9QHaLH?w=160&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    boxingphysics2: "https://th.bing.com/th/id/OIP.7WUKPapKlGB6Re0sfeGKTwAAAA?w=167&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    sonic2: "https://www.bing.com/th/id/OIP.B8PDK6z22HyABvgXoRzqLgHaFj?w=215&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    vex: "https://tse4.mm.bing.net/th/id/OIP.irCqiSdQgiQLYFSDhmI5jwHaHa?pid=ImgDet&w=201&h=201&c=7&o=7&rm=3 ",
+    vex2: "https://tse3.mm.bing.net/th/id/OIP.z7WLcL4b941WvDFf9uJsDgAAAA?pid=ImgDet&w=150&h=150&c=7&o=7&rm=3 ",
+    vex3: "https://www.bing.com/th/id/OIP.fRaMSIMs6JuIkyVHc0RtjQHaHa?w=183&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    vex4: "https://www.bing.com/th/id/OIP.hxYh-KA81zWC9V8cB9ItEgAAAA?w=167&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    vex5: "https://www.bing.com/th/id/OIP.7BAUEIbKfNaQAUepVZJtFAHaHa?w=190&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    vex6: "https://tse3.mm.bing.net/th/id/OIP.cXrw9OsCAC9tMHE_cA7mlwHaGg?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    vex7: "https://th.bing.com/th/id/OIP.sYs-7YAO_yUfe66qHYna6wAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    fireboywatergirl: "https://th.bing.com/th/id/OIP.JwTVnLrA8yUp5QzlTLi-6QHaD4?w=324&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    deathrun3d: "https://www.bing.com/th/id/OIP.Aqk0DtQD3b9IRKAwdUNtXgHaHa?w=200&h=200&c=8&rs=1&o=6&pid=3.1&rm=2 ",
+    simpsonsroadrage: "https://th.bing.com/th/id/OIP.zEwC5qNpl_gXyiMcyy3EXAAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    doodlejump: "https://th.bing.com/th/id/OIP.rAribFaLtd9oT2WDMzcXagHaHa?w=108&h=108&c=1&bgcl=af6d64&r=0&o=7&pid=ImgRC&rm=3 ",
+    shift: "https://tse2.mm.bing.net/th/id/OIP.iBTnDbODR6BW0CUT0q-ClgAAAA?pid=ImgDet&w=164&h=137&c=7&o=7&rm=3 ",
+    shift2: "https://tse4.mm.bing.net/th/id/OIP.wgsdX0uVUb3itzbW0ZbY3wAAAA?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    dogeminer: "https://www.bing.com/th/id/OIP.D60KTKjilfSDXDWPjr2m4AHaGH?w=196&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    riddleschool1: "https://th.bing.com/th/id/OIP.gLCNBY9qcTXJZRuGK3qh3AAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    riddleschool2: "https://th.bing.com/th/id/OIP.Gz1cSkUwmhnRzU61AdQWiQAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    riddleschool3: "https://tse1.mm.bing.net/th/id/OIP.kfBTsf4m5bgKhbHHHxcTLwAAAA?pid=ImgDet&w=199&h=150&c=7&o=7&rm=3 ",
+    riddleschool4: "https://images.rocketgames.io/uploads/games/r/riddle-school-4/riddle-school-4.e88bea.jpg?w=204&dpr=1 ",
+    riddleschool5: "https://rocketgames.imgix.net/uploads/games/r/riddle-school-5/riddle-school-5.ac6eb4.jpg?auto=format ,compress,enhance&w=204&dpr=1",
+    riddletransfer: "https://www.bing.com/th/id/OIP.HLEnImAG2nERQPwUakD75wHaDy?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    riddletransfer2: "https://www.bing.com/th/id/OIP.IFnlQI-vhGZE77RZkCG_NwHaEX?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2 ",
+    happywheels: "https://th.bing.com/th/id/OIP.Vui68qhUBvIYG3VMgJvJQgHaHa?w=178&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    drifthunters: "https://th.bing.com/th/id/OIP.bJBJmYEGpuNUNgP90v6XTQHaHa?w=181&h=181&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    baldisbasics: "https://th.bing.com/th/id/OIP.mVKO5R9DdbIGnXtwrgzHVwHaHa?w=170&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    basketbros: "https://th.bing.com/th/id/OIP.P3foEkf_UBvx7aDuZD3nUAHaHZ?w=173&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    eagler18: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png ",
+    fnaf1: "https://th.bing.com/th/id/OIP.XW_OsPwLtSFaQrOSHEr5eAHaHa?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    fnaf2: "https://m.gjcdn.net/fireside-post-image/900/3467800-ppykcyyi-v4.jpg ",
+    fnaf3: "https://assets1.ignimgs.com/2020/02/04/five-nights-at-freddys-3---button-2020-1580781479018.jpg ",
+    fnaf4: "https://th.bing.com/th/id/OIP.FQBfMq9Y3PMCGyw_kC6HlgHaHa?w=177&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    motox3m: "https://tse1.mm.bing.net/th/id/OIP.ot9ulyBW2vqbzv6bNd0gRQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    stickmanhook: "https://th.bing.com/th/id/OIP.UEKMsdk-eU43lfHA0j9naQHaHa?w=162&h=180&c=7&r=0&o=7&pid=1.7&rm=3 ",
+    bendy: "https://tse3.mm.bing.net/th/id/OIP.RTz7git_IoykZEI7Sjw2DQHaHa?w=768&h=768&rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    angrybirds: "https://tse4.mm.bing.net/th/id/OIP.UxuhKcJ5YjBd8k8zGneZyQHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3 ",
+    fnafepstein: "https://th.bing.com/th/id/OIP.cmAzM1da671zoApQ5Cp8vQHaEK?w=313&h=180&c=7&r=0&o=7&pid=1.7&rm=3 "
 };
 
 const isInIframe = window !== window.parent;
@@ -390,6 +390,30 @@ function createGameCard(name, imageUrl, onClick) {
     return card;
 }
 
+function createExternalLinkCard(name, imageUrl, url) {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.style.backgroundImage = "url(" + imageUrl + ")";
+    
+    const fsBtn = document.createElement("button");
+    fsBtn.className = "fullscreen-btn";
+    fsBtn.innerHTML = "⛶";
+    fsBtn.title = "Open in New Tab";
+    fsBtn.onclick = (e) => {
+        e.stopPropagation();
+        window.open(url, "_blank");
+    };
+    card.appendChild(fsBtn);
+    
+    const label = document.createElement("div");
+    label.className = "game-name";
+    label.textContent = name;
+    card.appendChild(label);
+    
+    card.onclick = () => window.open(url, "_blank");
+    return card;
+}
+
 function makeIframeHtml(url, title) {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -409,7 +433,7 @@ iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: 
 }
 
 function addRoblox(){
-    const card = createGameCard("Roblox", GAME_IMAGES.roblox, () => openPreview(makeIframeHtml("https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149", "Roblox"), "Roblox"));
+    const card = createGameCard("Roblox", GAME_IMAGES.roblox, () => openPreview(makeIframeHtml("https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149 ", "Roblox"), "Roblox"));
     gamesEl.appendChild(card);
 }
 
@@ -424,7 +448,7 @@ function addGTAViceCity(){
     fsBtn.title = "Fullscreen";
     fsBtn.onclick = (e) => {
         e.stopPropagation();
-        window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1", "_blank");
+        window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1 ", "_blank");
     };
     card.appendChild(fsBtn);
     
@@ -433,347 +457,347 @@ function addGTAViceCity(){
     label.textContent = "GTA Vice City";
     card.appendChild(label);
     
-    card.onclick = () => window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1", "_blank");
+    card.onclick = () => window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1 ", "_blank");
     gamesEl.appendChild(card);
 }
 
 function addSonic(){
-    const card = createGameCard("Sonic", GAME_IMAGES.sonic, () => openPreview(makeIframeHtml("https://classlink.com.de/games/sonic/index.html", "Sonic"), "Sonic"));
+    const card = createGameCard("Sonic", GAME_IMAGES.sonic, () => openPreview(makeIframeHtml("https://classlink.com.de/games/sonic/index.html ", "Sonic"), "Sonic"));
     gamesEl.appendChild(card);
 }
 
 function addLevelDevil(){
-    const card = createGameCard("Level Devil", GAME_IMAGES.leveldevil, () => openPreview(makeIframeHtml("https://classlink.com.de/games/lvldevil/index.html", "Level Devil"), "Level Devil"));
+    const card = createGameCard("Level Devil", GAME_IMAGES.leveldevil, () => openPreview(makeIframeHtml("https://classlink.com.de/games/lvldevil/index.html ", "Level Devil"), "Level Devil"));
     gamesEl.appendChild(card);
 }
 
 function addSubwaySurfers(){
-    const card = createGameCard("Subway Surfers", GAME_IMAGES.subwaysurfers, () => openPreview(makeIframeHtml("https://classlink.com.de/games/subway-surfers/index.html", "Subway Surfers"), "Subway Surfers"));
+    const card = createGameCard("Subway Surfers", GAME_IMAGES.subwaysurfers, () => openPreview(makeIframeHtml("https://classlink.com.de/games/subway-surfers/index.html ", "Subway Surfers"), "Subway Surfers"));
     gamesEl.appendChild(card);
 }
 
 function addSlope(){
-    const card = createGameCard("Slope", GAME_IMAGES.slope, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/slope/index.html", "Slope"), "Slope"));
+    const card = createGameCard("Slope", GAME_IMAGES.slope, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/slope/index.html ", "Slope"), "Slope"));
     gamesEl.appendChild(card);
 }
 
 function addFlappy(){
-    const card = createGameCard("Flappy Bird", GAME_IMAGES.flappy, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/flappy/index.html", "Flappy Bird"), "Flappy Bird"));
+    const card = createGameCard("Flappy Bird", GAME_IMAGES.flappy, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/flappy/index.html ", "Flappy Bird"), "Flappy Bird"));
     gamesEl.appendChild(card);
 }
 
 function addSM64(){
-    const card = createGameCard("Super Mario 64", GAME_IMAGES.sm64, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/sm64/index.html", "Super Mario 64"), "Super Mario 64"));
+    const card = createGameCard("Super Mario 64", GAME_IMAGES.sm64, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/sm64/index.html ", "Super Mario 64"), "Super Mario 64"));
     gamesEl.appendChild(card);
 }
 
 function addRun3(){
-    const card = createGameCard("Run 3", GAME_IMAGES.run3, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/run3/index.html", "Run 3"), "Run 3"));
+    const card = createGameCard("Run 3", GAME_IMAGES.run3, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/run3/index.html ", "Run 3"), "Run 3"));
     gamesEl.appendChild(card);
 }
 
 function addCrossy(){
-    const card = createGameCard("Crossy Road", GAME_IMAGES.crossy, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/crossy/index.html", "Crossy Road"), "Crossy Road"));
+    const card = createGameCard("Crossy Road", GAME_IMAGES.crossy, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/crossy/index.html ", "Crossy Road"), "Crossy Road"));
     gamesEl.appendChild(card);
 }
 
 function addEaglercraft(){
-    const card = createGameCard("Eaglercraft", GAME_IMAGES.eaglercraft, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/mc/index.html", "Eaglercraft"), "Eaglercraft"));
+    const card = createGameCard("Eaglercraft", GAME_IMAGES.eaglercraft, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/mc/index.html ", "Eaglercraft"), "Eaglercraft"));
     gamesEl.appendChild(card);
 }
 
 function addCookieClicker(){
-    const card = createGameCard("Cookie Clicker", GAME_IMAGES.cookieclicker, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/cookieclicker/index.html", "Cookie Clicker"), "Cookie Clicker"));
+    const card = createGameCard("Cookie Clicker", GAME_IMAGES.cookieclicker, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/cookieclicker/index.html ", "Cookie Clicker"), "Cookie Clicker"));
     gamesEl.appendChild(card);
 }
 
 function addTempleRun2(){
-    const card = createGameCard("Temple Run 2", GAME_IMAGES.templerun2, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/templerun2/index.html", "Temple Run 2"), "Temple Run 2"));
+    const card = createGameCard("Temple Run 2", GAME_IMAGES.templerun2, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/templerun2/index.html ", "Temple Run 2"), "Temple Run 2"));
     gamesEl.appendChild(card);
 }
 
 function addJetpackJoyride(){
-    const card = createGameCard("Jetpack Joyride", GAME_IMAGES.jetpack, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html", "Jetpack Joyride"), "Jetpack Joyride"));
+    const card = createGameCard("Jetpack Joyride", GAME_IMAGES.jetpack, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html ", "Jetpack Joyride"), "Jetpack Joyride"));
     gamesEl.appendChild(card);
 }
 
 function addRetroBowl(){
-    const card = createGameCard("Retro Bowl", GAME_IMAGES.retrobowl, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/retrobowl/index.html", "Retro Bowl"), "Retro Bowl"));
+    const card = createGameCard("Retro Bowl", GAME_IMAGES.retrobowl, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/retrobowl/index.html ", "Retro Bowl"), "Retro Bowl"));
     gamesEl.appendChild(card);
 }
 
 function addFruitNinja(){
-    const card = createGameCard("Fruit Ninja", GAME_IMAGES.fruitninja, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/fruitninja/index.html", "Fruit Ninja"), "Fruit Ninja"));
+    const card = createGameCard("Fruit Ninja", GAME_IMAGES.fruitninja, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/fruitninja/index.html ", "Fruit Ninja"), "Fruit Ninja"));
     gamesEl.appendChild(card);
 }
 
 function addJustFall(){
-    const card = createGameCard("JustFall.lol", GAME_IMAGES.justfall, () => openPreview(makeIframeHtml("https://justfall.lol", "JustFall.lol"), "JustFall.lol"));
+    const card = createGameCard("JustFall.lol", GAME_IMAGES.justfall, () => openPreview(makeIframeHtml("https://justfall.lol ", "JustFall.lol"), "JustFall.lol"));
     gamesEl.appendChild(card);
 }
 
 function addSnowRider(){
-    const card = createGameCard("Snow Rider 3D", GAME_IMAGES.snowrider, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/snowrider3d/index.html", "Snow Rider 3D"), "Snow Rider 3D"));
+    const card = createGameCard("Snow Rider 3D", GAME_IMAGES.snowrider, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/snowrider3d/index.html ", "Snow Rider 3D"), "Snow Rider 3D"));
     gamesEl.appendChild(card);
 }
 
 function add1v1lol(){
-    const card = createGameCard("1v1.lol", GAME_IMAGES.v1v1lol, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/1v1lol/index.html", "1v1.lol"), "1v1.lol"));
+    const card = createGameCard("1v1.lol", GAME_IMAGES.v1v1lol, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/1v1lol/index.html ", "1v1.lol"), "1v1.lol"));
     gamesEl.appendChild(card);
 }
 
 function addBasketRandom(){
-    const card = createGameCard("Basket Random", GAME_IMAGES.basketrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/basketrandom/index.html", "Basket Random"), "Basket Random"));
+    const card = createGameCard("Basket Random", GAME_IMAGES.basketrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/basketrandom/index.html ", "Basket Random"), "Basket Random"));
     gamesEl.appendChild(card);
 }
 
 function addBoxingRandom(){
-    const card = createGameCard("Boxing Random", GAME_IMAGES.boxingrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/boxingrandom/index.html", "Boxing Random"), "Boxing Random"));
+    const card = createGameCard("Boxing Random", GAME_IMAGES.boxingrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/boxingrandom/index.html ", "Boxing Random"), "Boxing Random"));
     gamesEl.appendChild(card);
 }
 
 function addSoccerRandom(){
-    const card = createGameCard("Soccer Random", GAME_IMAGES.soccerrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/soccerrandom/index.html", "Soccer Random"), "Soccer Random"));
+    const card = createGameCard("Soccer Random", GAME_IMAGES.soccerrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/soccerrandom/index.html ", "Soccer Random"), "Soccer Random"));
     gamesEl.appendChild(card);
 }
 
 function addVolleyRandom(){
-    const card = createGameCard("Volley Random", GAME_IMAGES.volleyrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/volleyrandom/index.html", "Volley Random"), "Volley Random"));
+    const card = createGameCard("Volley Random", GAME_IMAGES.volleyrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/volleyrandom/index.html ", "Volley Random"), "Volley Random"));
     gamesEl.appendChild(card);
 }
 
 function addSuperHot(){
-    const card = createGameCard("SUPERHOT", GAME_IMAGES.superhot, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/superhot/index.html", "SUPERHOT"), "SUPERHOT"));
+    const card = createGameCard("SUPERHOT", GAME_IMAGES.superhot, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/superhot/index.html ", "SUPERHOT"), "SUPERHOT"));
     gamesEl.appendChild(card);
 }
 
 function addFNF(){
-    const card = createGameCard("Friday Night Funkin'", GAME_IMAGES.fnf, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnf/index.html", "Friday Night Funkin'"), "Friday Night Funkin'"));
+    const card = createGameCard("Friday Night Funkin'", GAME_IMAGES.fnf, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnf/index.html ", "Friday Night Funkin'"), "Friday Night Funkin'"));
     gamesEl.appendChild(card);
 }
 
 function addDriftBoss(){
-    const card = createGameCard("Drift Boss", GAME_IMAGES.driftboss, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/driftboss/index.html", "Drift Boss"), "Drift Boss"));
+    const card = createGameCard("Drift Boss", GAME_IMAGES.driftboss, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/driftboss/index.html ", "Drift Boss"), "Drift Boss"));
     gamesEl.appendChild(card);
 }
 
 function addTimeShooter2(){
-    const card = createGameCard("Time Shooter 2", GAME_IMAGES.timeshooter2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/timeshooter2/index.html", "Time Shooter 2"), "Time Shooter 2"));
+    const card = createGameCard("Time Shooter 2", GAME_IMAGES.timeshooter2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/timeshooter2/index.html ", "Time Shooter 2"), "Time Shooter 2"));
     gamesEl.appendChild(card);
 }
 
 function addGDLite(){
-    const card = createGameCard("Geometry Dash Lite", GAME_IMAGES.gdlite, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/gdlite/index.html", "Geometry Dash Lite"), "Geometry Dash Lite"));
+    const card = createGameCard("Geometry Dash Lite", GAME_IMAGES.gdlite, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/gdlite/index.html ", "Geometry Dash Lite"), "Geometry Dash Lite"));
     gamesEl.appendChild(card);
 }
 
 function addFNFMidFight(){
-    const card = createGameCard("FNF Mid-Fight Masses", GAME_IMAGES.fnfmidfight, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnfmidfight/index.html", "FNF Mid-Fight Masses"), "FNF Mid-Fight Masses"));
+    const card = createGameCard("FNF Mid-Fight Masses", GAME_IMAGES.fnfmidfight, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnfmidfight/index.html ", "FNF Mid-Fight Masses"), "FNF Mid-Fight Masses"));
     gamesEl.appendChild(card);
 }
 
 function addNewSuperMarioBros(){
-    const card = createGameCard("New Super Mario Bros", GAME_IMAGES.newsupermariobros, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/newsupermariobros/index.html", "New Super Mario Bros"), "New Super Mario Bros"));
+    const card = createGameCard("New Super Mario Bros", GAME_IMAGES.newsupermariobros, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/newsupermariobros/index.html ", "New Super Mario Bros"), "New Super Mario Bros"));
     gamesEl.appendChild(card);
 }
 
 function addMarioKartDS(){
-    const card = createGameCard("Mario Kart DS", GAME_IMAGES.mariokartds, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/mariokartds/index.html", "Mario Kart DS"), "Mario Kart DS"));
+    const card = createGameCard("Mario Kart DS", GAME_IMAGES.mariokartds, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/mariokartds/index.html ", "Mario Kart DS"), "Mario Kart DS"));
     gamesEl.appendChild(card);
 }
 
 function addAmongUs(){
-    const card = createGameCard("Among Us", GAME_IMAGES.amongus, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/amongus/index.html", "Among Us"), "Among Us"));
+    const card = createGameCard("Among Us", GAME_IMAGES.amongus, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/amongus/index.html ", "Among Us"), "Among Us"));
     gamesEl.appendChild(card);
 }
 
 function addDoom(){
-    const card = createGameCard("DOOM", GAME_IMAGES.doom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/doom/index.html", "DOOM"), "DOOM"));
+    const card = createGameCard("DOOM", GAME_IMAGES.doom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/doom/index.html ", "DOOM"), "DOOM"));
     gamesEl.appendChild(card);
 }
 
 function addBoxingPhysics2(){
-    const card = createGameCard("Boxing Physics 2", GAME_IMAGES.boxingphysics2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/boxingphysics2/index.html", "Boxing Physics 2"), "Boxing Physics 2"));
+    const card = createGameCard("Boxing Physics 2", GAME_IMAGES.boxingphysics2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/boxingphysics2/index.html ", "Boxing Physics 2"), "Boxing Physics 2"));
     gamesEl.appendChild(card);
 }
 
 function addSonic2(){
-    const card = createGameCard("Sonic the Hedgehog 2", GAME_IMAGES.sonic2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/sonicthehedgehog2/index.html", "Sonic the Hedgehog 2"), "Sonic the Hedgehog 2"));
+    const card = createGameCard("Sonic the Hedgehog 2", GAME_IMAGES.sonic2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/sonicthehedgehog2/index.html ", "Sonic the Hedgehog 2"), "Sonic the Hedgehog 2"));
     gamesEl.appendChild(card);
 }
 
 function addVex(){
-    const card = createGameCard("Vex", GAME_IMAGES.vex, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex/index.html", "Vex"), "Vex"));
+    const card = createGameCard("Vex", GAME_IMAGES.vex, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex/index.html ", "Vex"), "Vex"));
     gamesEl.appendChild(card);
 }
 
 function addVex2(){
-    const card = createGameCard("Vex 2", GAME_IMAGES.vex2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex2/index.html", "Vex 2"), "Vex 2"));
+    const card = createGameCard("Vex 2", GAME_IMAGES.vex2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex2/index.html ", "Vex 2"), "Vex 2"));
     gamesEl.appendChild(card);
 }
 
 function addVex3(){
-    const card = createGameCard("Vex 3", GAME_IMAGES.vex3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex3/index.html", "Vex 3"), "Vex 3"));
+    const card = createGameCard("Vex 3", GAME_IMAGES.vex3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex3/index.html ", "Vex 3"), "Vex 3"));
     gamesEl.appendChild(card);
 }
 
 function addVex4(){
-    const card = createGameCard("Vex 4", GAME_IMAGES.vex4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex4/index.html", "Vex 4"), "Vex 4"));
+    const card = createGameCard("Vex 4", GAME_IMAGES.vex4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex4/index.html ", "Vex 4"), "Vex 4"));
     gamesEl.appendChild(card);
 }
 
 function addVex5(){
-    const card = createGameCard("Vex 5", GAME_IMAGES.vex5, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex5/index.html", "Vex 5"), "Vex 5"));
+    const card = createGameCard("Vex 5", GAME_IMAGES.vex5, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex5/index.html ", "Vex 5"), "Vex 5"));
     gamesEl.appendChild(card);
 }
 
 function addVex6(){
-    const card = createGameCard("Vex 6", GAME_IMAGES.vex6, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex6/index.html", "Vex 6"), "Vex 6"));
+    const card = createGameCard("Vex 6", GAME_IMAGES.vex6, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex6/index.html ", "Vex 6"), "Vex 6"));
     gamesEl.appendChild(card);
 }
 
 function addVex7(){
-    const card = createGameCard("Vex 7", GAME_IMAGES.vex7, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex7/index.html", "Vex 7"), "Vex 7"));
+    const card = createGameCard("Vex 7", GAME_IMAGES.vex7, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex7/index.html ", "Vex 7"), "Vex 7"));
     gamesEl.appendChild(card);
 }
 
 function addFireboyWatergirl(){
-    const card = createGameCard("Fireboy and Watergirl", GAME_IMAGES.fireboywatergirl, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fireboywatergirl/index.html", "Fireboy and Watergirl"), "Fireboy and Watergirl"));
+    const card = createGameCard("Fireboy and Watergirl", GAME_IMAGES.fireboywatergirl, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fireboywatergirl/index.html ", "Fireboy and Watergirl"), "Fireboy and Watergirl"));
     gamesEl.appendChild(card);
 }
 
 function addDeathRun3D(){
-    const card = createGameCard("Death Run 3D", GAME_IMAGES.deathrun3d, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/deathrun3d/index.html", "Death Run 3D"), "Death Run 3D"));
+    const card = createGameCard("Death Run 3D", GAME_IMAGES.deathrun3d, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/deathrun3d/index.html ", "Death Run 3D"), "Death Run 3D"));
     gamesEl.appendChild(card);
 }
 
 function addSimpsonsRoadRage(){
-    const card = createGameCard("The Simpsons Road Rage", GAME_IMAGES.simpsonsroadrage, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/simpsonsroadrage/index.html", "The Simpsons Road Rage"), "The Simpsons Road Rage"));
+    const card = createGameCard("The Simpsons Road Rage", GAME_IMAGES.simpsonsroadrage, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/simpsonsroadrage/index.html ", "The Simpsons Road Rage"), "The Simpsons Road Rage"));
     gamesEl.appendChild(card);
 }
 
 function addDoodleJump(){
-    const card = createGameCard("Doodle Jump", GAME_IMAGES.doodlejump, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/doodlejump/index.html", "Doodle Jump"), "Doodle Jump"));
+    const card = createGameCard("Doodle Jump", GAME_IMAGES.doodlejump, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/doodlejump/index.html ", "Doodle Jump"), "Doodle Jump"));
     gamesEl.appendChild(card);
 }
 
 function addShift(){
-    const card = createGameCard("Shift", GAME_IMAGES.shift, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/shift/index.html", "Shift"), "Shift"));
+    const card = createGameCard("Shift", GAME_IMAGES.shift, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/shift/index.html ", "Shift"), "Shift"));
     gamesEl.appendChild(card);
 }
 
 function addShift2(){
-    const card = createGameCard("Shift 2", GAME_IMAGES.shift2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/shift2/index.html", "Shift 2"), "Shift 2"));
+    const card = createGameCard("Shift 2", GAME_IMAGES.shift2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/shift2/index.html ", "Shift 2"), "Shift 2"));
     gamesEl.appendChild(card);
 }
 
 function addDogeMiner(){
-    const card = createGameCard("Doge Miner", GAME_IMAGES.dogeminer, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/dogeminer/index.html", "Doge Miner"), "Doge Miner"));
+    const card = createGameCard("Doge Miner", GAME_IMAGES.dogeminer, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/dogeminer/index.html ", "Doge Miner"), "Doge Miner"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleSchool1(){
-    const card = createGameCard("Riddle School 1", GAME_IMAGES.riddleschool1, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool1/index.html", "Riddle School 1"), "Riddle School 1"));
+    const card = createGameCard("Riddle School 1", GAME_IMAGES.riddleschool1, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool1/index.html ", "Riddle School 1"), "Riddle School 1"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleSchool2(){
-    const card = createGameCard("Riddle School 2", GAME_IMAGES.riddleschool2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool2/index.html", "Riddle School 2"), "Riddle School 2"));
+    const card = createGameCard("Riddle School 2", GAME_IMAGES.riddleschool2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool2/index.html ", "Riddle School 2"), "Riddle School 2"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleSchool3(){
-    const card = createGameCard("Riddle School 3", GAME_IMAGES.riddleschool3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool3/index.html", "Riddle School 3"), "Riddle School 3"));
+    const card = createGameCard("Riddle School 3", GAME_IMAGES.riddleschool3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool3/index.html ", "Riddle School 3"), "Riddle School 3"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleSchool4(){
-    const card = createGameCard("Riddle School 4", GAME_IMAGES.riddleschool4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool4/index.html", "Riddle School 4"), "Riddle School 4"));
+    const card = createGameCard("Riddle School 4", GAME_IMAGES.riddleschool4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool4/index.html ", "Riddle School 4"), "Riddle School 4"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleSchool5(){
-    const card = createGameCard("Riddle School 5", GAME_IMAGES.riddleschool5, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool5/index.html", "Riddle School 5"), "Riddle School 5"));
+    const card = createGameCard("Riddle School 5", GAME_IMAGES.riddleschool5, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool5/index.html ", "Riddle School 5"), "Riddle School 5"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleTransfer(){
-    const card = createGameCard("Riddle Transfer", GAME_IMAGES.riddletransfer, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer/index.html", "Riddle Transfer"), "Riddle Transfer"));
+    const card = createGameCard("Riddle Transfer", GAME_IMAGES.riddletransfer, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer/index.html ", "Riddle Transfer"), "Riddle Transfer"));
     gamesEl.appendChild(card);
 }
 
 function addRiddleTransfer2(){
-    const card = createGameCard("Riddle Transfer 2", GAME_IMAGES.riddletransfer2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer2/index.html", "Riddle Transfer 2"), "Riddle Transfer 2"));
+    const card = createGameCard("Riddle Transfer 2", GAME_IMAGES.riddletransfer2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer2/index.html ", "Riddle Transfer 2"), "Riddle Transfer 2"));
     gamesEl.appendChild(card);
 }
 
 function addHappyWheels(){
-    const card = createGameCard("Happy Wheels", GAME_IMAGES.happywheels, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/happywheels/index.html", "Happy Wheels"), "Happy Wheels"));
+    const card = createGameCard("Happy Wheels", GAME_IMAGES.happywheels, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/happywheels/index.html ", "Happy Wheels"), "Happy Wheels"));
     gamesEl.appendChild(card);
 }
 
 function addDriftHunters(){
-    const card = createGameCard("Drift Hunters", GAME_IMAGES.drifthunters, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/drifthunters/index.html", "Drift Hunters"), "Drift Hunters"));
+    const card = createGameCard("Drift Hunters", GAME_IMAGES.drifthunters, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/drifthunters/index.html ", "Drift Hunters"), "Drift Hunters"));
     gamesEl.appendChild(card);
 }
 
 function addBaldiBasics(){
-    const card = createGameCard("Baldi's Basics", GAME_IMAGES.baldisbasics, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/baldisbasics/index.html", "Baldi's Basics"), "Baldi's Basics"));
+    const card = createGameCard("Baldi's Basics", GAME_IMAGES.baldisbasics, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/baldisbasics/index.html ", "Baldi's Basics"), "Baldi's Basics"));
     gamesEl.appendChild(card);
 }
 
 function addBasketBros(){
-    const card = createGameCard("Basket Bros", GAME_IMAGES.basketbros, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/basketbrosio/index.html", "Basket Bros"), "Basket Bros"));
+    const card = createGameCard("Basket Bros", GAME_IMAGES.basketbros, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/basketbrosio/index.html ", "Basket Bros"), "Basket Bros"));
     gamesEl.appendChild(card);
 }
 
 function addEagler18(){
-    const card = createGameCard("Minecraft 1.8", GAME_IMAGES.eagler18, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/eagler1.8/index.html", "Minecraft 1.8"), "Minecraft 1.8"));
+    const card = createGameCard("Minecraft 1.8", GAME_IMAGES.eagler18, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/eagler1.8/index.html ", "Minecraft 1.8"), "Minecraft 1.8"));
     gamesEl.appendChild(card);
 }
 
 function addFNAF1(){
-    const card = createGameCard("FNAF 1", GAME_IMAGES.fnaf1, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf/index.html", "FNAF 1"), "FNAF 1"));
+    const card = createGameCard("FNAF 1", GAME_IMAGES.fnaf1, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf/index.html ", "FNAF 1"), "FNAF 1"));
     gamesEl.appendChild(card);
 }
 
 function addFNAF2(){
-    const card = createGameCard("FNAF 2", GAME_IMAGES.fnaf2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-2/index.html", "FNAF 2"), "FNAF 2"));
+    const card = createGameCard("FNAF 2", GAME_IMAGES.fnaf2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-2/index.html ", "FNAF 2"), "FNAF 2"));
     gamesEl.appendChild(card);
 }
 
 function addFNAF3(){
-    const card = createGameCard("FNAF 3", GAME_IMAGES.fnaf3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-3/index.html", "FNAF 3"), "FNAF 3"));
+    const card = createGameCard("FNAF 3", GAME_IMAGES.fnaf3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-3/index.html ", "FNAF 3"), "FNAF 3"));
     gamesEl.appendChild(card);
 }
 
 function addFNAF4(){
-    const card = createGameCard("FNAF 4", GAME_IMAGES.fnaf4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-4/index.html", "FNAF 4"), "FNAF 4"));
+    const card = createGameCard("FNAF 4", GAME_IMAGES.fnaf4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-4/index.html ", "FNAF 4"), "FNAF 4"));
     gamesEl.appendChild(card);
 }
 
 function addMotoX3M(){
-    const card = createGameCard("Moto X3M", GAME_IMAGES.motox3m, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/motox3m/index.html", "Moto X3M"), "Moto X3M"));
+    const card = createGameCard("Moto X3M", GAME_IMAGES.motox3m, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/motox3m/index.html ", "Moto X3M"), "Moto X3M"));
     gamesEl.appendChild(card);
 }
 
 function addStickmanHook(){
-    const card = createGameCard("Stickman Hook", GAME_IMAGES.stickmanhook, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/stickmanhook/index.html", "Stickman Hook"), "Stickman Hook"));
+    const card = createGameCard("Stickman Hook", GAME_IMAGES.stickmanhook, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/stickmanhook/index.html ", "Stickman Hook"), "Stickman Hook"));
     gamesEl.appendChild(card);
 }
 
 function addBendy(){
-    const card = createGameCard("Bendy and the Ink Machine", GAME_IMAGES.bendy, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/bendy/index.html", "Bendy and the Ink Machine"), "Bendy and the Ink Machine"));
+    const card = createExternalLinkCard("Bendy and the Ink Machine", GAME_IMAGES.bendy, "https://sites.google.com/view/noguardiang2/game-bendy?authuser=1");
     gamesEl.appendChild(card);
 }
 
 function addAngryBirds(){
-    const card = createGameCard("Angry Birds", GAME_IMAGES.angrybirds, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/angrybirds/index.html", "Angry Birds"), "Angry Birds"));
+    const card = createExternalLinkCard("Angry Birds", GAME_IMAGES.angrybirds, "https://sites.google.com/view/noguardiang1/game-a?authuser=1");
     gamesEl.appendChild(card);
 }
 
 function addFNAFEpstein(){
-    const card = createGameCard("Five Nights at Epstein's", GAME_IMAGES.fnafepstein, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnae/index.html", "Five Nights at Epstein's"), "Five Nights at Epstein's"));
+    const card = createExternalLinkCard("Five Nights at Epstein's", GAME_IMAGES.fnafepstein, "https://sites.google.com/view/noguardiang3/game-fnae?authuser=1");
     gamesEl.appendChild(card);
 }
 
