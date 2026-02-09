@@ -1,1278 +1,342 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoGuardian Games</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>T9 Browser</title>
+
+<script src="/uv/uv.bundle.js"></script>
+<script src="/uv/uv.config.js"></script>
+<script src="/baremux/index.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
 <style>
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    color:white;
-    min-height:100vh;
-}
-.nav{
-    padding:20px;
-    background:rgba(17,17,17,0.9);
-    display:flex;
-    align-items:center;
-    backdrop-filter:blur(10px);
-}
-.logo{
-    font-size:24px;
-    font-weight:bold;
-    color:#e50914;
-}
-.topbar{
-    padding:15px 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid rgba(34,34,34,0.8);
-    background:rgba(0,0,0,0.5);
-    backdrop-filter:blur(5px);
-}
-#search{
-    padding:8px 15px;
-    border-radius:20px;
-    border:none;
-    background:rgba(34,34,34,0.9);
-    color:white;
-    width:200px;
-}
-.games-grid{
-    display:grid;
-    grid-template-columns:repeat(6, 1fr);
-    gap:25px;
-    padding:30px;
-    max-width:1400px;
-    margin:0 auto;
-}
-@media (max-width: 1200px) {
-    .games-grid{grid-template-columns:repeat(4, 1fr);}
-}
-@media (max-width: 900px) {
-    .games-grid{grid-template-columns:repeat(3, 1fr);}
-}
-@media (max-width: 600px) {
-    .games-grid{grid-template-columns:repeat(2, 1fr);}
-}
-.game-card{
-    width:100%;
-    aspect-ratio:1/1;
-    border-radius:12px;
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-    justify-content:space-between;
-    cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease;
-    box-shadow:0 4px 15px rgba(0,0,0,.6);
-    position:relative;
-    overflow:hidden;
-    border:2px solid rgba(255,255,255,0.1);
-}
-.game-card:hover{
-    transform:scale(1.05);
-    box-shadow:0 8px 25px rgba(0,0,0,.8);
-    border-color:rgba(229,9,20,0.5);
-}
-.game-name{
-    background:rgba(0,0,0,.85);
-    width:100%;
-    text-align:center;
-    font-size:13px;
-    padding:8px 0;
-    font-weight:bold;
-}
-.fullscreen-btn{
-    background:#00ff00;
-    color:#000;
-    border:none;
-    border-radius:50%;
-    width:32px;
-    height:32px;
-    font-size:14px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:8px;
-    z-index:10;
-    transition:all 0.2s ease;
-    box-shadow:0 2px 8px rgba(0,255,0,0.4);
-}
-.fullscreen-btn:hover{
-    transform:scale(1.1);
-    box-shadow:0 4px 12px rgba(0,255,0,0.6);
-}
-.close-btn{
-    position:fixed;
-    top:10px;
-    right:10px;
-    z-index:9999;
-    background:#e50914;
-    color:white;
-    border:none;
-    border-radius:50%;
-    width:40px;
-    height:40px;
-    font-size:20px;
-    cursor:pointer;
-    box-shadow:0 2px 10px rgba(0,0,0,0.5);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:Arial,sans-serif;
+* { box-sizing: border-box; font-family: Inter, system-ui; }
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
-/* Preview Overlay Styles */
-.preview-overlay{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:#000;
-    z-index:10000;
-    flex-direction:column;
+/* ===== TOP BAR ===== */
+.browser-ui {
+    height: 96px;
+    background: #2b2b2b;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #000000;
+    z-index: 10;
 }
-.preview-overlay.active{display:flex}
-.preview-header{
-    background:#111;
-    padding:15px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #222;
-    height:50px;
-    box-sizing:border-box;
+
+/* ===== TABS ===== */
+.tabs {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 6px;
+    overflow-x: auto;
 }
-.preview-title{font-size:18px;font-weight:bold;color:#e50914}
-.preview-close{
-    background:#e50914;
+
+.tab {
+    height: 28px;
+    min-width: 160px;
+    max-width: 220px;
+    padding: 0 12px;
+    border-radius: 8px 8px 0 0;
+    background: #212121;
+    color: #ddd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #151515;
+    color: white;
+}
+
+.tab span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tab i {
+    opacity: .6;
+}
+.tab i:hover {
+    opacity: 1;
+    color: #ff6b6b;
+}
+
+.newtab {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+}
+.newtab:hover { background: #444; }
+
+/* ===== NAV BAR ===== */
+.navbar {
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+}
+
+.navbar button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #bbb;
+    cursor: pointer;
+}
+.navbar button:hover {
+    background: #3a3a3a;
+    color: white;
+}
+
+/* ===== URL BAR ===== */
+.urlbar {
+    flex: 1;
+    height: 36px;
+    background: #161616;
+    border-radius: 18px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
     color:white;
-    border:none;
-    border-radius:50%;
-    width:35px;
-    height:35px;
-    font-size:18px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
 }
-.preview-content{
-    flex:1;
-    position:relative;
-    width:100%;
-    height:calc(100% - 50px);
-    overflow:hidden;
+
+.urlbar input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
 }
-.preview-frame{
-    width:100%;
-    height:100%;
-    border:none;
-    background:#000;
+
+/* ===== VIEWPORT ===== */
+.viewframe {
+    position: absolute;
+    top: 96px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 96px);
+    border: none;
+    display: none;
 }
-.preview-loader{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    color:#e50914;
-    font-size:24px;
-    display:none;
+
+.viewframe.active {
+    display: block;
+}
+
+/* ===== NTP ===== */
+.ntp {
+    position: absolute;
+    top: 96px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 96px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    pointer-events: none;
 }
 </style>
 </head>
+
 <body>
 
-<button onclick="closeWindow()" class="close-btn">✕</button>
-
-<!-- Preview Overlay -->
-<div id="previewOverlay" class="preview-overlay">
-    <div class="preview-header">
-        <span class="preview-title" id="previewTitle">Game Preview</span>
-        <button class="preview-close" onclick="closePreview()">✕</button>
+<div class="browser-ui">
+    <div class="tabs" id="tabs">
+        <button class="newtab" id="newtab"><i class="fas fa-plus"></i></button>
     </div>
-    <div class="preview-content" id="previewContent">
-        <div class="preview-loader" id="previewLoader">Loading...</div>
-        <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-fullscreen"></iframe>
+
+    <div class="navbar">
+        <button id="back"><i class="fas fa-arrow-left"></i></button>
+        <button id="forward"><i class="fas fa-arrow-right"></i></button>
+        <button id="reload"><i class="fas fa-rotate-right"></i></button>
+
+        <form class="urlbar" id="form">
+            <input id="url" placeholder="Search or enter address">
+        </form>
+
+        <button id="popout"><i class="fas fa-external-link"></i></button>
     </div>
 </div>
 
-<nav class="nav">
-  <span class="logo">NoGuardian Games</span>
-</nav>
-
-<div class="topbar">
-  <span id="total">Total games: 72</span>
-  <input id="search" placeholder="Search games…">
+<div class="ntp" id="ntp">
+    <h1>NoGaurdian</h1>
 </div>
-
-<div id="games" class="games-grid"></div>
 
 <script>
-const gamesEl = document.getElementById("games");
-const search = document.getElementById("search");
-const previewOverlay = document.getElementById("previewOverlay");
-const previewFrame = document.getElementById("previewFrame");
-const previewTitle = document.getElementById("previewTitle");
-const previewLoader = document.getElementById("previewLoader");
-const previewContent = document.getElementById("previewContent");
+navigator.serviceWorker?.register("/uv/sw.js")
 
-let isFullscreen = false;
+const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
+connection.setTransport("/libcurl/index.mjs", [{ websocket: "wss://wisp.rhw.one/" }])
 
-// Game images
-const GAME_IMAGES = {
-    roblox: "https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
-    sonic: "https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    leveldevil: "https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    subwaysurfers: "https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    slope: "https://www.bing.com/th/id/OIP.QdGX2PGxPzeZDTxizb5DOwHaDl?w=235&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    flappy: "https://www.bing.com/th/id/OIP.Vn5yYlroJGjlEWzpLcJL3gHaHa?w=226&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    sm64: "https://www.bing.com/th/id/OIP.5ts3jBQ9iMbitz2WxBvePQHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    run3: "https://www.bing.com/th/id/OIP.2MCJFTF30qp63QBJVZTbpgHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    crossy: "https://tse2.mm.bing.net/th/id/OIP.g_0cjaKQTHUf0cFtbYo6NwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain&o=7&rm=3",
-    eaglercraft: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png",
-    cookieclicker: "https://pizza-clicker.com/wp-content/uploads/2024/12/Cookie-Clicker--150x150.webp",
-    templerun2: "https://th.bing.com/th/id/OIP.L38fbUWeHDJCAvcI3RsT9gHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7&rm=3",
-    jetpack: "https://tse3.mm.bing.net/th/id/OIP.okzWNhg-I0noPToN2c_VkQHaHa?pid=ImgDet&w=474&h=474&rs=1&o=7&rm=3",
-    retrobowl: "https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ",
-    fruitninja: "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/c4dc286c30b8fbde45a0b5d4fe6f2146/fruit-ninja.png",
-    justfall: "https://th.bing.com/th/id/OIP.ersDkiJosBRijaGMqY0IqwHaFj?w=80&h=80&c=12&rs=1&r=0&o=6&pid=23.1",
-    snowrider: "https://tse1.mm.bing.net/th/id/OIP.sAfBrkOicv159Rfst1m_LQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    v1v1lol: "https://www.bing.com/th/id/OIP.jv6iR5gwlta2uwmJ-zoJmgHaHa?w=181&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    basketrandom: "https://tse4.mm.bing.net/th/id/OIP.ODjmdKROvha8EqUPurHRGAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    boxingrandom: "https://tse1.mm.bing.net/th/id/OIP.YIy-VT9zXUpO6d0gFEb86gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    soccerrandom: "https://tse3.mm.bing.net/th/id/OIP.ZcCDpENt03hhsqJlU5R8uwHaHa?w=512&h=512&rs=1&pid=ImgDetMain&o=7&rm=3",
-    volleyrandom: "https://www.bing.com/th/id/OIP.k79muXvF9OB_2kdO30GOBgHaHa?w=191&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    superhot: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7ybp.webp",
-    fnf: "https://tse2.mm.bing.net/th/id/OIP.PWszDPU4F1bEHCs6gpsgnAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    driftboss: "https://www.bing.com/th/id/OIP.VjI7f1Px8UIv9Ysiu0qpIQHaHa?w=204&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    timeshooter2: "https://tse4.mm.bing.net/th/id/OIP.cOZgMg4Dr9nRfMGiBH91QwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    gdlite: "https://tse1.mm.bing.net/th/id/OIP._J04MdyKvWMenHd1GU8cNAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    fnfmidfight: "https://th.bing.com/th/id/OIP.BQlG25LlI5YOwhUydk5OHwHaFj?w=236&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    newsupermariobros: "https://th.bing.com/th/id/OIP.1UMmAqIe9Y3SeDmFLj6KEgHaHa?w=176&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    mariokartds: "https://www.bing.com/th/id/OIP.kGcU1P9BOLscMj-Aoxw34QHaGp?w=225&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    amongus: "https://th.bing.com/th/id/OIP.8JkOfq65BTCs96gDsGeSnwHaHa?w=183&h=183&c=7&r=0&o=7&pid=1.7&rm=3",
-    doom: "https://www.bing.com/th/id/OIP.uGTRf6-S7y1gaN_xexSG9QHaLH?w=160&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    boxingphysics2: "https://th.bing.com/th/id/OIP.7WUKPapKlGB6Re0sfeGKTwAAAA?w=167&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    sonic2: "https://www.bing.com/th/id/OIP.B8PDK6z22HyABvgXoRzqLgHaFj?w=215&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex: "https://tse4.mm.bing.net/th/id/OIP.irCqiSdQgiQLYFSDhmI5jwHaHa?pid=ImgDet&w=201&h=201&c=7&o=7&rm=3",
-    vex2: "https://tse3.mm.bing.net/th/id/OIP.z7WLcL4b941WvDFf9uJsDgAAAA?pid=ImgDet&w=150&h=150&c=7&o=7&rm=3",
-    vex3: "https://www.bing.com/th/id/OIP.fRaMSIMs6JuIkyVHc0RtjQHaHa?w=183&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex4: "https://www.bing.com/th/id/OIP.hxYh-KA81zWC9V8cB9ItEgAAAA?w=167&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex5: "https://www.bing.com/th/id/OIP.7BAUEIbKfNaQAUepVZJtFAHaHa?w=190&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    vex6: "https://tse3.mm.bing.net/th/id/OIP.cXrw9OsCAC9tMHE_cA7mlwHaGg?rs=1&pid=ImgDetMain&o=7&rm=3",
-    vex7: "https://th.bing.com/th/id/OIP.sYs-7YAO_yUfe66qHYna6wAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    fireboywatergirl: "https://th.bing.com/th/id/OIP.JwTVnLrA8yUp5QzlTLi-6QHaD4?w=324&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    deathrun3d: "https://www.bing.com/th/id/OIP.Aqk0DtQD3b9IRKAwdUNtXgHaHa?w=200&h=200&c=8&rs=1&o=6&pid=3.1&rm=2",
-    simpsonsroadrage: "https://th.bing.com/th/id/OIP.zEwC5qNpl_gXyiMcyy3EXAAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    doodlejump: "https://th.bing.com/th/id/OIP.rAribFaLtd9oT2WDMzcXagHaHa?w=108&h=108&c=1&bgcl=af6d64&r=0&o=7&pid=ImgRC&rm=3",
-    shift: "https://tse2.mm.bing.net/th/id/OIP.iBTnDbODR6BW0CUT0q-ClgAAAA?pid=ImgDet&w=164&h=137&c=7&o=7&rm=3",
-    shift2: "https://tse4.mm.bing.net/th/id/OIP.wgsdX0uVUb3itzbW0ZbY3wAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    dogeminer: "https://www.bing.com/th/id/OIP.D60KTKjilfSDXDWPjr2m4AHaGH?w=196&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    riddleschool1: "https://th.bing.com/th/id/OIP.gLCNBY9qcTXJZRuGK3qh3AAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    riddleschool2: "https://th.bing.com/th/id/OIP.Gz1cSkUwmhnRzU61AdQWiQAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    riddleschool3: "https://tse1.mm.bing.net/th/id/OIP.kfBTsf4m5bgKhbHHHxcTLwAAAA?pid=ImgDet&w=199&h=150&c=7&o=7&rm=3",
-    riddleschool4: "https://images.rocketgames.io/uploads/games/r/riddle-school-4/riddle-school-4.e88bea.jpg?w=204&dpr=1",
-    riddleschool5: "https://rocketgames.imgix.net/uploads/games/r/riddle-school-5/riddle-school-5.ac6eb4.jpg?auto=format,compress,enhance&w=204&dpr=1",
-    riddletransfer: "https://www.bing.com/th/id/OIP.HLEnImAG2nERQPwUakD75wHaDy?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    riddletransfer2: "https://www.bing.com/th/id/OIP.IFnlQI-vhGZE77RZkCG_NwHaEX?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
-    happywheels: "https://th.bing.com/th/id/OIP.Vui68qhUBvIYG3VMgJvJQgHaHa?w=178&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    drifthunters: "https://th.bing.com/th/id/OIP.bJBJmYEGpuNUNgP90v6XTQHaHa?w=181&h=181&c=7&r=0&o=7&pid=1.7&rm=3",
-    baldisbasics: "https://th.bing.com/th/id/OIP.mVKO5R9DdbIGnXtwrgzHVwHaHa?w=170&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    basketbros: "https://th.bing.com/th/id/OIP.P3foEkf_UBvx7aDuZD3nUAHaHZ?w=173&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    eagler18: "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png",
-    fnaf1: "https://th.bing.com/th/id/OIP.XW_OsPwLtSFaQrOSHEr5eAHaHa?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    fnaf2: "https://m.gjcdn.net/fireside-post-image/900/3467800-ppykcyyi-v4.jpg",
-    fnaf3: "https://assets1.ignimgs.com/2020/02/04/five-nights-at-freddys-3---button-2020-1580781479018.jpg",
-    fnaf4: "https://th.bing.com/th/id/OIP.FQBfMq9Y3PMCGyw_kC6HlgHaHa?w=177&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    motox3m: "https://tse1.mm.bing.net/th/id/OIP.ot9ulyBW2vqbzv6bNd0gRQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    stickmanhook: "https://th.bing.com/th/id/OIP.UEKMsdk-eU43lfHA0j9naQHaHa?w=162&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    bendy: "https://tse3.mm.bing.net/th/id/OIP.RTz7git_IoykZEI7Sjw2DQHaHa?w=768&h=768&rs=1&pid=ImgDetMain&o=7&rm=3",
-    angrybirds: "https://tse4.mm.bing.net/th/id/OIP.UxuhKcJ5YjBd8k8zGneZyQHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3",
-    fnafepstein: "https://th.bing.com/th/id/OIP.cmAzM1da671zoApQ5Cp8vQHaEK?w=313&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
-};
+const tabsEl = document.getElementById("tabs")
+const newTabBtn = document.getElementById("newtab")
+const urlInput = document.getElementById("url")
+const ntp = document.getElementById("ntp")
 
-// Safe window handling
-const isInIframe = window !== window.parent;
-const closeWindow = () => {
-    if (isInIframe && typeof parent.closeWindow === 'function') {
-        parent.closeWindow();
+let tabs = []
+let activeId = null
+let idCounter = 0
+
+function createTab(url = "") {
+    const id = idCounter++
+
+    const iframe = document.createElement("iframe")
+    iframe.className = "viewframe"
+    iframe.dataset.id = id
+
+    iframe.setAttribute("sandbox",
+        "allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
+    )
+
+    document.body.appendChild(iframe)
+
+    const tabBtn = document.createElement("div")
+    tabBtn.className = "tab"
+    tabBtn.dataset.id = id
+    tabBtn.innerHTML = `<span>New Tab</span><i class="fas fa-xmark"></i>`
+
+    tabBtn.addEventListener("click", e => {
+        if (e.target.tagName === "I") closeTab(id)
+        else activateTab(id)
+    })
+
+    tabsEl.insertBefore(tabBtn, newTabBtn)
+
+    tabs.push({ id, iframe, tabBtn, history: [], index: -1 })
+    activateTab(id)
+
+    if (url) navigate(url)
+}
+
+function activateTab(id) {
+    activeId = id
+
+    tabs.forEach(t => {
+        t.iframe.classList.toggle("active", t.id === id)
+        t.tabBtn.classList.toggle("active", t.id === id)
+    })
+
+    const tab = getTab()
+    if (!tab) return
+
+    if (tab.index >= 0) {
+        urlInput.value = tab.history[tab.index]
+        ntp.style.display = "none"
     } else {
-        window.close();
-    }
-};
-
-// Fullscreen functions
-function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-        previewContent.requestFullscreen().then(() => {
-            isFullscreen = true;
-            document.querySelector('.preview-header').style.display = 'none';
-            previewContent.style.height = '100vh';
-        }).catch(err => {
-            console.log('Fullscreen error:', err);
-        });
-    } else {
-        document.exitFullscreen();
+        urlInput.value = ""
+        ntp.style.display = "flex"
     }
 }
 
-// Listen for fullscreen changes
-document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
-        isFullscreen = false;
-        document.querySelector('.preview-header').style.display = 'flex';
-        previewContent.style.height = 'calc(100% - 50px)';
-    }
-});
+function closeTab(id) {
+    if (tabs.length === 1) return
 
-// Preview functions
-function openPreview(htmlContent, title) {
-    previewTitle.textContent = title || "Game Preview";
-    previewOverlay.classList.add('active');
-    previewLoader.style.display = 'block';
-    previewFrame.style.opacity = '0';
-    
-    previewFrame.srcdoc = htmlContent;
-    
-    previewFrame.onload = function() {
-        previewLoader.style.display = 'none';
-        previewFrame.style.opacity = '1';
-    };
-    
-    setTimeout(() => {
-        previewLoader.style.display = 'none';
-        previewFrame.style.opacity = '1';
-    }, 1000);
+    const i = tabs.findIndex(t => t.id === id)
+    const tab = tabs[i]
+
+    tab.iframe.remove()
+    tab.tabBtn.remove()
+    tabs.splice(i, 1)
+
+    activateTab(tabs[Math.max(0, i - 1)].id)
 }
 
-function closePreview() {
-    previewOverlay.classList.remove('active');
-    previewFrame.srcdoc = '';
-    if (document.fullscreenElement) {
-        document.exitFullscreen();
+function normalize(input) {
+    if (!input.includes(".")) {
+        return "https://search.brave.com/search?q=" + encodeURIComponent(input)
+    }
+    if (!input.startsWith("http")) return "https://" + input
+    return input
+}
+
+function navigate(input, push = true) {
+    const tab = getTab()
+    if (!tab) return
+
+    const url = normalize(input)
+
+    if (push) {
+        tab.history = tab.history.slice(0, tab.index + 1)
+        tab.history.push(url)
+        tab.index++
+    }
+
+    tab.iframe.src = __uv$config.prefix + __uv$config.encodeUrl(url)
+    urlInput.value = url
+    ntp.style.display = "none"
+
+    tab.iframe.onload = () => {
+        tab.tabBtn.querySelector("span").textContent =
+            tab.iframe.contentDocument?.title || new URL(url).hostname
     }
 }
 
-// Close on escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else if (previewOverlay.classList.contains('active')) {
-            closePreview();
-        }
-    }
-});
+function getTab() {
+    return tabs.find(t => t.id === activeId)
+}
 
-// HTML content for games
-const ROBLOX_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>roblox - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149" allowfullscreen></iframe>
-<a href="https://nevertraveling.thepresenttraveller.com" target="_blank">
-    <img id="truffled-logo" src="https://nevertraveling.thepresenttraveller.com/png/logo.png" alt="Logo">
-</a>
+/* ===== CONTROLS ===== */
+back.onclick = () => {
+    const t = getTab()
+    if (!t || t.index <= 0) return
+    t.index--
+    navigate(t.history[t.index], false)
+}
+
+forward.onclick = () => {
+    const t = getTab()
+    if (!t || t.index >= t.history.length - 1) return
+    t.index++
+    navigate(t.history[t.index], false)
+}
+
+reload.onclick = () => {
+    const t = getTab()
+    if (!t) return
+    t.iframe.src = t.iframe.src
+}
+
+popout.onclick = () => {
+    const t = getTab()
+    if (!t) return
+    window.open(t.iframe.src, "_blank")
+}
+
+form.onsubmit = e => {
+    e.preventDefault()
+    if (urlInput.value.trim()) navigate(urlInput.value)
+}
+
+newTabBtn.onclick = () => createTab()
+
+createTab()
+</script>
+
 </body>
-</html>`;
-
-const SONIC_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>sonic - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://classlink.com.de/games/sonic/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
-
-const LEVELDEVIL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lvldevil - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://classlink.com.de/games/lvldevil/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
-
-const SUBWAYSURFERS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>subway-surfers - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://classlink.com.de/games/subway-surfers/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
-
-const SLOPE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slope - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/slope/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FLAPPY_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flappy Bird - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/flappy/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SM64_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Super Mario 64 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/sm64/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RUN3_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Run 3 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/run3/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const CROSSY_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crossy Road - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/crossy/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const EAGLERCRAFT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eaglercraft - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/mc/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const COOKIE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cookie Clicker - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/cookieclicker/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const TEMPLERUN2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Temple Run 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/templerun2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const JETPACK_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jetpack Joyride - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RETROBOWL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retro Bowl - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/retrobowl/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FRUITNINJA_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fruit Ninja - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/fruitninja/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const JUSTFALL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JustFall.lol - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://justfall.lol" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SNOWRIDER_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snow Rider 3D - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/snowrider3d/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const V1V1LOL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1v1.lol - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/1v1lol/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const BASKETRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basket Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/basketrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const BOXINGRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boxing Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/boxingrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SOCCERRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soccer Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/soccerrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VOLLEYRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Volley Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/volleyrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SUPERHOT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPERHOT - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/superhot/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FNF_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Friday Night Funkin' - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/fnf/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DRIFTBOSS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drift Boss - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/driftboss/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const TIMESHOOTER2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Time Shooter 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/timeshooter2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const GDLITE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geometry Dash Lite - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/gdlite/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FNFMIDFIGHT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FNF Mid-Fight Masses - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/fnfmidfight/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const NEWSUPERMARIOBROS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Super Mario Bros - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/newsupermariobros/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const MARIOKARTDS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mario Kart DS - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/mariokartds/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const AMONGUS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Among Us - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/amongus/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DOOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOOM - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/doom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const BOXINGPHYSICS2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boxing Physics 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/boxingphysics2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SONIC2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sonic the Hedgehog 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/sonicthehedgehog2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX3_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 3 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex3/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX4_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 4 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex4/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX5_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 5 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex5/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX6_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 6 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex6/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX7_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 7 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex7/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FIREBOYWATERGIRL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fireboy and Watergirl - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/fireboywatergirl/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DEATHRUN3D_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Death Run 3D - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/deathrun3d/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SIMPSONSROADRAGE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Simpsons Road Rage - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/simpsonsroadrage/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DOODLEJUMP_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doodle Jump - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/doodlejump/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SHIFT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shift - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/shift/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SHIFT2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shift 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/shift2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DOGEMINER_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doge Miner - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/dogeminer/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL1_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 1 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool1/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL3_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 3 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool3/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL4_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 4 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool4/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL5_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 5 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool5/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLETRANSFER_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle Transfer - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLETRANSFER2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle Transfer 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const HAPPYWHEELS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.
+</html>
