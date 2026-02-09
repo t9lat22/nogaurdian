@@ -127,8 +127,6 @@ body{
     justify-content:center;
     font-family:Arial,sans-serif;
 }
-
-/* Preview Overlay Styles */
 .preview-overlay{
     display:none;
     position:fixed;
@@ -193,7 +191,6 @@ body{
 
 <button onclick="closeWindow()" class="close-btn">✕</button>
 
-<!-- Preview Overlay -->
 <div id="previewOverlay" class="preview-overlay">
     <div class="preview-header">
         <span class="preview-title" id="previewTitle">Game Preview</span>
@@ -227,7 +224,6 @@ const previewContent = document.getElementById("previewContent");
 
 let isFullscreen = false;
 
-// Game images
 const GAME_IMAGES = {
     roblox: "https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
     gta: "https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
@@ -301,7 +297,6 @@ const GAME_IMAGES = {
     fnafepstein: "https://th.bing.com/th/id/OIP.cmAzM1da671zoApQ5Cp8vQHaEK?w=313&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
 };
 
-// Safe window handling
 const isInIframe = window !== window.parent;
 const closeWindow = () => {
     if (isInIframe && typeof parent.closeWindow === 'function') {
@@ -311,7 +306,6 @@ const closeWindow = () => {
     }
 };
 
-// Fullscreen functions
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
         previewContent.requestFullscreen().then(() => {
@@ -326,7 +320,6 @@ function toggleFullscreen() {
     }
 }
 
-// Listen for fullscreen changes
 document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement) {
         isFullscreen = false;
@@ -335,7 +328,6 @@ document.addEventListener('fullscreenchange', () => {
     }
 });
 
-// Preview functions
 function openPreview(htmlContent, title) {
     previewTitle.textContent = title || "Game Preview";
     previewOverlay.classList.add('active');
@@ -363,7 +355,6 @@ function closePreview() {
     }
 }
 
-// Close on escape key
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         if (document.fullscreenElement) {
@@ -374,905 +365,574 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// HTML content for games
-const ROBLOX_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>roblox - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149" allowfullscreen></iframe>
-<a href="https://nevertraveling.thepresenttraveller.com" target="_blank">
-    <img id="truffled-logo" src="https://nevertraveling.thepresenttraveller.com/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
+function createGameCard(name, imageUrl, onClick) {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.style.backgroundImage = "url(" + imageUrl + ")";
+    
+    const fsBtn = document.createElement("button");
+    fsBtn.className = "fullscreen-btn";
+    fsBtn.innerHTML = "⛶";
+    fsBtn.title = "Fullscreen";
+    fsBtn.onclick = (e) => {
+        e.stopPropagation();
+        onClick();
+        setTimeout(toggleFullscreen, 100);
+    };
+    card.appendChild(fsBtn);
+    
+    const label = document.createElement("div");
+    label.className = "game-name";
+    label.textContent = name;
+    card.appendChild(label);
+    
+    card.onclick = () => onClick();
+    return card;
+}
 
-const SONIC_HTML = `<!DOCTYPE html>
+function makeIframeHtml(url, title) {
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>sonic - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://classlink.com.de/games/sonic/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
-
-const LEVELDEVIL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lvldevil - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://classlink.com.de/games/lvldevil/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
-
-const SUBWAYSURFERS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>subway-surfers - Truffled</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-#truffled-logo { position: fixed; bottom: 10px; right: 10px; width: 150px; height: 150px; cursor: pointer; z-index: 9999; }
-</style>
-</head>
-<body>
-<iframe src="https://classlink.com.de/games/subway-surfers/index.html" allowfullscreen></iframe>
-<a href="https://classlink.com.de" target="_blank">
-    <img id="truffled-logo" src="https://classlink.com.de/png/logo.png" alt="Logo">
-</a>
-</body>
-</html>`;
-
-const SLOPE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slope - NoGuardian</title>
+<title>${title}</title>
 <style>
 html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
 iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
 </style>
 </head>
 <body>
-<iframe src="https://seraph-embeds.vercel.app/games/slope/index.html" allowfullscreen></iframe>
+<iframe src="${url}" allowfullscreen></iframe>
 </body>
 </html>`;
+}
 
-const FLAPPY_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flappy Bird - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/flappy/index.html" allowfullscreen></iframe>
+function addRoblox(){
+    const card = createGameCard("Roblox", GAME_IMAGES.roblox, () => openPreview(makeIframeHtml("https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149", "Roblox"), "Roblox"));
+    gamesEl.appendChild(card);
+}
+
+function addGTAViceCity(){
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.style.backgroundImage = "url(" + GAME_IMAGES.gta + ")";
+    
+    const fsBtn = document.createElement("button");
+    fsBtn.className = "fullscreen-btn";
+    fsBtn.innerHTML = "⛶";
+    fsBtn.title = "Fullscreen";
+    fsBtn.onclick = (e) => {
+        e.stopPropagation();
+        window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1", "_blank");
+    };
+    card.appendChild(fsBtn);
+    
+    const label = document.createElement("div");
+    label.className = "game-name";
+    label.textContent = "GTA Vice City";
+    card.appendChild(label);
+    
+    card.onclick = () => window.open("https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1", "_blank");
+    gamesEl.appendChild(card);
+}
+
+function addSonic(){
+    const card = createGameCard("Sonic", GAME_IMAGES.sonic, () => openPreview(makeIframeHtml("https://classlink.com.de/games/sonic/index.html", "Sonic"), "Sonic"));
+    gamesEl.appendChild(card);
+}
+
+function addLevelDevil(){
+    const card = createGameCard("Level Devil", GAME_IMAGES.leveldevil, () => openPreview(makeIframeHtml("https://classlink.com.de/games/lvldevil/index.html", "Level Devil"), "Level Devil"));
+    gamesEl.appendChild(card);
+}
+
+function addSubwaySurfers(){
+    const card = createGameCard("Subway Surfers", GAME_IMAGES.subwaysurfers, () => openPreview(makeIframeHtml("https://classlink.com.de/games/subway-surfers/index.html", "Subway Surfers"), "Subway Surfers"));
+    gamesEl.appendChild(card);
+}
+
+function addSlope(){
+    const card = createGameCard("Slope", GAME_IMAGES.slope, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/slope/index.html", "Slope"), "Slope"));
+    gamesEl.appendChild(card);
+}
+
+function addFlappy(){
+    const card = createGameCard("Flappy Bird", GAME_IMAGES.flappy, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/flappy/index.html", "Flappy Bird"), "Flappy Bird"));
+    gamesEl.appendChild(card);
+}
+
+function addSM64(){
+    const card = createGameCard("Super Mario 64", GAME_IMAGES.sm64, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/sm64/index.html", "Super Mario 64"), "Super Mario 64"));
+    gamesEl.appendChild(card);
+}
+
+function addRun3(){
+    const card = createGameCard("Run 3", GAME_IMAGES.run3, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/run3/index.html", "Run 3"), "Run 3"));
+    gamesEl.appendChild(card);
+}
+
+function addCrossy(){
+    const card = createGameCard("Crossy Road", GAME_IMAGES.crossy, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/crossy/index.html", "Crossy Road"), "Crossy Road"));
+    gamesEl.appendChild(card);
+}
+
+function addEaglercraft(){
+    const card = createGameCard("Eaglercraft", GAME_IMAGES.eaglercraft, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/mc/index.html", "Eaglercraft"), "Eaglercraft"));
+    gamesEl.appendChild(card);
+}
+
+function addCookieClicker(){
+    const card = createGameCard("Cookie Clicker", GAME_IMAGES.cookieclicker, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/cookieclicker/index.html", "Cookie Clicker"), "Cookie Clicker"));
+    gamesEl.appendChild(card);
+}
+
+function addTempleRun2(){
+    const card = createGameCard("Temple Run 2", GAME_IMAGES.templerun2, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/templerun2/index.html", "Temple Run 2"), "Temple Run 2"));
+    gamesEl.appendChild(card);
+}
+
+function addJetpackJoyride(){
+    const card = createGameCard("Jetpack Joyride", GAME_IMAGES.jetpack, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html", "Jetpack Joyride"), "Jetpack Joyride"));
+    gamesEl.appendChild(card);
+}
+
+function addRetroBowl(){
+    const card = createGameCard("Retro Bowl", GAME_IMAGES.retrobowl, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/retrobowl/index.html", "Retro Bowl"), "Retro Bowl"));
+    gamesEl.appendChild(card);
+}
+
+function addFruitNinja(){
+    const card = createGameCard("Fruit Ninja", GAME_IMAGES.fruitninja, () => openPreview(makeIframeHtml("https://seraph-embeds.vercel.app/games/fruitninja/index.html", "Fruit Ninja"), "Fruit Ninja"));
+    gamesEl.appendChild(card);
+}
+
+function addJustFall(){
+    const card = createGameCard("JustFall.lol", GAME_IMAGES.justfall, () => openPreview(makeIframeHtml("https://justfall.lol", "JustFall.lol"), "JustFall.lol"));
+    gamesEl.appendChild(card);
+}
+
+function addSnowRider(){
+    const card = createGameCard("Snow Rider 3D", GAME_IMAGES.snowrider, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/snowrider3d/index.html", "Snow Rider 3D"), "Snow Rider 3D"));
+    gamesEl.appendChild(card);
+}
+
+function add1v1lol(){
+    const card = createGameCard("1v1.lol", GAME_IMAGES.v1v1lol, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/1v1lol/index.html", "1v1.lol"), "1v1.lol"));
+    gamesEl.appendChild(card);
+}
+
+function addBasketRandom(){
+    const card = createGameCard("Basket Random", GAME_IMAGES.basketrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/basketrandom/index.html", "Basket Random"), "Basket Random"));
+    gamesEl.appendChild(card);
+}
+
+function addBoxingRandom(){
+    const card = createGameCard("Boxing Random", GAME_IMAGES.boxingrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/boxingrandom/index.html", "Boxing Random"), "Boxing Random"));
+    gamesEl.appendChild(card);
+}
+
+function addSoccerRandom(){
+    const card = createGameCard("Soccer Random", GAME_IMAGES.soccerrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/soccerrandom/index.html", "Soccer Random"), "Soccer Random"));
+    gamesEl.appendChild(card);
+}
+
+function addVolleyRandom(){
+    const card = createGameCard("Volley Random", GAME_IMAGES.volleyrandom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/volleyrandom/index.html", "Volley Random"), "Volley Random"));
+    gamesEl.appendChild(card);
+}
+
+function addSuperHot(){
+    const card = createGameCard("SUPERHOT", GAME_IMAGES.superhot, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/superhot/index.html", "SUPERHOT"), "SUPERHOT"));
+    gamesEl.appendChild(card);
+}
+
+function addFNF(){
+    const card = createGameCard("Friday Night Funkin'", GAME_IMAGES.fnf, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnf/index.html", "Friday Night Funkin'"), "Friday Night Funkin'"));
+    gamesEl.appendChild(card);
+}
+
+function addDriftBoss(){
+    const card = createGameCard("Drift Boss", GAME_IMAGES.driftboss, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/driftboss/index.html", "Drift Boss"), "Drift Boss"));
+    gamesEl.appendChild(card);
+}
+
+function addTimeShooter2(){
+    const card = createGameCard("Time Shooter 2", GAME_IMAGES.timeshooter2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/timeshooter2/index.html", "Time Shooter 2"), "Time Shooter 2"));
+    gamesEl.appendChild(card);
+}
+
+function addGDLite(){
+    const card = createGameCard("Geometry Dash Lite", GAME_IMAGES.gdlite, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/gdlite/index.html", "Geometry Dash Lite"), "Geometry Dash Lite"));
+    gamesEl.appendChild(card);
+}
+
+function addFNFMidFight(){
+    const card = createGameCard("FNF Mid-Fight Masses", GAME_IMAGES.fnfmidfight, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnfmidfight/index.html", "FNF Mid-Fight Masses"), "FNF Mid-Fight Masses"));
+    gamesEl.appendChild(card);
+}
+
+function addNewSuperMarioBros(){
+    const card = createGameCard("New Super Mario Bros", GAME_IMAGES.newsupermariobros, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/newsupermariobros/index.html", "New Super Mario Bros"), "New Super Mario Bros"));
+    gamesEl.appendChild(card);
+}
+
+function addMarioKartDS(){
+    const card = createGameCard("Mario Kart DS", GAME_IMAGES.mariokartds, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/mariokartds/index.html", "Mario Kart DS"), "Mario Kart DS"));
+    gamesEl.appendChild(card);
+}
+
+function addAmongUs(){
+    const card = createGameCard("Among Us", GAME_IMAGES.amongus, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/amongus/index.html", "Among Us"), "Among Us"));
+    gamesEl.appendChild(card);
+}
+
+function addDoom(){
+    const card = createGameCard("DOOM", GAME_IMAGES.doom, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/doom/index.html", "DOOM"), "DOOM"));
+    gamesEl.appendChild(card);
+}
+
+function addBoxingPhysics2(){
+    const card = createGameCard("Boxing Physics 2", GAME_IMAGES.boxingphysics2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/boxingphysics2/index.html", "Boxing Physics 2"), "Boxing Physics 2"));
+    gamesEl.appendChild(card);
+}
+
+function addSonic2(){
+    const card = createGameCard("Sonic the Hedgehog 2", GAME_IMAGES.sonic2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/sonicthehedgehog2/index.html", "Sonic the Hedgehog 2"), "Sonic the Hedgehog 2"));
+    gamesEl.appendChild(card);
+}
+
+function addVex(){
+    const card = createGameCard("Vex", GAME_IMAGES.vex, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex/index.html", "Vex"), "Vex"));
+    gamesEl.appendChild(card);
+}
+
+function addVex2(){
+    const card = createGameCard("Vex 2", GAME_IMAGES.vex2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex2/index.html", "Vex 2"), "Vex 2"));
+    gamesEl.appendChild(card);
+}
+
+function addVex3(){
+    const card = createGameCard("Vex 3", GAME_IMAGES.vex3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex3/index.html", "Vex 3"), "Vex 3"));
+    gamesEl.appendChild(card);
+}
+
+function addVex4(){
+    const card = createGameCard("Vex 4", GAME_IMAGES.vex4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex4/index.html", "Vex 4"), "Vex 4"));
+    gamesEl.appendChild(card);
+}
+
+function addVex5(){
+    const card = createGameCard("Vex 5", GAME_IMAGES.vex5, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex5/index.html", "Vex 5"), "Vex 5"));
+    gamesEl.appendChild(card);
+}
+
+function addVex6(){
+    const card = createGameCard("Vex 6", GAME_IMAGES.vex6, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex6/index.html", "Vex 6"), "Vex 6"));
+    gamesEl.appendChild(card);
+}
+
+function addVex7(){
+    const card = createGameCard("Vex 7", GAME_IMAGES.vex7, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/vex7/index.html", "Vex 7"), "Vex 7"));
+    gamesEl.appendChild(card);
+}
+
+function addFireboyWatergirl(){
+    const card = createGameCard("Fireboy and Watergirl", GAME_IMAGES.fireboywatergirl, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fireboywatergirl/index.html", "Fireboy and Watergirl"), "Fireboy and Watergirl"));
+    gamesEl.appendChild(card);
+}
+
+function addDeathRun3D(){
+    const card = createGameCard("Death Run 3D", GAME_IMAGES.deathrun3d, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/deathrun3d/index.html", "Death Run 3D"), "Death Run 3D"));
+    gamesEl.appendChild(card);
+}
+
+function addSimpsonsRoadRage(){
+    const card = createGameCard("The Simpsons Road Rage", GAME_IMAGES.simpsonsroadrage, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/simpsonsroadrage/index.html", "The Simpsons Road Rage"), "The Simpsons Road Rage"));
+    gamesEl.appendChild(card);
+}
+
+function addDoodleJump(){
+    const card = createGameCard("Doodle Jump", GAME_IMAGES.doodlejump, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/doodlejump/index.html", "Doodle Jump"), "Doodle Jump"));
+    gamesEl.appendChild(card);
+}
+
+function addShift(){
+    const card = createGameCard("Shift", GAME_IMAGES.shift, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/shift/index.html", "Shift"), "Shift"));
+    gamesEl.appendChild(card);
+}
+
+function addShift2(){
+    const card = createGameCard("Shift 2", GAME_IMAGES.shift2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/shift2/index.html", "Shift 2"), "Shift 2"));
+    gamesEl.appendChild(card);
+}
+
+function addDogeMiner(){
+    const card = createGameCard("Doge Miner", GAME_IMAGES.dogeminer, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/dogeminer/index.html", "Doge Miner"), "Doge Miner"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleSchool1(){
+    const card = createGameCard("Riddle School 1", GAME_IMAGES.riddleschool1, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool1/index.html", "Riddle School 1"), "Riddle School 1"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleSchool2(){
+    const card = createGameCard("Riddle School 2", GAME_IMAGES.riddleschool2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool2/index.html", "Riddle School 2"), "Riddle School 2"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleSchool3(){
+    const card = createGameCard("Riddle School 3", GAME_IMAGES.riddleschool3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool3/index.html", "Riddle School 3"), "Riddle School 3"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleSchool4(){
+    const card = createGameCard("Riddle School 4", GAME_IMAGES.riddleschool4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool4/index.html", "Riddle School 4"), "Riddle School 4"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleSchool5(){
+    const card = createGameCard("Riddle School 5", GAME_IMAGES.riddleschool5, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool5/index.html", "Riddle School 5"), "Riddle School 5"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleTransfer(){
+    const card = createGameCard("Riddle Transfer", GAME_IMAGES.riddletransfer, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer/index.html", "Riddle Transfer"), "Riddle Transfer"));
+    gamesEl.appendChild(card);
+}
+
+function addRiddleTransfer2(){
+    const card = createGameCard("Riddle Transfer 2", GAME_IMAGES.riddletransfer2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer2/index.html", "Riddle Transfer 2"), "Riddle Transfer 2"));
+    gamesEl.appendChild(card);
+}
+
+function addHappyWheels(){
+    const card = createGameCard("Happy Wheels", GAME_IMAGES.happywheels, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/happywheels/index.html", "Happy Wheels"), "Happy Wheels"));
+    gamesEl.appendChild(card);
+}
+
+function addDriftHunters(){
+    const card = createGameCard("Drift Hunters", GAME_IMAGES.drifthunters, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/drifthunters/index.html", "Drift Hunters"), "Drift Hunters"));
+    gamesEl.appendChild(card);
+}
+
+function addBaldiBasics(){
+    const card = createGameCard("Baldi's Basics", GAME_IMAGES.baldisbasics, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/baldisbasics/index.html", "Baldi's Basics"), "Baldi's Basics"));
+    gamesEl.appendChild(card);
+}
+
+function addBasketBros(){
+    const card = createGameCard("Basket Bros", GAME_IMAGES.basketbros, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/basketbrosio/index.html", "Basket Bros"), "Basket Bros"));
+    gamesEl.appendChild(card);
+}
+
+function addEagler18(){
+    const card = createGameCard("Minecraft 1.8", GAME_IMAGES.eagler18, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/eagler1.8/index.html", "Minecraft 1.8"), "Minecraft 1.8"));
+    gamesEl.appendChild(card);
+}
+
+function addFNAF1(){
+    const card = createGameCard("FNAF 1", GAME_IMAGES.fnaf1, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf/index.html", "FNAF 1"), "FNAF 1"));
+    gamesEl.appendChild(card);
+}
+
+function addFNAF2(){
+    const card = createGameCard("FNAF 2", GAME_IMAGES.fnaf2, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-2/index.html", "FNAF 2"), "FNAF 2"));
+    gamesEl.appendChild(card);
+}
+
+function addFNAF3(){
+    const card = createGameCard("FNAF 3", GAME_IMAGES.fnaf3, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-3/index.html", "FNAF 3"), "FNAF 3"));
+    gamesEl.appendChild(card);
+}
+
+function addFNAF4(){
+    const card = createGameCard("FNAF 4", GAME_IMAGES.fnaf4, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnaf-4/index.html", "FNAF 4"), "FNAF 4"));
+    gamesEl.appendChild(card);
+}
+
+function addMotoX3M(){
+    const card = createGameCard("Moto X3M", GAME_IMAGES.motox3m, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/motox3m/index.html", "Moto X3M"), "Moto X3M"));
+    gamesEl.appendChild(card);
+}
+
+function addStickmanHook(){
+    const card = createGameCard("Stickman Hook", GAME_IMAGES.stickmanhook, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/stickmanhook/index.html", "Stickman Hook"), "Stickman Hook"));
+    gamesEl.appendChild(card);
+}
+
+function addBendy(){
+    const card = createGameCard("Bendy and the Ink Machine", GAME_IMAGES.bendy, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/bendy/index.html", "Bendy and the Ink Machine"), "Bendy and the Ink Machine"));
+    gamesEl.appendChild(card);
+}
+
+function addAngryBirds(){
+    const card = createGameCard("Angry Birds", GAME_IMAGES.angrybirds, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/angrybirds/index.html", "Angry Birds"), "Angry Birds"));
+    gamesEl.appendChild(card);
+}
+
+function addFNAFEpstein(){
+    const card = createGameCard("Five Nights at Epstein's", GAME_IMAGES.fnafepstein, () => openPreview(makeIframeHtml("https://seraph-lilac-zeta.vercel.app/games/fnae/index.html", "Five Nights at Epstein's"), "Five Nights at Epstein's"));
+    gamesEl.appendChild(card);
+}
+
+function initGames() {
+    gamesEl.innerHTML = "";
+    addRoblox();
+    addGTAViceCity();
+    addSonic();
+    addLevelDevil();
+    addSubwaySurfers();
+    addSlope();
+    addFlappy();
+    addSM64();
+    addRun3();
+    addCrossy();
+    addEaglercraft();
+    addCookieClicker();
+    addTempleRun2();
+    addJetpackJoyride();
+    addRetroBowl();
+    addFruitNinja();
+    addJustFall();
+    addSnowRider();
+    add1v1lol();
+    addBasketRandom();
+    addBoxingRandom();
+    addSoccerRandom();
+    addVolleyRandom();
+    addSuperHot();
+    addFNF();
+    addDriftBoss();
+    addTimeShooter2();
+    addGDLite();
+    addFNFMidFight();
+    addNewSuperMarioBros();
+    addMarioKartDS();
+    addAmongUs();
+    addDoom();
+    addBoxingPhysics2();
+    addSonic2();
+    addVex();
+    addVex2();
+    addVex3();
+    addVex4();
+    addVex5();
+    addVex6();
+    addVex7();
+    addFireboyWatergirl();
+    addDeathRun3D();
+    addSimpsonsRoadRage();
+    addDoodleJump();
+    addShift();
+    addShift2();
+    addDogeMiner();
+    addRiddleSchool1();
+    addRiddleSchool2();
+    addRiddleSchool3();
+    addRiddleSchool4();
+    addRiddleSchool5();
+    addRiddleTransfer();
+    addRiddleTransfer2();
+    addHappyWheels();
+    addDriftHunters();
+    addBaldiBasics();
+    addBasketBros();
+    addEagler18();
+    addFNAF1();
+    addFNAF2();
+    addFNAF3();
+    addFNAF4();
+    addMotoX3M();
+    addStickmanHook();
+    addBendy();
+    addAngryBirds();
+    addFNAFEpstein();
+}
+
+search.oninput = () => {
+    const q = search.value.toLowerCase();
+    const allGames = [
+        {name: "Roblox", add: addRoblox},
+        {name: "GTA Vice City", add: addGTAViceCity},
+        {name: "Sonic", add: addSonic},
+        {name: "Level Devil", add: addLevelDevil},
+        {name: "Subway Surfers", add: addSubwaySurfers},
+        {name: "Slope", add: addSlope},
+        {name: "Flappy Bird", add: addFlappy},
+        {name: "Super Mario 64", add: addSM64},
+        {name: "Run 3", add: addRun3},
+        {name: "Crossy Road", add: addCrossy},
+        {name: "Eaglercraft", add: addEaglercraft},
+        {name: "Cookie Clicker", add: addCookieClicker},
+        {name: "Temple Run 2", add: addTempleRun2},
+        {name: "Jetpack Joyride", add: addJetpackJoyride},
+        {name: "Retro Bowl", add: addRetroBowl},
+        {name: "Fruit Ninja", add: addFruitNinja},
+        {name: "JustFall.lol", add: addJustFall},
+        {name: "Snow Rider 3D", add: addSnowRider},
+        {name: "1v1.lol", add: add1v1lol},
+        {name: "Basket Random", add: addBasketRandom},
+        {name: "Boxing Random", add: addBoxingRandom},
+        {name: "Soccer Random", add: addSoccerRandom},
+        {name: "Volley Random", add: addVolleyRandom},
+        {name: "SUPERHOT", add: addSuperHot},
+        {name: "Friday Night Funkin'", add: addFNF},
+        {name: "Drift Boss", add: addDriftBoss},
+        {name: "Time Shooter 2", add: addTimeShooter2},
+        {name: "Geometry Dash Lite", add: addGDLite},
+        {name: "FNF Mid-Fight Masses", add: addFNFMidFight},
+        {name: "New Super Mario Bros", add: addNewSuperMarioBros},
+        {name: "Mario Kart DS", add: addMarioKartDS},
+        {name: "Among Us", add: addAmongUs},
+        {name: "DOOM", add: addDoom},
+        {name: "Boxing Physics 2", add: addBoxingPhysics2},
+        {name: "Sonic the Hedgehog 2", add: addSonic2},
+        {name: "Vex", add: addVex},
+        {name: "Vex 2", add: addVex2},
+        {name: "Vex 3", add: addVex3},
+        {name: "Vex 4", add: addVex4},
+        {name: "Vex 5", add: addVex5},
+        {name: "Vex 6", add: addVex6},
+        {name: "Vex 7", add: addVex7},
+        {name: "Fireboy and Watergirl", add: addFireboyWatergirl},
+        {name: "Death Run 3D", add: addDeathRun3D},
+        {name: "The Simpsons Road Rage", add: addSimpsonsRoadRage},
+        {name: "Doodle Jump", add: addDoodleJump},
+        {name: "Shift", add: addShift},
+        {name: "Shift 2", add: addShift2},
+        {name: "Doge Miner", add: addDogeMiner},
+        {name: "Riddle School 1", add: addRiddleSchool1},
+        {name: "Riddle School 2", add: addRiddleSchool2},
+        {name: "Riddle School 3", add: addRiddleSchool3},
+        {name: "Riddle School 4", add: addRiddleSchool4},
+        {name: "Riddle School 5", add: addRiddleSchool5},
+        {name: "Riddle Transfer", add: addRiddleTransfer},
+        {name: "Riddle Transfer 2", add: addRiddleTransfer2},
+        {name: "Happy Wheels", add: addHappyWheels},
+        {name: "Drift Hunters", add: addDriftHunters},
+        {name: "Baldi's Basics", add: addBaldiBasics},
+        {name: "Basket Bros", add: addBasketBros},
+        {name: "Minecraft 1.8", add: addEagler18},
+        {name: "FNAF 1", add: addFNAF1},
+        {name: "FNAF 2", add: addFNAF2},
+        {name: "FNAF 3", add: addFNAF3},
+        {name: "FNAF 4", add: addFNAF4},
+        {name: "Moto X3M", add: addMotoX3M},
+        {name: "Stickman Hook", add: addStickmanHook},
+        {name: "Bendy and the Ink Machine", add: addBendy},
+        {name: "Angry Birds", add: addAngryBirds},
+        {name: "Five Nights at Epstein's", add: addFNAFEpstein}
+    ];
+    
+    gamesEl.innerHTML = "";
+    const filtered = allGames.filter(g => g.name.toLowerCase().includes(q));
+    filtered.forEach(g => g.add());
+};
+
+initGames();
+</script>
+
 </body>
-</html>`;
-
-const SM64_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Super Mario 64 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/sm64/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RUN3_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Run 3 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/run3/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const CROSSY_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crossy Road - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/crossy/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const EAGLERCRAFT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eaglercraft - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/mc/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const COOKIE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cookie Clicker - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/cookieclicker/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const TEMPLERUN2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Temple Run 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/templerun2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const JETPACK_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jetpack Joyride - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RETROBOWL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retro Bowl - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/retrobowl/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FRUITNINJA_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fruit Ninja - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-embeds.vercel.app/games/fruitninja/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const JUSTFALL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JustFall.lol - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://justfall.lol" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SNOWRIDER_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snow Rider 3D - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/snowrider3d/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const V1V1LOL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1v1.lol - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/1v1lol/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const BASKETRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basket Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/basketrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const BOXINGRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boxing Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/boxingrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SOCCERRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soccer Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/soccerrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VOLLEYRANDOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Volley Random - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/volleyrandom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SUPERHOT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPERHOT - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/superhot/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FNF_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Friday Night Funkin' - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/fnf/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DRIFTBOSS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drift Boss - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/driftboss/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const TIMESHOOTER2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Time Shooter 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/timeshooter2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const GDLITE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geometry Dash Lite - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/gdlite/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FNFMIDFIGHT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FNF Mid-Fight Masses - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/fnfmidfight/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const NEWSUPERMARIOBROS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Super Mario Bros - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/newsupermariobros/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const MARIOKARTDS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mario Kart DS - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/mariokartds/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const AMONGUS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Among Us - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/amongus/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DOOM_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOOM - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/doom/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const BOXINGPHYSICS2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boxing Physics 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/boxingphysics2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SONIC2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sonic the Hedgehog 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/sonicthehedgehog2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX3_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 3 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex3/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX4_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 4 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex4/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX5_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 5 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex5/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX6_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 6 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex6/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const VEX7_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vex 7 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/vex7/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const FIREBOYWATERGIRL_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fireboy and Watergirl - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/fireboywatergirl/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DEATHRUN3D_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Death Run 3D - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/deathrun3d/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SIMPSONSROADRAGE_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Simpsons Road Rage - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/simpsonsroadrage/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DOODLEJUMP_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doodle Jump - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/doodlejump/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SHIFT_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shift - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/shift/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const SHIFT2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shift 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/shift2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const DOGEMINER_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doge Miner - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/dogeminer/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL1_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 1 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool1/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL3_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 3 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool3/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL4_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 4 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool4/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLESCHOOL5_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle School 5 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool5/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLETRANSFER_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle Transfer - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const RIDDLETRANSFER2_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riddle Transfer 2 - NoGuardian</title>
-<style>
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-iframe { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; }
-</style>
-</head>
-<body>
-<iframe src="https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer2/index.html" allowfullscreen></iframe>
-</body>
-</html>`;
-
-const HAPPYWHEELS_HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.
+</html>
