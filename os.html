@@ -41,7 +41,7 @@
             transition: opacity 0.5s ease;
         }
 
-        .navbar {
+       .navbar {
       position: fixed;
       bottom: 12px;
       left: 50%;
@@ -474,106 +474,6 @@
     </style>
 </head>
 <body>
-        <div onclick="settings()" class="icon" style="left:100px; top:220px;"> 
-  <img src="seting.png" alt="settings"> 
-  <span>Settings</span> </div> 
-
-  <div onclick="ro()" class="icon" style="left:100px; top:320px;"> 
-    <img src="r2.png" alt="roblox"> 
-    <span>Roblox</span> </div> 
-
-
-
-<script>
-  const icons = document.querySelectorAll('.icon');
-const gridSize = 100;
-const offsetX = 5;  // Matches your HTML left: 5px
-const offsetY = 20; // Matches your HTML top: 120px/220px grid logic
-
-let draggingIcon = null;
-let mouseOffset = { x: 0, y: 0 };
-let mouseStart = { x: 0, y: 0 };
-let isDragging = false;
-const dragThreshold = 5;
-
-// Precision snapping functions
-const snapX = (v) => Math.round((v - offsetX) / gridSize) * gridSize + offsetX;
-const snapY = (v) => Math.round((v - offsetY) / gridSize) * gridSize + offsetY;
-
-// Check for collisions using snapped coordinates
-function isOccupied(x, y, ignore) {
-  return Array.from(icons).some(ic => 
-    ic !== ignore && 
-    parseInt(ic.style.left) === x && 
-    parseInt(ic.style.top) === y
-  );
-}
-
-icons.forEach(icon => {
-  icon.addEventListener('mousedown', (e) => {
-    draggingIcon = icon;
-    mouseStart = { x: e.clientX, y: e.clientY };
-    const rect = icon.getBoundingClientRect();
-    mouseOffset = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    icon.style.zIndex = 1000;
-  });
-
-  // Captures and blocks the click if the mouse moved (dragging)
-  icon.addEventListener('click', (e) => {
-    if (isDragging) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
-    }
-  }, true); 
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!draggingIcon) return;
-
-  const dx = e.clientX - mouseStart.x;
-  const dy = e.clientY - mouseStart.y;
-
-  if (!isDragging && Math.hypot(dx, dy) > dragThreshold) {
-    isDragging = true;
-  }
-
-  if (!isDragging) return;
-
-  // Real-time movement logic
-  let x = Math.min(Math.max(e.clientX - mouseOffset.x, 0), window.innerWidth - draggingIcon.offsetWidth);
-  let y = Math.min(Math.max(e.clientY - mouseOffset.y, 0), window.innerHeight - draggingIcon.offsetHeight);
-
-  draggingIcon.style.left = x + 'px';
-  draggingIcon.style.top = y + 'px';
-});
-
-document.addEventListener('mouseup', () => {
-  if (!draggingIcon) return;
-
-  if (isDragging) {
-    const targetX = snapX(draggingIcon.offsetLeft);
-    const targetY = snapY(draggingIcon.offsetTop);
-
-    if (isOccupied(targetX, targetY, draggingIcon)) {
-      // Snap back to original grid spot if blocked
-      draggingIcon.style.left = snapX(mouseStart.x - mouseOffset.x) + 'px';
-      draggingIcon.style.top = snapY(mouseStart.y - mouseOffset.y) + 'px';
-    } else {
-      // Lock into new grid spot
-      draggingIcon.style.left = targetX + 'px';
-      draggingIcon.style.top = targetY + 'px';
-    }
-
-    // Delay resetting the flag so 'click' event doesn't trigger 's()'
-    setTimeout(() => { isDragging = false; }, 50);
-  }
-
-  draggingIcon.style.zIndex = '';
-  draggingIcon = null;
-});
-
-document.addEventListener('selectstart', e => e.preventDefault());
-  </script>
     <!-- Wallpaper Background Layer -->
     <div id="wallpaperLayer"></div>
 
@@ -582,22 +482,27 @@ document.addEventListener('selectstart', e => e.preventDefault());
         <a onclick="loadPage('g.html')" class="nav-item">
             <span class="nav-emoji">🎮</span>
             <span class="nav-text">Games</span>
+            <span class="nav-label">Games</span>
         </a>
         <a onclick="loadPage('b.html')" class="nav-item">
             <span class="nav-emoji">🌐</span>
             <span class="nav-text">Browser</span>
+            <span class="nav-label">Browser</span>
         </a>
         <a onclick="loadPage('movies.html')" class="nav-item">
             <span class="nav-emoji">🎬</span>
             <span class="nav-text">Movies & TV</span>
+            <span class="nav-label">Movies & TV</span>
         </a>
         <a onclick="loadPage('app.html')" class="nav-item">
             <span class="nav-emoji">📱</span>
             <span class="nav-text">Apps</span>
+            <span class="nav-label">Apps</span>
         </a>
         <a onclick="toggleSettings()" class="nav-item">
             <span class="nav-emoji">⚙️</span>
             <span class="nav-text">Settings</span>
+            <span class="nav-label">Settings</span>
         </a>
     </div>
 
@@ -816,7 +721,5 @@ document.addEventListener('selectstart', e => e.preventDefault());
             if (e.key === 'Enter') addCustomWallpaper();
         });
     </script>
-
-
 </body>
 </html>
