@@ -506,7 +506,7 @@
   <button class="close-btn" onclick="document.getElementById('gmsDiv').style.display = 'none';">●</button>
       <button class="full-btn" onclick="fullscreenIframe3()">●</button>
 
-        <h3 style="  left: 50%; color:white; top:3px; position: absolute;   transform: translateX(-50%);" >Games</h3>
+        <h3 style="  left: 50%; color:white; top:5px; position: absolute;   transform: translateX(-50%);" >Games</h3>
 
 
 
@@ -527,11 +527,31 @@
     background: none;
     border: none;
     color: rgb(255, 0, 0);
-    font-size: 24px;
     cursor: pointer;
     padding: 0;
     font-size:20px;
+    top:6px;
 } 
+ @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 80%;
+        transform: scale(1);
+      }
+    }
+     @keyframes popIn2 {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 100%;
+        transform: scale(1);
+      }
+    }
        #gmsDiv {
     display: none;
     margin-top: 20px;
