@@ -830,32 +830,48 @@ box-shadow: 2px #141414;
     document.getElementById("calcDiv")
   ];
 
-  // Global state to track what is being dragged/resized
-  let activeState = null; // { type: 'drag'|'resize', el: element, startX, startY, startRect }
+  let activeState = null; 
   let animationFrameId = null;
 
-  // ───────── CSS Injection (Helpers) ─────────
+  // ───────── CSS Injection (Fixes Clickability) ─────────
   const style = document.createElement('style');
   style.innerHTML = `
+    /* The invisible drag layer */
     .win-drag-handle {
       position: absolute; top: 0; left: 0; right: 0;
-      height: ${HEADER_HEIGHT}px; cursor: move; z-index: 5;
+      height: ${HEADER_HEIGHT}px; 
+      cursor: move; 
+      z-index: 1; /* LOW z-index so buttons sit on top */
     }
+    
+    /* The resize handle */
     .win-resizer {
       position: absolute; width: 20px; height: 20px;
-      right: 0; bottom: 0; cursor: nwse-resize; z-index: 10;
+      right: 0; bottom: 0; cursor: nwse-resize; 
+      z-index: 20; /* High z-index to be grab-able */
       background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.2) 50%);
     }
+
+    /* Force buttons to be ABOVE the drag handle */
+    .close-btn, button, input, select, a {
+      position: relative; /* or absolute */
+      z-index: 10 !important; /* HIGHER than drag handle */
+    }
+
+    /* Animation and Smoothing classes */
     .win-active {
       will-change: transform, width, height;
       z-index: 1000 !important; /* Bring active window to front */
     }
+    
     body.is-interacting iframe {
-      pointer-events: none !important; /* Critical for smooth drag over iframes */
+      pointer-events: none !important; /* Stops iframe stealing mouse */
     }
+    
     body.is-interacting {
       user-select: none;
       -webkit-user-select: none;
+      cursor: move;
     }
   `;
   document.head.appendChild(style);
@@ -870,27 +886,26 @@ box-shadow: 2px #141414;
       win.style.position = 'absolute';
     }
 
-    // Add Drag Handle
+    // 1. Add Drag Handle (Background Layer)
     if (!win.querySelector(".win-drag-handle")) {
       const handle = document.createElement("div");
       handle.className = "win-drag-handle";
-      win.appendChild(handle);
+      // Insert as first child so it stays behind content if possible
+      win.insertBefore(handle, win.firstChild);
       
-      // Handle Mouse Down
       handle.addEventListener("mousedown", (e) => startInteraction(e, win, 'drag'));
     }
 
-    // Add Resizer
+    // 2. Add Resizer
     if (!win.querySelector(".win-resizer")) {
       const resizer = document.createElement("div");
       resizer.className = "win-resizer";
       win.appendChild(resizer);
       
-      // Resizer Mouse Down
       resizer.addEventListener("mousedown", (e) => startInteraction(e, win, 'resize'));
     }
 
-    // Adjust Iframes
+    // 3. Adjust Iframes
     win.querySelectorAll("iframe").forEach(iframe => {
       iframe.style.marginTop = HEADER_HEIGHT + "px";
       iframe.style.height = `calc(100% - ${HEADER_HEIGHT}px)`;
@@ -902,26 +917,23 @@ box-shadow: 2px #141414;
   // ───────── Core Logic ─────────
 
   function startInteraction(e, win, type) {
-    // Prevent default to stop text selection
+    // Safety check: If user clicked a button/input, DO NOT drag.
+    if (e.target.closest('button, input, select, a, .close-btn')) {
+      return; 
+    }
+
     e.preventDefault(); 
-    
-    // Ignore if clicking buttons/inputs inside header
-    if (e.target.closest('button, input, a') && type === 'drag') return;
 
     const rect = win.getBoundingClientRect();
 
-    // 1. Normalize Position (Fixes jumping on first drag)
-    // If the element uses % or auto margins, we lock it to pixels now.
+    // Lock position to pixels to prevent jumping
     win.style.left = rect.left + "px";
     win.style.top = rect.top + "px";
     win.style.width = rect.width + "px";
     win.style.height = rect.height + "px";
     win.style.transform = "none";
     win.style.margin = "0";
-    win.style.right = "auto";
-    win.style.bottom = "auto";
 
-    // 2. Set Active State
     activeState = {
       type: type,
       el: win,
@@ -935,11 +947,10 @@ box-shadow: 2px #141414;
       }
     };
 
-    // 3. Add visual classes and interaction locks
     win.classList.add('win-active');
     document.body.classList.add('is-interacting');
     
-    // Set cursor explicitly on body so it doesn't flicker
+    // Set global cursor
     document.body.style.cursor = type === 'drag' ? 'move' : 'nwse-resize';
   }
 
@@ -948,9 +959,9 @@ box-shadow: 2px #141414;
   window.addEventListener('mousemove', (e) => {
     if (!activeState) return;
 
-    e.preventDefault(); // Stop scrolling/selection
+    e.preventDefault();
 
-    // Use requestAnimationFrame for smooth 60fps rendering
+    // Smooth animation loop
     if (animationFrameId) cancelAnimationFrame(animationFrameId);
     
     animationFrameId = requestAnimationFrame(() => {
@@ -962,19 +973,13 @@ box-shadow: 2px #141414;
       if (activeState.type === 'drag') {
         const newLeft = activeState.startRect.left + deltaX;
         const newTop = activeState.startRect.top + deltaY;
-
-        // Optional: Bound checking (keep inside screen)
-        // const maxLeft = window.innerWidth - 50;
-        // const maxTop = window.innerHeight - HEADER_HEIGHT;
-        // activeState.el.style.left = Math.max(0, Math.min(newLeft, maxLeft)) + 'px';
-        // activeState.el.style.top = Math.max(0, Math.min(newTop, maxTop)) + 'px';
         
         activeState.el.style.left = newLeft + 'px';
         activeState.el.style.top = newTop + 'px';
       } 
       else if (activeState.type === 'resize') {
-        const newWidth = Math.max(200, activeState.startRect.width + deltaX); // Min width 200
-        const newHeight = Math.max(100, activeState.startRect.height + deltaY); // Min height 100
+        const newWidth = Math.max(200, activeState.startRect.width + deltaX);
+        const newHeight = Math.max(100, activeState.startRect.height + deltaY);
         
         activeState.el.style.width = newWidth + 'px';
         activeState.el.style.height = newHeight + 'px';
@@ -985,7 +990,6 @@ box-shadow: 2px #141414;
   window.addEventListener('mouseup', () => {
     if (!activeState) return;
 
-    // Cleanup
     if (animationFrameId) cancelAnimationFrame(animationFrameId);
     activeState.el.classList.remove('win-active');
     document.body.classList.remove('is-interacting');
