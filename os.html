@@ -474,12 +474,13 @@
     </style>
 </head>
 <body>
+    
     <!-- Wallpaper Background Layer -->
     <div id="wallpaperLayer"></div>
 
     <!-- Navigation Sidebar -->
     <div id="navbar" class="navbar">
-        <a onclick="loadPage('g.html')" class="nav-item">
+        <a onclick="gms()" class="nav-item">
             <span class="nav-emoji">🎮</span>
             <span class="nav-text">Games</span>
         </a>
@@ -500,6 +501,66 @@
             <span class="nav-text">Settings</span>
         </a>
     </div>
+
+    <div id="gmsDiv">
+  <button class="close-btn" onclick="document.getElementById('gmsDiv').style.display = 'none';">●</button>
+      <button class="full-btn" onclick="fullscreenIframe3()">●</button>
+
+        <h3 style="  left: 50%; color:white; top:-9.5px; position: absolute;   transform: translateX(-50%);" >Games</h3>
+
+
+
+ 
+<iframe id="gmsframe" class="gmsframe" src="g.html"></iframe>
+  <style>
+    .gmsframe{
+      width:100%;
+      height:95%;
+      bottom:10px;
+      position: absolute;
+      border:none;
+      border-radius:0px 0px 15px 15px;
+      left: 0;
+      bottom: 0;
+    }
+       #gmsDiv {
+    display: none;
+    margin-top: 20px;
+    padding: 10px;
+background-color: rgba(5, 139, 196, 0.504);
+  border: 1px solid rgba(0,180,255,.5);  
+    color: white;
+    inset: 0;
+    margin:auto;
+    position: fixed;
+    z-index: 1000;
+    border-radius:12px; 
+    width:70%;
+    height: 71%; 
+    overflow-x: hidden;
+    overflow-y: auto;
+box-shadow: 2px #141414;
+      animation: popIn2 0.5s ease-out forwards;
+
+  }
+   
+  </style>
+   <script>
+    function fullscreenIframe3() {
+      let iframe = document.getElementById("mframe");
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) { 
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) { 
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) { 
+        iframe.msRequestFullscreen();
+      }
+    }
+  </script>
+           
+</div>
 
     <!-- Settings Overlay -->
     <div class="settings-overlay" id="settingsOverlay" onclick="toggleSettings()"></div>
@@ -716,5 +777,11 @@
             if (e.key === 'Enter') addCustomWallpaper();
         });
     </script>
+    <script>
+  function gms(){
+    const div = document.getElementById('gmsDiv');
+    div.style.display = div.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
 </body>
 </html>
