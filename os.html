@@ -918,7 +918,7 @@ wins.forEach(win => {
     
     e.preventDefault();
     e.stopPropagation();
-  }, true); // Use capture phase
+  });
 
   // ───────── RESIZE ─────────
   resizer.addEventListener("mousedown", e => {
@@ -951,57 +951,41 @@ wins.forEach(win => {
     
     e.preventDefault();
     e.stopPropagation();
-  }, true); // Use capture phase
+  });
 
   // ───────── MOVE (Global listeners) ─────────
   function handleMouseMove(e) {
     if (isDragging) {
-      // Use requestAnimationFrame for smooth updates
-      requestAnimationFrame(() => {
-        let x = e.clientX - offsetX;
-        let y = e.clientY - offsetY;
-        
-        // Keep window within viewport bounds
-        x = Math.max(0, Math.min(x, window.innerWidth - 100));
-        y = Math.max(0, Math.min(y, window.innerHeight - HEADER_HEIGHT));
-        
-        // Use transform for better performance
-        win.style.transform = `translate(${x - parseFloat(win.style.left || 0)}px, ${y - parseFloat(win.style.top || 0)}px)`;
-      });
+      let x = e.clientX - offsetX;
+      let y = e.clientY - offsetY;
+      
+      // Keep window within viewport bounds
+      x = Math.max(0, Math.min(x, window.innerWidth - 100));
+      y = Math.max(0, Math.min(y, window.innerHeight - HEADER_HEIGHT));
+      
+      win.style.left = x + "px";
+      win.style.top = y + "px";
       
       e.preventDefault();
     }
     
     if (isResizing) {
-      requestAnimationFrame(() => {
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        
-        const newWidth = Math.max(300, startWidth + dx);
-        const newHeight = Math.max(90, startHeight + dy);
-        
-        win.style.width = newWidth + "px";
-        win.style.height = newHeight + "px";
-      });
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      
+      const newWidth = Math.max(300, startWidth + dx);
+      const newHeight = Math.max(90, startHeight + dy);
+      
+      win.style.width = newWidth + "px";
+      win.style.height = newHeight + "px";
       
       e.preventDefault();
     }
   }
 
   // ───────── STOP ─────────
-  function stopAll(e) {
+  function stopAll() {
     if (!isDragging && !isResizing) return;
-    
-    if (isDragging) {
-      // Finalize position after dragging
-      const computedTransform = win.style.transform;
-      if (computedTransform && computedTransform !== "none") {
-        const rect = win.getBoundingClientRect();
-        win.style.left = rect.left + "px";
-        win.style.top = rect.top + "px";
-        win.style.transform = "none";
-      }
-    }
     
     enableIframeTemp();
     isDragging = false;
@@ -1013,18 +997,12 @@ wins.forEach(win => {
     document.body.style.cursor = "";
   }
 
-  // Attach listeners to document for smooth dragging - use capture phase
-  document.addEventListener("mousemove", handleMouseMove, true);
-  document.addEventListener("mouseup", stopAll, true);
+  // Attach listeners to document for smooth dragging
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", stopAll);
   
   // Extra safety for edge cases
   window.addEventListener("blur", stopAll);
-  document.addEventListener("mouseleave", e => {
-    // Only stop if mouse actually leaves the document
-    if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
-      stopAll(e);
-    }
-  });
 });
 </script>
 </body>
