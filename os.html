@@ -523,15 +523,19 @@
       left: 0;
       bottom: 0;
     }
-      .close-btn {
-    background: none;
-    border: none;
-    color: rgb(255, 0, 0);
-    cursor: pointer;
-    padding: 0;
-    font-size:20px;
-    top:-4px;
-} 
+ .close-btn {
+  background: none;
+  border: none;
+  color: rgb(255, 0, 0);
+  cursor: pointer;
+  padding: 0;
+  font-size: 20px;
+
+  position: absolute; /* important */
+  top: 0;              /* stick to top */
+  right: 0;            /* usually for close buttons */
+}
+
  @keyframes popIn {
       0% {
         opacity: 0;
