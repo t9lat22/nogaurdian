@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brainy</title>
+    <title>Brainy OS</title>
     <style>
         * {
             margin: 0;
@@ -15,990 +15,1369 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: Arial, sans-serif;
             color: white;
-            /* Background will be set by JavaScript */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background: #000;
         }
 
-        /* Background layer that covers everything */
+        /* Wallpaper Layer with Rose */
         #wallpaperLayer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: opacity 0.5s ease;
+            z-index: -2;
+            background: url('https://kimi-web-img.moonshot.cn/img/4kwallpapers.com/fe80e6fbdd81518a44f51e4e3b0a52f852e39783.jpeg') center/cover no-repeat;
         }
 
-       .navbar {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 56px;
-         background: linear-gradient(160deg,
-        rgba(255,255,255,0.08),
-        rgba(0,0,0,0.65)
-      );
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-      padding: 0 10px;
-      backdrop-filter: blur(2px) saturate(140%);
-       box-shadow: 
-    0 12px 28px rgba(0,0,0,0.45),
-    0 0 0 1px rgba(255,255,255,0.15) inset;
-      transition: height 0.2s ease, border-radius 0.2s ease, border-color 0.2s ease;
-      opacity: 0.92;
-      z-index: 9999;
-      will-change: height, border-radius;
-
-    }
-
-    .navbar:hover {
-      height: 64px;
-      border-radius: 20px;
-      border-color: rgba(0,180,255,0.6);
-    }
-
-    .navbar::after {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      pointer-events: none;
-      background: radial-gradient(circle at center,  rgba(255,255,255,0.08), transparent 70%);
-      opacity: 1;
-      transition: opacity 0.2s ease;
-    }
-
-    .navbar:hover::after {
-      opacity: 1;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 70%);
-    }
-
-    .navbar img {
-      width: 30px;
-      height: 30px;
-      transition: transform 0.15s ease;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,.6));
-      cursor: pointer;
-      will-change: transform;
-    }
-
-    .navbar img:hover {
-      transform: scale(1.25) translateY(-3px);
-    }
-    .navbar img:active{
-        transform: scale(0.97);
-    }
-
-        .nav-item {
-            width: 48px;
-            min-height: 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            text-decoration: none;
-            position: relative;
-            padding: 6px;
-        }
-
-        .nav-item:hover {
-            background: rgba(0,180,255,0.2);
-            border-color: rgba(0,180,255,0.5);
-            transform: scale(1.1);
-        }
-
-        .nav-item:active {
-            transform: scale(0.95);
-        }
-
-        .nav-emoji {
-            font-size: 20px;
-            line-height: 1;
-        }
-
-        .nav-text {
-            font-size: 9px;
-            font-weight: bold;
-            text-align: center;
-            color: white;
-            margin-top: 4px;
-            line-height: 1.2;
-            font-family: Arial, sans-serif;
-        }
-
-        .nav-label {
-            position: absolute;
-            left: 60px;
-            background: rgba(0,0,0,0.8);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s;
-            pointer-events: none;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        .nav-item:hover .nav-label {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Content iframe - transparent to show wallpaper behind */
-        #contentFrame {
+        /* Dark overlay for better text readability */
+        #wallpaperOverlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
-            background: transparent;
-            z-index: 1;
+            z-index: -1;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(0px);
         }
 
-        /* Settings Panel - Glassmorphism to show wallpaper behind */
-        .settings-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            backdrop-filter: blur(3px);
-        }
-
-        .settings-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .settings-panel {
+        /* Date/Time Widget on Wallpaper */
+        #datetimeWidget {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            background: rgba(20,20,20,0.85);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 24px;
-            padding: 40px;
-            backdrop-filter: blur(20px) saturate(180%);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(.2,.8,.2,1);
-            min-width: 700px;
-            max-width: 900px;
-            max-height: 85vh;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 0;
+            pointer-events: none;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        #timeDisplay {
+            font-size: 96px;
+            font-weight: 300;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI Light', sans-serif;
+        }
+
+        #dateDisplay {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Desktop Area */
+        #desktop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 70px);
+            z-index: 1;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 20px;
             overflow-y: auto;
         }
 
-        .settings-panel.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .settings-header {
+        /* Desktop Icons */
+        .desktop-icon {
+            width: 80px;
+            height: 90px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            position: relative;
+            padding: 8px;
         }
 
-        .settings-title {
-            font-family: Arial, sans-serif;
-            font-size: 28px;
-            font-weight: 600;
-            margin: 0;
-            background: linear-gradient(135deg, #fff, #a0a0a0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
         }
 
-        .close-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            font-size: 24px;
+        .desktop-icon.selected {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .desktop-icon img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .desktop-icon span {
+            font-size: 12px;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+
+        /* Windows 11 Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 48px;
+            background: rgba(32, 32, 32, 0.85);
+            backdrop-filter: blur(20px) saturate(125%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 9999;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+        }
+
+        .taskbar-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .taskbar-icon {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            font-size: 20px;
         }
 
-        .close-btn:hover {
-            background: rgba(255,0,0,0.3);
-            border-color: rgba(255,0,0,0.5);
-            transform: rotate(90deg);
+        .taskbar-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .wallpaper-section {
-            margin-bottom: 30px;
+        .taskbar-icon.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            width: 16px;
+            height: 3px;
+            background: #60cdff;
+            border-radius: 2px;
         }
 
-        .section-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.6);
+        .taskbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .system-tray {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .system-tray:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tray-time {
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Start Menu */
+        #startMenu {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            width: 600px;
+            height: 700px;
+            background: rgba(32, 32, 32, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease-out;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #startMenu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .start-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
+        }
+
+        .start-search {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 8px 16px;
+            color: white;
+            outline: none;
+        }
+
+        .start-search::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .start-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .start-item {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 24px;
+            gap: 5px;
+        }
+
+        .start-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .start-item span {
+            font-size: 11px;
+            text-align: center;
+            padding: 0 4px;
+        }
+
+        /* Windows */
+        .window {
+            position: fixed;
+            background: rgba(32, 32, 32, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.2s, opacity 0.2s;
+            min-width: 400px;
+            min-height: 300px;
+        }
+
+        .window.maximized {
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: calc(100% - 48px) !important;
+            border-radius: 0;
+        }
+
+        .window.minimized {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        .window-header {
+            height: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            cursor: move;
+            user-select: none;
+        }
+
+        .window-title {
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .window-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .minimize-btn { background: #ffbd2e; }
+        .maximize-btn { background: #28c840; }
+        .close-btn-win { background: #ff5f57; }
+
+        .window-content {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+            background: #1a1a1a;
+        }
+
+        .window-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        /* Game Store Styles - NoGuardian Theme */
+        .store-container {
+            height: 100%;
+            overflow-y: auto;
+            background: #0a0a0a;
             font-family: Arial, sans-serif;
+        }
+
+        .store-nav {
+            padding: 20px;
+            background: rgba(17,17,17,0.9);
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .store-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+            text-shadow: 0 0 10px rgba(229,9,20,0.5);
+        }
+
+        .store-topbar {
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(34,34,34,0.8);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .store-search {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            background: rgba(34,34,34,0.9);
+            color: white;
+            width: 200px;
+            outline: none;
+        }
+
+        .games-grid-store {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .game-card-store {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform .15s ease, box-shadow .15s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,.6);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .game-card-store:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(229,9,20,0.4);
+            border-color: rgba(229,9,20,0.5);
+        }
+
+        .game-name-store {
+            background: rgba(0,0,0,.85);
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            padding: 8px 0;
+            font-weight: bold;
+        }
+
+        .download-btn-store {
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px;
+            z-index: 10;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(229,9,20,0.4);
+        }
+
+        .download-btn-store:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(229,9,20,0.6);
+        }
+
+        .download-btn-store.downloaded {
+            background: #28c840;
+            box-shadow: 0 2px 8px rgba(40,200,64,0.4);
+        }
+
+        .play-btn-store {
+            background: #00ff00;
+            color: #000;
+        }
+
+        /* Preview Overlay within Store */
+        .preview-overlay-store {
+            display: none;
+            position: fixed;
+            top: 32px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 32px);
+            background: #000;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .preview-overlay-store.active { display: flex; }
+
+        .preview-header-store {
+            background: #111;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+            height: 40px;
+        }
+
+        .preview-title-store {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e50914;
+        }
+
+        .preview-close-store {
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .preview-content-store {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-frame-store {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        /* Settings Panel */
+        .settings-container {
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .settings-section {
+            margin-bottom: 40px;
+        }
+
+        .settings-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.9);
         }
 
         .wallpaper-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
         }
 
         .wallpaper-option {
-            position: relative;
             aspect-ratio: 16/10;
-            border-radius: 12px;
+            border-radius: 6px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(.2,.8,.2,1);
-            border: 3px solid transparent;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            position: relative;
         }
 
         .wallpaper-option:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0,180,255,0.4);
+            transform: scale(1.05);
+            border-color: rgba(255,255,255,0.5);
         }
 
         .wallpaper-option.active {
-            border-color: #00b4ff;
-            box-shadow: 0 0 0 4px rgba(0,180,255,0.3), 0 15px 35px rgba(0,180,255,0.5);
+            border-color: #60cdff;
+            box-shadow: 0 0 0 3px rgba(96, 205, 255, 0.3);
         }
 
         .wallpaper-option img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s;
         }
 
-        .wallpaper-option:hover img {
-            transform: scale(1.1);
+        /* Notifications */
+        #notificationArea {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .wallpaper-check {
-            position: absolute;
-            top: 8px;
-            right: 8px;
+        .notification {
+            background: rgba(32, 32, 32, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #60cdff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            animation: slideIn 0.3s ease-out;
+            max-width: 300px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Context Menu */
+        #contextMenu {
+            position: fixed;
+            background: rgba(32, 32, 32, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 8px 0;
+            z-index: 30000;
+            display: none;
+            min-width: 150px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .context-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .context-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .context-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 4px 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Browser Styles */
+        .browser-container {
+            width: 100%;
+            height: 100%;
+            background: #2b2b2b;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browser-ui {
+            height: 96px;
+            background: #2b2b2b;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #000000;
+        }
+
+        .browser-tabs {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 6px;
+            overflow-x: auto;
+            background: #2b2b2b;
+        }
+
+        .browser-tab {
+            height: 28px;
+            min-width: 120px;
+            max-width: 180px;
+            padding: 0 12px;
+            border-radius: 8px 8px 0 0;
+            background: #212121;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .browser-tab.active {
+            background: #151515;
+            color: white;
+        }
+
+        .browser-tab span {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .browser-tab i {
+            opacity: .6;
+            cursor: pointer;
+        }
+        .browser-tab i:hover {
+            opacity: 1;
+            color: #ff6b6b;
+        }
+
+        .browser-newtab {
             width: 28px;
             height: 28px;
-            background: #00b4ff;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .browser-newtab:hover { background: #444; }
+
+        .browser-navbar {
+            height: 58px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 12px;
+            background: #2b2b2b;
+        }
+
+        .browser-navbar button {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: #bbb;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .browser-navbar button:hover {
+            background: #3a3a3a;
+            color: white;
+        }
+
+        .browser-urlbar {
+            flex: 1;
+            height: 36px;
+            background: #161616;
+            border-radius: 18px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .browser-urlbar input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        .browser-view {
+            flex: 1;
+            position: relative;
+            background: #1a1a1a;
+        }
+
+        .browser-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+
+        .browser-frame.active {
+            display: block;
+        }
+
+        .browser-ntp {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 48px;
+            font-weight: 300;
+        }
+
+        /* Movies App Styles */
+        .movies-container {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .movies-starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .movies-header {
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 10;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .movies-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .movies-nav-tab {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .movies-nav-tab:hover, .movies-nav-tab.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .movies-search-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 10px 0 30px 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .movies-search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 920px;
+            max-width: 100%;
+        }
+
+        .movies-search-input {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(20,20,20,1);
+            color: #fff;
+            outline: none;
+        }
+
+        .movies-search-input:focus {
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            border-color: #fff;
+        }
+
+        .movies-rating-select {
+            min-width: 140px;
+            height: 46px;
+            border-radius: 50px;
+            padding: 10px 16px;
+            font-size: 14px;
+            background: rgba(20,20,20,1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            padding: 0 20px 60px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .movie-card {
+            position: relative;
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .movie-image-container {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .movie-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .movie-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .movie-card:hover .movie-play-overlay {
+            opacity: 1;
+        }
+
+        .movie-play-button {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.2s;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
+            transition: transform 0.3s ease;
         }
 
-        .wallpaper-option.active .wallpaper-check {
-            opacity: 1;
-            transform: scale(1);
+        .movie-play-button:hover {
+            transform: scale(1.1);
         }
 
-        .wallpaper-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 10px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            font-size: 12px;
+        .movie-play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 16px solid #000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 4px;
+        }
+
+        .movie-card h4 {
+            padding: 12px;
+            font-size: 14px;
             text-align: center;
-            opacity: 0;
-            transition: opacity 0.2s;
-            font-family: Arial, sans-serif;
+            color: #fff;
+            background: #000;
             font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .wallpaper-option:hover .wallpaper-label {
-            opacity: 1;
-        }
-
-        .add-wallpaper {
-            border: 2px dashed rgba(255,255,255,0.3);
-            display: flex;
-            flex-direction: column;
+        .movie-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.95);
+            display: none;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            color: rgba(255,255,255,0.6);
-            font-size: 12px;
-            background: rgba(255,255,255,0.05);
-        }
-
-        .add-wallpaper:hover {
-            border-color: #00b4ff;
-            color: #00b4ff;
-            background: rgba(0,180,255,0.1);
-        }
-
-        .add-icon {
-            font-size: 28px;
-        }
-
-        .custom-url-section {
-            margin-top: 20px;
+            z-index: 1000;
             padding: 20px;
-            background: rgba(255,255,255,0.05);
+        }
+
+        .movie-modal.active {
+            display: flex;
+        }
+
+        .movie-modal-content {
+            width: 100%;
+            max-width: 900px;
+            background: #111;
             border-radius: 12px;
+            overflow: hidden;
+            padding: 20px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 50px rgba(255,255,255,0.05);
+        }
+
+        .movie-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .movie-modal-close:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .movie-modal-title {
+            font-size: 24px;
+            text-align: center;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 0 80px;
+        }
+
+        .movie-modal-iframe-wrap {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .url-input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .url-input {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.3);
-            color: white;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .url-input:focus {
-            border-color: #00b4ff;
-        }
-
-        .url-btn {
-            padding: 12px 24px;
-            border-radius: 8px;
+        .movie-modal-iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            background: linear-gradient(135deg, #00b4ff, #0080ff);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .url-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,180,255,0.4);
-        }
-
-        /* Preview text */
-        .current-wallpaper {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0,180,255,0.1);
-            border-radius: 8px;
-            border-left: 4px solid #00b4ff;
-        }
-
-        .current-wallpaper-text {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-            font-family: Arial, sans-serif;
-        }
-
-        /* Category tabs */
-        .category-tabs {
+        .movie-modal-controls {
             display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 10px;
-            margin-bottom: 20px;
+            padding: 10px;
             flex-wrap: wrap;
         }
 
-        .category-tab {
-            padding: 8px 16px;
-            border-radius: 20px;
+        .movie-modal-controls select {
+            background-color: #000;
+            color: #fff;
             border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.7);
-            cursor: pointer;
-            transition: all 0.2s;
+            padding: 10px 16px;
+            border-radius: 25px;
             font-size: 13px;
-        }
-
-        .category-tab:hover {
-            background: rgba(0,180,255,0.2);
-            border-color: rgba(0,180,255,0.5);
-        }
-
-        .category-tab.active {
-            background: rgba(0,180,255,0.3);
-            border-color: #00b4ff;
-            color: white;
+            appearance: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    
-    <!-- Wallpaper Background Layer -->
+
+    <!-- Wallpaper Layers -->
     <div id="wallpaperLayer"></div>
+    <div id="wallpaperOverlay"></div>
 
-    <!-- Navigation Sidebar -->
-    <div id="navbar" class="navbar">
-        <a onclick="gms()" class="nav-item">
-            <span class="nav-emoji">🎮</span>
-            <span class="nav-text">Games</span>
-        </a>
-        <a onclick="loadPage('b.html')" class="nav-item">
-            <span class="nav-emoji">🌐</span>
-            <span class="nav-text">Browser</span>
-        </a>
-        <a onclick="loadPage('movies.html')" class="nav-item">
-            <span class="nav-emoji">🎬</span>
-            <span class="nav-text">Movies & TV</span>
-        </a>
-        <a onclick="loadPage('app.html')" class="nav-item">
-            <span class="nav-emoji">📱</span>
-            <span class="nav-text">Apps</span>
-        </a>
-        <a onclick="toggleSettings()" class="nav-item">
-            <span class="nav-emoji">⚙️</span>
-            <span class="nav-text">Settings</span>
-        </a>
+    <!-- Date/Time Widget -->
+    <div id="datetimeWidget">
+        <div id="timeDisplay">00:00</div>
+        <div id="dateDisplay">Loading...</div>
     </div>
 
-    <div id="gmsDiv">
-  <button class="close-btn" onclick="document.getElementById('gmsDiv').style.display = 'none';">●</button>
+    <!-- Desktop Area -->
+    <div id="desktop">
+        <!-- Desktop icons will be generated here -->
+    </div>
 
-        <h3 style="  left: 50%; color:white; top:5px; position: absolute;   transform: translateX(-50%);" >Games</h3>
-
-
-
- 
-<iframe id="gmsframe" class="gmsframe" src="g.html"></iframe>
-  <style>
-    .gmsframe{
-      width:100%;
-      height:95%;
-      bottom:10px;
-      position: absolute;
-      border:none;
-      border-radius:0px 0px 15px 15px;
-      left: 0;
-      bottom: 0;
-    }
- .close-btn {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-  padding: 0;
-  font-size: 20px;
-
-  position: absolute; /* important */
-  top: 0;              /* stick to top */
-  left: 0;            /* usually for close buttons */
-}
-.close-btn:hover{
-    color:red
-
-}
-
-
- @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      100% {
-        opacity: 80%;
-        transform: scale(1);
-      }
-    }
-     @keyframes popIn2 {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      100% {
-        opacity: 100%;
-        transform: scale(1);
-      }
-    }
-       #gmsDiv {
-    display: none;
-    margin-top: 20px;
-    padding: 10px;
-background-color: rgba(5, 139, 196, 0.504);
-  border: 1px solid rgba(0,180,255,.5);  
-    color: white;
-    inset: 0;
-    margin:auto;
-    position: fixed;
-    z-index: 1000;
-    border-radius:12px; 
-    width:70%;
-    height: 71%; 
-    overflow-x: hidden;
-    overflow-y: auto;
-box-shadow: 2px #141414;
-      animation: popIn2 0.5s ease-out forwards;
-
-  }
-   
-  </style>
-   <script>
-    function fullscreenIframe3() {
-      let iframe = document.getElementById("mframe");
-      if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-      } else if (iframe.mozRequestFullScreen) { 
-        iframe.mozRequestFullScreen();
-      } else if (iframe.webkitRequestFullscreen) { 
-        iframe.webkitRequestFullscreen();
-      } else if (iframe.msRequestFullscreen) { 
-        iframe.msRequestFullscreen();
-      }
-    }
-  </script>
-           
-</div>
-
-    <!-- Settings Overlay -->
-    <div class="settings-overlay" id="settingsOverlay" onclick="toggleSettings()"></div>
-
-    <!-- Settings Panel -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-header">
-            <h2 class="settings-title">⚙️ Settings</h2>
-            <button class="close-btn" onclick="toggleSettings()">×</button>
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="taskbar-center">
+            <div class="taskbar-icon" id="startBtn" onclick="toggleStartMenu()" title="Start">🪟</div>
+            <div class="taskbar-icon" onclick="openGameStore()" title="Game Store">🎮</div>
+            <div class="taskbar-icon" onclick="openBrowser()" title="Browser">🌐</div>
+            <div class="taskbar-icon" onclick="openWindow('Files', '📁', 'files.html')" title="Files">📁</div>
+            <div class="taskbar-icon" onclick="openSettings()" title="Settings">⚙️</div>
         </div>
-
-        <div class="wallpaper-section">
-            <div class="section-title">🖼️ Choose your wallpaper</div>
-            
-            <!-- Category Tabs -->
-            <div class="category-tabs">
-                <div class="category-tab active" onclick="filterWallpapers('all')">All</div>
-                <div class="category-tab" onclick="filterWallpapers('anime')">Anime</div>
-                <div class="category-tab" onclick="filterWallpapers('nature')">Nature</div>
-                <div class="category-tab" onclick="filterWallpapers('city')">City</div>
-                <div class="category-tab" onclick="filterWallpapers('space')">Space</div>
-            </div>
-
-            <div class="wallpaper-grid" id="wallpaperGrid">
-                <!-- Wallpapers generated by JavaScript -->
-            </div>
-        </div>
-
-        <div class="current-wallpaper" id="currentWallpaperInfo">
-            <div class="current-wallpaper-text">Current: <span id="currentWpName">Default</span></div>
-        </div>
-
-        <div class="custom-url-section">
-            <div class="section-title">➕ Add custom wallpaper</div>
-            <div class="url-input-group">
-                <input type="text" class="url-input" id="customUrl" placeholder="Enter image URL...">
-                <button class="url-btn" onclick="addCustomWallpaper()">Add</button>
+        
+        <div class="taskbar-right">
+            <div class="system-tray">
+                <span>🔊</span>
+                <span>📶</span>
+                <div class="tray-time" id="trayTime">
+                    <div id="trayClock">00:00</div>
+                    <div id="trayDate" style="font-size: 11px;">00/00/0000</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Content Iframe -->
-    <iframe id="contentFrame" src="start.html"></iframe>
+    <!-- Start Menu -->
+    <div id="startMenu">
+        <div class="start-header">
+            <input type="text" class="start-search" placeholder="Type here to search" id="startSearch">
+        </div>
+        <div style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.8);">Pinned</div>
+        <div class="start-grid" id="startGrid">
+            <!-- Generated by JS -->
+        </div>
+    </div>
+
+    <!-- Notification Area -->
+    <div id="notificationArea"></div>
+
+    <!-- Context Menu -->
+    <div id="contextMenu">
+        <div class="context-item" onclick="refreshDesktop()">🔄 Refresh</div>
+        <div class="context-divider"></div>
+        <div class="context-item" onclick="openSettings()">⚙️ Settings</div>
+        <div class="context-item" onclick="toggleStartMenu()">🪟 Open Start</div>
+    </div>
 
     <script>
-        // Default wallpapers collection with categories
-        const wallpapers = [
-            { id: 'default', url: 'https://i.pinimg.com/736x/8e/d9/33/8ed93366a95da86f13ae3e50582944f3.jpg', name: 'Default', category: 'nature' },
-            
-            // Anime Wallpapers
-            { id: 'goku', url: 'https://c.tenor.com/2vNulb0EXpQAAAAC/goku-saiyan.gif', name: 'Goku SSJ', category: 'anime' },
-            { id: 'anime-city-night', url: 'https://images.hdqwalls.com/download/tokyo-night-cityscape-anime-te-2048x2048.jpg', name: 'Tokyo Night', category: 'anime' },
-            { id: 'anime-city-lights', url: 'https://w0.peakpx.com/wallpaper/624/160/HD-wallpaper-anime-city-light-night.jpg', name: 'City Lights', category: 'anime' },
-            { id: 'anime-mountain', url: 'https://wallpapercave.com/wp/wp5915553.jpg', name: 'Anime Mountains', category: 'anime' },
-            { id: 'anime-starry', url: 'https://artfiles.alphacoders.com/133/thumb-1920-133421.jpg', name: 'Starry Night', category: 'anime' },
-            { id: 'anime-neon', url: 'https://wallpapers.com/images/hd/anime-night-city-n2ybc1ke0v8bog0e.jpg', name: 'Neon Streets', category: 'anime' },
-            { id: 'anime-twilight', url: 'https://images.stockcake.com/public/9/a/5/9a5e89c4-dbdb-4dcd-9249-5b30a15275c0_large/neon-twilight-city-stockcake.jpg', name: 'Twilight City', category: 'anime' },
-            { id: 'anime-park', url: 'https://wallpapers.com/images/hd/anime-city-night-park-vmgrwvvkr3dqy2tt.jpg', name: 'Night Park', category: 'anime' },
-            
-            // Nature Wallpapers
-            { id: 'aurora', url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920', name: 'Aurora Borealis', category: 'nature' },
-            { id: 'mountains', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920', name: 'Mountains', category: 'nature' },
-            { id: 'ocean', url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920', name: 'Ocean Waves', category: 'nature' },
-            { id: 'forest', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920', name: 'Forest', category: 'nature' },
-            { id: 'nature', url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920', name: 'Nature', category: 'nature' },
-            
-            // City Wallpapers
-            { id: 'city', url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920', name: 'City Night', category: 'city' },
-            { id: 'neon', url: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=1920', name: 'Neon City', category: 'city' },
-            
-            // Space Wallpapers
-            { id: 'space', url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920', name: 'Space', category: 'space' },
-            
-            // Abstract
-            { id: 'abstract', url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1920', name: 'Abstract', category: 'nature' }
+        // Game Database - NoGuardian Games (73 items including Movies)
+        const gamesDB = [
+            { id: 'roblox', name: 'Roblox', image: 'https://tse3.mm.bing.net/th/id/OIP.Suu0wkaP6duvpXY_gWJucgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://nevertraveling.thepresenttraveller.com/gamefile/nowgg/roblox.html?prefix=149' },
+            { id: 'gta', name: 'GTA Vice City', image: 'https://tse2.mm.bing.net/th/id/OIP.T6kQS4BQ4CCT6jlXGtAuDgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://sites.google.com/view/gtavicecityforclassroomspot/sdds?authuser=1', external: true },
+            { id: 'sonic', name: 'Sonic', image: 'https://www.bing.com/th/id/OIP.oIxKByEEPvxJynlJ-lejUwHaD4?w=258&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://classlink.com.de/games/sonic/index.html' },
+            { id: 'leveldevil', name: 'Level Devil', image: 'https://www.bing.com/th/id/OIP.I0DJIM69u3fkaj32V4IX8QAAAA?w=206&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://classlink.com.de/games/lvldevil/index.html' },
+            { id: 'subwaysurfers', name: 'Subway Surfers', image: 'https://th.bing.com/th/id/OIP.kHOQ3zf6vvyOAUXDY4wWNwHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://classlink.com.de/games/subway-surfers/index.html' },
+            { id: 'slope', name: 'Slope', image: 'https://www.bing.com/th/id/OIP.QdGX2PGxPzeZDTxizb5DOwHaDl?w=235&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-embeds.vercel.app/games/slope/index.html' },
+            { id: 'flappy', name: 'Flappy Bird', image: 'https://www.bing.com/th/id/OIP.Vn5yYlroJGjlEWzpLcJL3gHaHa?w=226&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-embeds.vercel.app/games/flappy/index.html' },
+            { id: 'sm64', name: 'Super Mario 64', image: 'https://www.bing.com/th/id/OIP.5ts3jBQ9iMbitz2WxBvePQHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-embeds.vercel.app/games/sm64/index.html' },
+            { id: 'run3', name: 'Run 3', image: 'https://www.bing.com/th/id/OIP.2MCJFTF30qp63QBJVZTbpgHaHa?w=188&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-embeds.vercel.app/games/run3/index.html' },
+            { id: 'crossy', name: 'Crossy Road', image: 'https://tse2.mm.bing.net/th/id/OIP.g_0cjaKQTHUf0cFtbYo6NwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-embeds.vercel.app/games/crossy/index.html' },
+            { id: 'eaglercraft', name: 'Eaglercraft', image: 'https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png', url: 'https://seraph-embeds.vercel.app/games/mc/index.html' },
+            { id: 'cookieclicker', name: 'Cookie Clicker', image: 'https://pizza-clicker.com/wp-content/uploads/2024/12/Cookie-Clicker--150x150.webp', url: 'https://seraph-embeds.vercel.app/games/cookieclicker/index.html' },
+            { id: 'templerun2', name: 'Temple Run 2', image: 'https://th.bing.com/th/id/OIP.L38fbUWeHDJCAvcI3RsT9gHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-embeds.vercel.app/games/templerun2/index.html' },
+            { id: 'jetpack', name: 'Jetpack Joyride', image: 'https://tse3.mm.bing.net/th/id/OIP.okzWNhg-I0noPToN2c_VkQHaHa?pid=ImgDet&w=474&h=474&rs=1&o=7&rm=3', url: 'https://seraph-embeds.vercel.app/games/jetpackjoyride/index.html' },
+            { id: 'retrobowl', name: 'Retro Bowl', image: 'https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ', url: 'https://seraph-embeds.vercel.app/games/retrobowl/index.html' },
+            { id: 'fruitninja', name: 'Fruit Ninja', image: 'https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/c4dc286c30b8fbde45a0b5d4fe6f2146/fruit-ninja.png', url: 'https://seraph-embeds.vercel.app/games/fruitninja/index.html' },
+            { id: 'justfall', name: 'JustFall.lol', image: 'https://th.bing.com/th/id/OIP.ersDkiJosBRijaGMqY0IqwHaFj?w=80&h=80&c=12&rs=1&r=0&o=6&pid=23.1', url: 'https://justfall.lol' },
+            { id: 'snowrider', name: 'Snow Rider 3D', image: 'https://tse1.mm.bing.net/th/id/OIP.sAfBrkOicv159Rfst1m_LQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/snowrider3d/index.html' },
+            { id: 'v1v1lol', name: '1v1.lol', image: 'https://www.bing.com/th/id/OIP.jv6iR5gwlta2uwmJ-zoJmgHaHa?w=181&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/1v1lol/index.html' },
+            { id: 'basketrandom', name: 'Basket Random', image: 'https://tse4.mm.bing.net/th/id/OIP.ODjmdKROvha8EqUPurHRGAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/basketrandom/index.html' },
+            { id: 'boxingrandom', name: 'Boxing Random', image: 'https://tse1.mm.bing.net/th/id/OIP.YIy-VT9zXUpO6d0gFEb86gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/boxingrandom/index.html' },
+            { id: 'soccerrandom', name: 'Soccer Random', image: 'https://tse3.mm.bing.net/th/id/OIP.ZcCDpENt03hhsqJlU5R8uwHaHa?w=512&h=512&rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/soccerrandom/index.html' },
+            { id: 'volleyrandom', name: 'Volley Random', image: 'https://www.bing.com/th/id/OIP.k79muXvF9OB_2kdO30GOBgHaHa?w=191&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/volleyrandom/index.html' },
+            { id: 'superhot', name: 'SUPERHOT', image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co7ybp.webp', url: 'https://seraph-lilac-zeta.vercel.app/games/superhot/index.html' },
+            { id: 'fnf', name: 'Friday Night Funkin', image: 'https://tse2.mm.bing.net/th/id/OIP.PWszDPU4F1bEHCs6gpsgnAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/fnf/index.html' },
+            { id: 'driftboss', name: 'Drift Boss', image: 'https://www.bing.com/th/id/OIP.VjI7f1Px8UIv9Ysiu0qpIQHaHa?w=204&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/driftboss/index.html' },
+            { id: 'timeshooter2', name: 'Time Shooter 2', image: 'https://tse4.mm.bing.net/th/id/OIP.cOZgMg4Dr9nRfMGiBH91QwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/timeshooter2/index.html' },
+            { id: 'gdlite', name: 'Geometry Dash Lite', image: 'https://tse1.mm.bing.net/th/id/OIP._J04MdyKvWMenHd1GU8cNAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/gdlite/index.html' },
+            { id: 'fnfmidfight', name: 'FNF Mid-Fight Masses', image: 'https://th.bing.com/th/id/OIP.BQlG25LlI5YOwhUydk5OHwHaFj?w=236&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/fnfmidfight/index.html' },
+            { id: 'newsupermariobros', name: 'New Super Mario Bros', image: 'https://th.bing.com/th/id/OIP.1UMmAqIe9Y3SeDmFLj6KEgHaHa?w=176&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/newsupermariobros/index.html' },
+            { id: 'mariokartds', name: 'Mario Kart DS', image: 'https://www.bing.com/th/id/OIP.kGcU1P9BOLscMj-Aoxw34QHaGp?w=225&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/mariokartds/index.html' },
+            { id: 'amongus', name: 'Among Us', image: 'https://th.bing.com/th/id/OIP.8JkOfq65BTCs96gDsGeSnwHaHa?w=183&h=183&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/amongus/index.html' },
+            { id: 'doom', name: 'DOOM', image: 'https://www.bing.com/th/id/OIP.uGTRf6-S7y1gaN_xexSG9QHaLH?w=160&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/doom/index.html' },
+            { id: 'boxingphysics2', name: 'Boxing Physics 2', image: 'https://th.bing.com/th/id/OIP.7WUKPapKlGB6Re0sfeGKTwAAAA?w=167&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/boxingphysics2/index.html' },
+            { id: 'sonic2', name: 'Sonic 2', image: 'https://www.bing.com/th/id/OIP.B8PDK6z22HyABvgXoRzqLgHaFj?w=215&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/sonicthehedgehog2/index.html' },
+            { id: 'vex', name: 'Vex', image: 'https://tse4.mm.bing.net/th/id/OIP.irCqiSdQgiQLYFSDhmI5jwHaHa?pid=ImgDet&w=201&h=201&c=7&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/vex/index.html' },
+            { id: 'vex2', name: 'Vex 2', image: 'https://tse3.mm.bing.net/th/id/OIP.z7WLcL4b941WvDFf9uJsDgAAAA?pid=ImgDet&w=150&h=150&c=7&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/vex2/index.html' },
+            { id: 'vex3', name: 'Vex 3', image: 'https://www.bing.com/th/id/OIP.fRaMSIMs6JuIkyVHc0RtjQHaHa?w=183&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/vex3/index.html' },
+            { id: 'vex4', name: 'Vex 4', image: 'https://www.bing.com/th/id/OIP.hxYh-KA81zWC9V8cB9ItEgAAAA?w=167&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/vex4/index.html' },
+            { id: 'vex5', name: 'Vex 5', image: 'https://www.bing.com/th/id/OIP.7BAUEIbKfNaQAUepVZJtFAHaHa?w=190&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/vex5/index.html' },
+            { id: 'vex6', name: 'Vex 6', image: 'https://tse3.mm.bing.net/th/id/OIP.cXrw9OsCAC9tMHE_cA7mlwHaGg?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/vex6/index.html' },
+            { id: 'vex7', name: 'Vex 7', image: 'https://th.bing.com/th/id/OIP.sYs-7YAO_yUfe66qHYna6wAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/vex7/index.html' },
+            { id: 'fireboywatergirl', name: 'Fireboy & Watergirl', image: 'https://th.bing.com/th/id/OIP.JwTVnLrA8yUp5QzlTLi-6QHaD4?w=324&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/fireboywatergirl/index.html' },
+            { id: 'deathrun3d', name: 'Death Run 3D', image: 'https://www.bing.com/th/id/OIP.Aqk0DtQD3b9IRKAwdUNtXgHaHa?w=200&h=200&c=8&rs=1&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/deathrun3d/index.html' },
+            { id: 'simpsonsroadrage', name: 'Simpsons Road Rage', image: 'https://th.bing.com/th/id/OIP.zEwC5qNpl_gXyiMcyy3EXAAAAA?w=166&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/simpsonsroadrage/index.html' },
+            { id: 'doodlejump', name: 'Doodle Jump', image: 'https://th.bing.com/th/id/OIP.rAribFaLtd9oT2WDMzcXagHaHa?w=108&h=108&c=1&bgcl=af6d64&r=0&o=7&pid=ImgRC&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/doodlejump/index.html' },
+            { id: 'shift', name: 'Shift', image: 'https://tse2.mm.bing.net/th/id/OIP.iBTnDbODR6BW0CUT0q-ClgAAAA?pid=ImgDet&w=164&h=137&c=7&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/shift/index.html' },
+            { id: 'shift2', name: 'Shift 2', image: 'https://tse4.mm.bing.net/th/id/OIP.wgsdX0uVUb3itzbW0ZbY3wAAAA?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/shift2/index.html' },
+            { id: 'dogeminer', name: 'Doge Miner', image: 'https://www.bing.com/th/id/OIP.D60KTKjilfSDXDWPjr2m4AHaGH?w=196&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/dogeminer/index.html' },
+            { id: 'riddleschool1', name: 'Riddle School 1', image: 'https://th.bing.com/th/id/OIP.gLCNBY9qcTXJZRuGK3qh3AAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool1/index.html' },
+            { id: 'riddleschool2', name: 'Riddle School 2', image: 'https://th.bing.com/th/id/OIP.Gz1cSkUwmhnRzU61AdQWiQAAAA?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool2/index.html' },
+            { id: 'riddleschool3', name: 'Riddle School 3', image: 'https://tse1.mm.bing.net/th/id/OIP.kfBTsf4m5bgKhbHHHxcTLwAAAA?pid=ImgDet&w=199&h=150&c=7&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool3/index.html' },
+            { id: 'riddleschool4', name: 'Riddle School 4', image: 'https://images.rocketgames.io/uploads/games/r/riddle-school-4/riddle-school-4.e88bea.jpg?w=204&dpr=1', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool4/index.html' },
+            { id: 'riddleschool5', name: 'Riddle School 5', image: 'https://rocketgames.imgix.net/uploads/games/r/riddle-school-5/riddle-school-5.ac6eb4.jpg?auto=format,compress,enhance&w=204&dpr=1', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddleschool5/index.html' },
+            { id: 'riddletransfer', name: 'Riddle Transfer', image: 'https://www.bing.com/th/id/OIP.HLEnImAG2nERQPwUakD75wHaDy?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer/index.html' },
+            { id: 'riddletransfer2', name: 'Riddle Transfer 2', image: 'https://www.bing.com/th/id/OIP.IFnlQI-vhGZE77RZkCG_NwHaEX?w=229&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', url: 'https://seraph-lilac-zeta.vercel.app/games/riddleschool/riddletransfer2/index.html' },
+            { id: 'happywheels', name: 'Happy Wheels', image: 'https://th.bing.com/th/id/OIP.Vui68qhUBvIYG3VMgJvJQgHaHa?w=178&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/happywheels/index.html' },
+            { id: 'drifthunters', name: 'Drift Hunters', image: 'https://th.bing.com/th/id/OIP.bJBJmYEGpuNUNgP90v6XTQHaHa?w=181&h=181&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/drifthunters/index.html' },
+            { id: 'baldisbasics', name: 'Baldis Basics', image: 'https://th.bing.com/th/id/OIP.mVKO5R9DdbIGnXtwrgzHVwHaHa?w=170&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/baldisbasics/index.html' },
+            { id: 'basketbros', name: 'Basket Bros', image: 'https://th.bing.com/th/id/OIP.P3foEkf_UBvx7aDuZD3nUAHaHZ?w=173&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/basketbrosio/index.html' },
+            { id: 'eagler18', name: 'Minecraft 1.8', image: 'https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/2c79aeea85b1abb37f8cf9fbcdc382b0.png', url: 'https://seraph-lilac-zeta.vercel.app/games/eagler1.8/index.html' },
+            { id: 'fnaf1', name: 'FNAF 1', image: 'https://th.bing.com/th/id/OIP.XW_OsPwLtSFaQrOSHEr5eAHaHa?w=174&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/fnaf/index.html' },
+            { id: 'fnaf2', name: 'FNAF 2', image: 'https://m.gjcdn.net/fireside-post-image/900/3467800-ppykcyyi-v4.jpg', url: 'https://seraph-lilac-zeta.vercel.app/games/fnaf-2/index.html' },
+            { id: 'fnaf3', name: 'FNAF 3', image: 'https://assets1.ignimgs.com/2020/02/04/five-nights-at-freddys-3---button-2020-1580781479018.jpg', url: 'https://seraph-lilac-zeta.vercel.app/games/fnaf-3/index.html' },
+            { id: 'fnaf4', name: 'FNAF 4', image: 'https://th.bing.com/th/id/OIP.FQBfMq9Y3PMCGyw_kC6HlgHaHa?w=177&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/fnaf-4/index.html' },
+            { id: 'motox3m', name: 'Moto X3M', image: 'https://tse1.mm.bing.net/th/id/OIP.ot9ulyBW2vqbzv6bNd0gRQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/motox3m/index.html' },
+            { id: 'stickmanhook', name: 'Stickman Hook', image: 'https://th.bing.com/th/id/OIP.UEKMsdk-eU43lfHA0j9naQHaHa?w=162&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://seraph-lilac-zeta.vercel.app/games/stickmanhook/index.html' },
+            { id: 'bendy', name: 'Bendy', image: 'https://tse3.mm.bing.net/th/id/OIP.RTz7git_IoykZEI7Sjw2DQHaHa?w=768&h=768&rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://sites.google.com/view/noguardiang2/game-bendy?authuser=1', external: true },
+            { id: 'angrybirds', name: 'Angry Birds', image: 'https://tse4.mm.bing.net/th/id/OIP.UxuhKcJ5YjBd8k8zGneZyQHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3', url: 'https://sites.google.com/view/noguardiang1/game-a?authuser=1', external: true },
+            { id: 'fnafepstein', name: 'Five Nights at Epsteins', image: 'https://th.bing.com/th/id/OIP.cmAzM1da671zoApQ5Cp8vQHaEK?w=313&h=180&c=7&r=0&o=7&pid=1.7&rm=3', url: 'https://sites.google.com/view/noguardiang3/game-fnae?authuser=1', external: true },
+            // SPECIAL APP: Movies
+            { id: 'movies', name: 'NoGuardian TV', image: 'https://cdn-icons-png.flaticon.com/512/1179/1179120.png', url: 'movies', isApp: true, special: 'movies' }
         ];
 
-        let currentWallpaperId = localStorage.getItem('brainy_wallpaper_id') || 'default';
-        let currentFilter = 'all';
+        // State
+        let downloadedGames = JSON.parse(localStorage.getItem('downloadedGames') || '[]');
+        let openWindows = {};
+        let windowCount = 0;
+        let activeWindow = null;
+        let currentWallpaper = localStorage.getItem('wallpaper') || 'rose';
+        let browserTabs = {};
+        let browserTabCounter = 0;
+        let activeBrowserTab = null;
 
-        // Initialize on load
+        // Wallpapers
+        const wallpapers = {
+            rose: 'https://kimi-web-img.moonshot.cn/img/4kwallpapers.com/fe80e6fbdd81518a44f51e4e3b0a52f852e39783.jpeg',
+            nature: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920',
+            city: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920',
+            space: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920',
+            abstract: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1920'
+        };
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            renderWallpapers();
-            applyWallpaper(currentWallpaperId, false);
+            updateTime();
+            setInterval(updateTime, 1000);
+            renderDesktop();
+            renderStartMenu();
+            setupEventListeners();
+            loadWallpaper();
         });
 
-        function filterWallpapers(category) {
-            currentFilter = category;
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            const shortDate = now.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
             
-            // Update tab styles
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.textContent.toLowerCase() === category || (category === 'all' && tab.textContent === 'All')) {
-                    tab.classList.add('active');
+            document.getElementById('timeDisplay').textContent = timeStr;
+            document.getElementById('dateDisplay').textContent = dateStr;
+            document.getElementById('trayClock').textContent = timeStr;
+            document.getElementById('trayDate').textContent = shortDate;
+        }
+
+        function loadWallpaper() {
+            const layer = document.getElementById('wallpaperLayer');
+            layer.style.backgroundImage = `url('${wallpapers[currentWallpaper]}')`;
+        }
+
+        function renderDesktop() {
+            const desktop = document.getElementById('desktop');
+            desktop.innerHTML = '';
+            
+            // Add downloaded games to desktop
+            downloadedGames.forEach(gameId => {
+                const game = gamesDB.find(g => g.id === gameId);
+                if (game) {
+                    const icon = createDesktopIcon(game.name, game.image, () => launchGame(game));
+                    desktop.appendChild(icon);
                 }
             });
+
+            // Add Recycle Bin
+            const recycleBin = createDesktopIcon('Recycle Bin', '🗑️', () => showNotification('Recycle Bin', 'Recycle Bin is empty'));
+            desktop.appendChild(recycleBin);
+        }
+
+        function createDesktopIcon(name, imageSrc, onClick) {
+            const div = document.createElement('div');
+            div.className = 'desktop-icon';
             
-            renderWallpapers();
-        }
-
-        function renderWallpapers() {
-            const grid = document.getElementById('wallpaperGrid');
-            const filtered = currentFilter === 'all' 
-                ? wallpapers 
-                : wallpapers.filter(wp => wp.category === currentFilter);
+            // Check if imageSrc is an emoji or URL
+            const isEmoji = !imageSrc.startsWith('http');
             
-            grid.innerHTML = filtered.map(wp => `
-                <div class="wallpaper-option ${wp.id === currentWallpaperId ? 'active' : ''}" 
-                     onclick="selectWallpaper('${wp.id}')" 
-                     data-id="${wp.id}">
-                    <img src="${wp.url}" alt="${wp.name}" loading="lazy">
-                    <div class="wallpaper-check">✓</div>
-                    <div class="wallpaper-label">${wp.name}</div>
-                </div>
-            `).join('') + `
-                <div class="wallpaper-option add-wallpaper" onclick="focusCustomUrl()">
-                    <span class="add-icon">+</span>
-                    <span>Add URL</span>
-                </div>
-            `;
-        }
-
-        function selectWallpaper(id) {
-            currentWallpaperId = id;
-            localStorage.setItem('brainy_wallpaper_id', id);
-            applyWallpaper(id, true);
-            renderWallpapers();
-            updateCurrentWallpaperText();
-        }
-
-        function applyWallpaper(id, animate = true) {
-            const wp = wallpapers.find(w => w.id === id);
-            if (!wp) return;
-
-            const layer = document.getElementById('wallpaperLayer');
+            div.innerHTML = isEmoji ? 
+                `<div style="font-size: 40px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">${imageSrc}</div>` :
+                `<img src="${imageSrc}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                 <div style="font-size: 40px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); display: none;">🎮</div>`;
             
-            if (animate) {
-                // Fade out, change, fade in
-                layer.style.opacity = '0';
-                setTimeout(() => {
-                    layer.style.backgroundImage = `url('${wp.url}')`;
-                    layer.style.opacity = '1';
-                }, 300);
-            } else {
-                layer.style.backgroundImage = `url('${wp.url}')`;
-                layer.style.opacity = '1';
-            }
-
-            // Also update body background as fallback
-            document.body.style.backgroundImage = `url('${wp.url}')`;
+            div.innerHTML += `<span>${name}</span>`;
+            div.onclick = onClick;
+            div.oncontextmenu = (e) => {
+                e.preventDefault();
+                showContextMenu(e.pageX, e.pageY);
+            };
+            return div;
         }
 
-        function updateCurrentWallpaperText() {
-            const wp = wallpapers.find(w => w.id === currentWallpaperId);
-            document.getElementById('currentWpName').textContent = wp ? wp.name : 'Unknown';
-        }
-
-        function addCustomWallpaper() {
-            const url = document.getElementById('customUrl').value.trim();
-            if (!url) {
-                alert('Please enter a URL');
-                return;
-            }
-            
-            // Validate URL
-            try {
-                new URL(url);
-            } catch {
-                alert('Please enter a valid URL');
-                return;
-            }
-
-            const id = 'custom_' + Date.now();
-            const name = 'Custom ' + (wallpapers.filter(w => w.id.startsWith('custom')).length + 1);
-            
-            wallpapers.push({ id, url, name, category: 'custom' });
-            selectWallpaper(id);
-            document.getElementById('customUrl').value = '';
-        }
-
-        function focusCustomUrl() {
-            document.getElementById('customUrl').focus();
-        }
-
-        function loadPage(url) {
-            document.getElementById('contentFrame').src = url;
-        }
-
-        function toggleSettings() {
-            const panel = document.getElementById('settingsPanel');
-            const overlay = document.getElementById('settingsOverlay');
-            const isActive = panel.classList.contains('active');
-            
-            if (isActive) {
-                panel.classList.remove('active');
-                overlay.classList.remove('active');
-            } else {
-                panel.classList.add('active');
-                overlay.classList.add('active');
-                updateCurrentWallpaperText();
-            }
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.getElementById('settingsPanel').classList.remove('active');
-                document.getElementById('settingsOverlay').classList.remove('active');
-            }
-        });
-
-        // Enter key on input
-        document.getElementById('customUrl').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addCustomWallpaper();
-        });
-    </script>
-    <script>
-  function gms(){
-    const div = document.getElementById('gmsDiv');
-    div.style.display = div.style.display === 'block' ? 'none' : 'block';
-  }
-</script>
-<script>
-(function() {
-  const HEADER_HEIGHT = 30;
-  
-  // Configuration for target windows
-  const targets = [
-    document.getElementById("gmsDiv"),
-    document.getElementById("calcDiv")
-  ];
-
-  let activeState = null; 
-  let animationFrameId = null;
-
-  // ───────── CSS Injection (Fixes Clickability) ─────────
-  const style = document.createElement('style');
-  style.innerHTML = `
-    /* The invisible drag layer */
-    .win-drag-handle {
-      position: absolute; top: 0; left: 0; right: 0;
-      height: ${HEADER_HEIGHT}px; 
-      cursor: move; 
-      z-index: 1; /* LOW z-index so buttons sit on top */
-    }
-    
-    /* The resize handle */
-    .win-resizer {
-      position: absolute; width: 20px; height: 20px;
-      right: 0; bottom: 0; cursor: nwse-resize; 
-      z-index: 20; /* High z-index to be grab-able */
-      background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.2) 50%);
-    }
-
-    /* Force buttons to be ABOVE the drag handle */
-    .close-btn, button, input, select, a {
-      position: relative; /* or absolute */
-      z-index: 10 !important; /* HIGHER than drag handle */
-    }
-
-    /* Animation and Smoothing classes */
-    .win-active {
-      will-change: transform, width, height;
-      z-index: 1000 !important; /* Bring active window to front */
-    }
-    
-    body.is-interacting iframe {
-      pointer-events: none !important; /* Stops iframe stealing mouse */
-    }
-    
-    body.is-interacting {
-      user-select: none;
-      -webkit-user-select: none;
-      cursor: move;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // ───────── Initialize Windows ─────────
-  targets.forEach(win => {
-    if (!win) return;
-
-    // Ensure absolute positioning groundwork
-    const css = window.getComputedStyle(win);
-    if (css.position !== 'absolute' && css.position !== 'fixed') {
-      win.style.position = 'absolute';
-    }
-
-    // 1. Add Drag Handle (Background Layer)
-    if (!win.querySelector(".win-drag-handle")) {
-      const handle = document.createElement("div");
-      handle.className = "win-drag-handle";
-      // Insert as first child so it stays behind content if possible
-      win.insertBefore(handle, win.firstChild);
-      
-      handle.addEventListener("mousedown", (e) => startInteraction(e, win, 'drag'));
-    }
-
-    // 2. Add Resizer
-    if (!win.querySelector(".win-resizer")) {
-      const resizer = document.createElement("div");
-      resizer.className = "win-resizer";
-      win.appendChild(resizer);
-      
-      resizer.addEventListener("mousedown", (e) => startInteraction(e, win, 'resize'));
-    }
-
-    // 3. Adjust Iframes
-    win.querySelectorAll("iframe").forEach(iframe => {
-      iframe.style.marginTop = HEADER_HEIGHT + "px";
-      iframe.style.height = `calc(100% - ${HEADER_HEIGHT}px)`;
-      iframe.style.display = "block";
-      iframe.style.border = "none";
-    });
-  });
-
-  // ───────── Core Logic ─────────
-
-  function startInteraction(e, win, type) {
-    // Safety check: If user clicked a button/input, DO NOT drag.
-    if (e.target.closest('button, input, select, a, .close-btn')) {
-      return; 
-    }
-
-    e.preventDefault(); 
-
-    const rect = win.getBoundingClientRect();
-
-    // Lock position to pixels to prevent jumping
-    win.style.left = rect.left + "px";
-    win.style.top = rect.top + "px";
-    win.style.width = rect.width + "px";
-    win.style.height = rect.height + "px";
-    win.style.transform = "none";
-    win.style.margin = "0";
-
-    activeState = {
-      type: type,
-      el: win,
-      startX: e.clientX,
-      startY: e.clientY,
-      startRect: {
-        left: rect.left,
-        top: rect.top,
-        width: rect.width,
-        height: rect.height
-      }
-    };
-
-    win.classList.add('win-active');
-    document.body.classList.add('is-interacting');
-    
-    // Set global cursor
-    document.body.style.cursor = type === 'drag' ? 'move' : 'nwse-resize';
-  }
-
-  // ───────── Global Event Listeners ─────────
-
-  window.addEventListener('mousemove', (e) => {
-    if (!activeState) return;
-
-    e.preventDefault();
-
-    // Smooth animation loop
-    if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    
-    animationFrameId = requestAnimationFrame(() => {
-      if (!activeState) return;
-
-      const deltaX = e.clientX - activeState.startX;
-      const deltaY = e.clientY - activeState.startY;
-
-      if (activeState.type === 'drag') {
-        const newLeft = activeState.startRect.left + deltaX;
-        const newTop = activeState.startRect.top + deltaY;
-        
-        activeState.el.style.left = newLeft + 'px';
-        activeState.el.style.top = newTop + 'px';
-      } 
-      else if (activeState.type === 'resize') {
-        const newWidth = Math.max(200, activeState.startRect.width + deltaX);
-        const newHeight = Math.max(100, activeState.startRect.height + deltaY);
-        
-        activeState.el.style.width = newWidth + 'px';
-        activeState.el.style.height = newHeight + 'px';
-      }
-    });
-  });
-
-  window.addEventListener('mouseup', () => {
-    if (!activeState) return;
-
-    if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    activeState.el.classList.remove('win-active');
-    document.body.classList.remove('is-interacting');
-    document.body.style.cursor = '';
-    
-    activeState = null;
-  });
-
-})();
-</script>
-</body>
-</html>
+        function renderStart
