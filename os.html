@@ -383,7 +383,7 @@
             width: 100%;
             height: 100%;
             border: none;
-            background: white;
+            background: #000;
         }
 
         /* Settings Panel */
@@ -1128,6 +1128,210 @@
             font-size: 48px;
             font-weight: 300;
         }
+
+        /* Apps Store Styles */
+        .apps-store-container {
+            height: 100%;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .apps-store-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .apps-store-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00ffcc, #00ff99, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .apps-grid-store {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-store-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-store-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 255, 204, 0.3);
+        }
+
+        .app-store-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-store-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .app-store-desc {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00ffcc, #00ccff);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.5);
+        }
+
+        .download-btn.installed {
+            background: linear-gradient(45deg, #00ff99, #00cc77);
+        }
+
+        /* Calculator in Apps */
+        .calculator-app-card {
+            grid-column: 1 / -1;
+            background: rgba(17, 17, 17, 0.8);
+            border-radius: 30px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+
+        .calculator-app {
+            background: #111;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+            width: 340px;
+            margin: 0 auto;
+        }
+
+        .calc-display {
+            width: 100%;
+            height: 70px;
+            background: #000;
+            border: 2px solid #00ffcc;
+            border-radius: 12px;
+            color: #00ffcc;
+            font-size: 28px;
+            text-align: right;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .calc-btn {
+            height: 65px;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calc-btn.number {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            color: white;
+        }
+
+        .calc-btn.operator {
+            background: linear-gradient(145deg, #00ffcc, #00ccaa);
+            color: black;
+            font-weight: bold;
+        }
+
+        .calc-btn.clear {
+            background: linear-gradient(145deg, #ff3c3c, #cc0000);
+            color: white;
+            grid-column: span 2;
+        }
+
+        .calc-btn.equal {
+            background: linear-gradient(145deg, #00ff99, #00cc77);
+            color: black;
+            grid-column: span 2;
+            font-weight: bold;
+        }
+
+        /* Music App Styles */
+        .music-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: white;
+        }
+
+        .music-header {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .music-player {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -1204,11 +1408,78 @@
                 name: 'Apps',
                 icon: '📱',
                 type: 'preloaded'
+            },
+            {
+                id: 'music',
+                name: 'Music',
+                icon: '🎵',
+                type: 'preloaded'
+            }
+        ];
+
+        // Available Apps in Store
+        const availableApps = [
+            {
+                id: 'emulatorjs',
+                name: 'Emulator JS',
+                icon: 'https://th.bing.com/th/id/ODF.BIX4aep3Ppw6CcpM60eAUw?w=80&h=80&qlt=90&pcl=fffffc&o=6&pid=1.2',
+                url: 'https://t9os.space/emulatorjs.html',
+                description: 'Play classic retro games directly in your browser with full emulation support.'
+            },
+            {
+                id: 'windows11',
+                name: 'Windows 11',
+                icon: 'https://th.bing.com/th/id/ODF.7jaHsiyRtqf5qiZn-r9vKA?w=80&h=80&qlt=90&pcl=fffffa&o=6&pid=1.2',
+                url: 'https://seraph-embeds.vercel.app/apps/windows11/index.html',
+                description: 'Experience Windows 11 interface directly in your browser. Full functional demo.'
+            },
+            {
+                id: 'blooket',
+                name: 'Blooket Hacks',
+                icon: 'https://th.bing.com/th/id/OIP.pbS2oPliI5Vw5a3nH15xhgHaHa?w=80&h=80&c=7&r=0&o=7&pid=1.7&rm=3',
+                url: 'https://t9os.vercel.app/blk.html',
+                description: 'Enhance your Blooket experience with various tools and modifications.'
+            },
+            {
+                id: 'ruffle',
+                name: 'Ruffle Player',
+                icon: 'https://th.bing.com/th/id/OIP.Yl0gI6yx3abVMkky63zV7wAAAA?w=80&h=80&c=1&bgcl=80e04b&r=0&o=7&pid=ImgRC&rm=3',
+                url: 'https://t9os.space/ruffle.html',
+                description: 'Flash emulator written in Rust. Play your favorite Flash games without the plugin.'
+            },
+            {
+                id: 'htmlcoder',
+                name: 'HTML Coder',
+                icon: 'https://geeksuper.gallerycdn.vsassets.io/extensions/geeksuper/ai-studio/1.1.5/1739502534779/explaincode.gif',
+                url: 'https://seraph-embeds.vercel.app/apps/htmlcoder/index.html',
+                description: 'Advanced HTML coding environment with live preview and AI assistance features.'
+            },
+            {
+                id: 'roblox2005',
+                name: '2005 Roblox',
+                icon: 'https://tse1.mm.bing.net/th/id/OIP.epbAfgT7RQD1pW-FKxnQTwHaIE?w=80&h=80&rs=1&pid=ImgDetMain&o=7&rm=3',
+                url: 'https://seraph-embeds.vercel.app/apps/godoblocks/index.html',
+                description: 'Experience the nostalgia of 2005 Roblox with the classic interface and features.'
+            },
+            {
+                id: 'weavesilk',
+                name: 'WeaveSilk',
+                icon: 'https://gimpchat.com/files/3878_weavesilkbridgeanigif2.gif',
+                url: 'https://seraph-embeds.vercel.app/apps/weavesilk/index.html',
+                description: 'Create beautiful generative art with this interactive drawing silk simulation.'
+            },
+            {
+                id: 'thirtydollar',
+                name: 'Thirty Dollar Site',
+                icon: 'https://th.bing.com/th/id/OIP.ltBS8J1YPjxgieNqhQHrqAAAAA?w=115&h=180&c=7&r=0&o=7&pid=1.7&rm=3',
+                url: 'https://seraph-embeds.vercel.app/apps/thirtydollarwebsite/index.html',
+                description: 'Create amazing music and beats with this intuitive online music maker.'
             }
         ];
 
         // State
         let downloadedGames = JSON.parse(localStorage.getItem('downloadedGames') || '[]');
+        let downloadedApps = JSON.parse(localStorage.getItem('downloadedApps') || '[]');
         let openWindows = {};
         let windowCount = 0;
         let activeWindow = null;
@@ -1239,20 +1510,17 @@
 
         function updateTime() {
             const now = new Date();
-            // US Time Format (12-hour with AM/PM)
             const timeStr = now.toLocaleTimeString('en-US', { 
                 hour12: true, 
                 hour: '2-digit', 
                 minute: '2-digit' 
             });
-            // US Date Format: Monday, January 1, 2024
             const dateStr = now.toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 month: 'long', 
                 day: 'numeric',
                 year: 'numeric'
             });
-            // Short date for tray: 1/1/2024
             const shortDate = now.toLocaleDateString('en-US', { 
                 month: 'numeric', 
                 day: 'numeric', 
@@ -1284,11 +1552,20 @@
                 desktop.appendChild(icon);
             });
             
+            // Add downloaded apps to desktop
+            downloadedApps.forEach(appId => {
+                const app = availableApps.find(a => a.id === appId);
+                if (app) {
+                    const icon = createDesktopIcon(app.name, app.icon, () => launchApp(app));
+                    desktop.appendChild(icon);
+                }
+            });
+            
             // Add downloaded games to desktop
             downloadedGames.forEach(gameId => {
-                const game = gamesDB.find(g => g.id === gameId);
+                const game = getGameById(gameId);
                 if (game) {
-                    const icon = createDesktopIcon(game.name, game.image, () => launchGame(game));
+                    const icon = createDesktopIcon(game.name, game.cover, () => launchGame(game));
                     desktop.appendChild(icon);
                 }
             });
@@ -1298,17 +1575,35 @@
             desktop.appendChild(recycleBin);
         }
 
+        function getGameById(gameId) {
+            if (gameId.startsWith('zone_')) {
+                const zoneId = parseInt(gameId.replace('zone_', ''));
+                if (window.zonesCache) {
+                    const zone = window.zonesCache.find(z => z.id === zoneId);
+                    if (zone) {
+                        return {
+                            id: gameId,
+                            name: zone.name,
+                            cover: zone.cover.replace('{COVER_URL}', 'https://cdn.jsdelivr.net/gh/gn-math/covers@main'),
+                            url: zone.url,
+                            type: 'zone'
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
         function createDesktopIcon(name, imageSrc, onClick) {
             const div = document.createElement('div');
             div.className = 'desktop-icon';
             
-            // Check if imageSrc is an emoji or URL
-            const isEmoji = !imageSrc.startsWith('http');
+            const isEmoji = !imageSrc || !imageSrc.startsWith('http');
             
             div.innerHTML = isEmoji ? 
                 `<div style="font-size: 40px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">${imageSrc}</div>` :
                 `<img src="${imageSrc}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                 <div style="font-size: 40px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); display: none;">🎮</div>`;
+                 <div style="font-size: 40px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); display: none;">📱</div>`;
             
             div.innerHTML += `<span>${name}</span>`;
             div.onclick = onClick;
@@ -1324,12 +1619,17 @@
             const items = [
                 { icon: '🎬', name: 'Movies', action: () => launchPreloadedApp(preloadedApps[0]) },
                 { icon: '📱', name: 'Apps', action: () => launchPreloadedApp(preloadedApps[1]) },
+                { icon: '🎵', name: 'Music', action: () => launchPreloadedApp(preloadedApps[2]) },
                 { icon: '🎮', name: 'Game Store', action: openGameStore },
                 { icon: '🌐', name: 'Browser', action: openBrowser },
                 { icon: '⚙️', name: 'Settings', action: openSettings },
+                ...downloadedApps.map(id => {
+                    const app = availableApps.find(a => a.id === id);
+                    return { icon: '📱', name: app ? app.name : 'App', action: () => launchApp(app) };
+                }),
                 ...downloadedGames.map(id => {
-                    const game = gamesDB.find(g => g.id === id);
-                    return { icon: '🎮', name: game.name, action: () => launchGame(game) };
+                    const game = getGameById(id);
+                    return { icon: '🎮', name: game ? game.name : 'Game', action: () => launchGame(game) };
                 })
             ];
 
@@ -1365,27 +1665,12 @@
                         <div class="window-btn close-btn-win" onclick="closeWindow('${winId}')" title="Close"></div>
                     </div>
                 </div>
-                <div class="window-content" id="content-${winId}">
-                    ${url.includes('store') || url.includes('settings') || url.includes('browser') || url.includes('preloaded') ? '' : `<iframe src="${url}"></iframe>`}
-                </div>
+                <div class="window-content" id="content-${winId}"></div>
             `;
 
             document.body.appendChild(win);
             openWindows[winId] = win;
             focusWindow(winId);
-
-            // Load content for special windows
-            if (title === 'Game Store') {
-                document.getElementById(`content-${winId}`).innerHTML = getStoreHTML();
-                initStore(`content-${winId}`);
-            } else if (title === 'Settings') {
-                document.getElementById(`content-${winId}`).innerHTML = getSettingsHTML();
-            } else if (title === 'T9 Browser') {
-                document.getElementById(`content-${winId}`).innerHTML = getBrowserHTML();
-                initBrowser(`content-${winId}`);
-            } else if (url === 'preloaded') {
-                // Preloaded apps handle their own content
-            }
 
             return winId;
         }
@@ -1454,16 +1739,154 @@
                 content.innerHTML = getMoviesHTML();
                 initMovies(content);
             } else if (app.id === 'apps') {
-                content.innerHTML = `
-                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#0f0f0f;color:#00f7ff;font-family:Segoe UI,sans-serif;">
-                        <div style="text-align:center;">
-                            <div style="font-size:48px;margin-bottom:20px;">📱</div>
-                            <div style="font-size:24px;text-transform:lowercase;text-shadow:0 0 10px #00f7ff;">Apps</div>
-                            <div style="margin-top:20px;color:#888;">Coming Soon</div>
+                content.innerHTML = getAppsStoreHTML();
+                initAppsStore(content);
+            } else if (app.id === 'music') {
+                content.innerHTML = getMusicHTML();
+            }
+        }
+
+        // Music App
+        function getMusicHTML() {
+            return `
+                <div class="music-container">
+                    <h1 class="music-header">🎵 Music Player</h1>
+                    <div class="music-player">
+                        <iframe class="music-iframe" src="https://drive.google.com/embeddedfolderview?id=10tvBZbrFa6sHGvrP1XGG82kHbX2QjB2-#list" allowfullscreen></iframe>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Apps Store
+        function getAppsStoreHTML() {
+            return `
+                <div class="apps-store-container">
+                    <div class="apps-store-header">
+                        <h1>NoGuardian Apps</h1>
+                        <p>Your collection of powerful web applications</p>
+                    </div>
+                    <div class="apps-grid-store" id="appsGridStore">
+                        <!-- Calculator (Always Available) -->
+                        <div class="calculator-app-card">
+                            <h2 style="text-align: center; margin-bottom: 20px; color: #00ffcc;">Calculator</h2>
+                            <div class="calculator-app">
+                                <input type="text" class="calc-display" id="calcDisplay" readonly>
+                                <div class="calc-buttons">
+                                    <button class="calc-btn clear" onclick="clearCalc()">C</button>
+                                    <button class="calc-btn operator" onclick="calcOp('/')">/</button>
+                                    <button class="calc-btn operator" onclick="calcOp('*')">*</button>
+                                    
+                                    <button class="calc-btn number" onclick="calcNum('7')">7</button>
+                                    <button class="calc-btn number" onclick="calcNum('8')">8</button>
+                                    <button class="calc-btn number" onclick="calcNum('9')">9</button>
+                                    <button class="calc-btn operator" onclick="calcOp('-')">-</button>
+                                    
+                                    <button class="calc-btn number" onclick="calcNum('4')">4</button>
+                                    <button class="calc-btn number" onclick="calcNum('5')">5</button>
+                                    <button class="calc-btn number" onclick="calcNum('6')">6</button>
+                                    <button class="calc-btn operator" onclick="calcOp('+')">+</button>
+                                    
+                                    <button class="calc-btn number" onclick="calcNum('1')">1</button>
+                                    <button class="calc-btn number" onclick="calcNum('2')">2</button>
+                                    <button class="calc-btn number" onclick="calcNum('3')">3</button>
+                                    <button class="calc-btn number" onclick="calcNum('.')">.</button>
+                                    
+                                    <button class="calc-btn number" onclick="calcNum('0')">0</button>
+                                    <button class="calc-btn equal" onclick="calcEqual()">=</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+            `;
+        }
+
+        function initAppsStore(container) {
+            const grid = container.querySelector('#appsGridStore');
+            
+            availableApps.forEach(app => {
+                const isDownloaded = downloadedApps.includes(app.id);
+                const card = document.createElement('div');
+                card.className = 'app-store-card';
+                
+                card.innerHTML = `
+                    <img src="${app.icon}" alt="${app.name}" class="app-store-icon" onerror="this.src='https://via.placeholder.com/80'">
+                    <div class="app-store-name">${app.name}</div>
+                    <div class="app-store-desc">${app.description}</div>
+                    <button class="download-btn ${isDownloaded ? 'installed' : ''}" onclick="handleAppDownload('${app.id}', this)">
+                        ${isDownloaded ? '▶ Launch' : '⬇ Download'}
+                    </button>
                 `;
+                
+                grid.appendChild(card);
+            });
+            
+            // Add calculator functions to window
+            window.calcDisplay = '';
+            window.calcNum = function(num) {
+                window.calcDisplay += num;
+                document.getElementById('calcDisplay').value = window.calcDisplay;
+            };
+            window.calcOp = function(op) {
+                window.calcDisplay += ' ' + op + ' ';
+                document.getElementById('calcDisplay').value = window.calcDisplay;
+            };
+            window.clearCalc = function() {
+                window.calcDisplay = '';
+                document.getElementById('calcDisplay').value = '';
+            };
+            window.calcEqual = function() {
+                try {
+                    window.calcDisplay = eval(window.calcDisplay).toString();
+                    document.getElementById('calcDisplay').value = window.calcDisplay;
+                } catch {
+                    document.getElementById('calcDisplay').value = 'Error';
+                    setTimeout(window.clearCalc, 1500);
+                }
+            };
+        }
+
+        function handleAppDownload(appId, btn) {
+            const app = availableApps.find(a => a.id === appId);
+            if (!app) return;
+            
+            if (downloadedApps.includes(appId)) {
+                // Launch app
+                launchApp(app);
+            } else {
+                // Download app
+                showNotification('Installing...', `${app.name} is being downloaded...`);
+                
+                setTimeout(() => {
+                    downloadedApps.push(appId);
+                    localStorage.setItem('downloadedApps', JSON.stringify(downloadedApps));
+                    
+                    btn.textContent = '▶ Launch';
+                    btn.classList.add('installed');
+                    btn.onclick = () => launchApp(app);
+                    
+                    renderDesktop();
+                    renderStartMenu();
+                    showNotification('Installation Complete', `${app.name} has been added to your desktop!`);
+                }, 1500);
             }
+        }
+
+        function launchApp(app) {
+            const winId = openWindow(app.name, '📱', 'app');
+            const win = document.getElementById(winId);
+            const content = win.querySelector('.window-content');
+            
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            iframe.style.background = '#000';
+            iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-fullscreen';
+            iframe.src = app.url;
+            
+            content.appendChild(iframe);
         }
 
         // Movies App HTML and Logic
@@ -1528,7 +1951,6 @@
         }
 
         function initMovies(container) {
-            // Starfield animation
             const canvas = container.querySelector('#starfield');
             const ctx = canvas.getContext('2d');
             let width, height, stars = [];
@@ -1573,7 +1995,6 @@
             initStars();
             animateStars();
 
-            // Disclaimer logic
             const overlay = container.querySelector('#disclaimerOverlay');
             const agreeBtn = container.querySelector('#agreeBtn');
             let countdown = 5;
@@ -1595,7 +2016,6 @@
                 setTimeout(() => overlay.style.display = 'none', 500);
             });
 
-            // Movies app logic
             const API_KEY = '3a73619bbb8fc6d47742d1b5b2b707b5';
             const baseURL = 'https://api.themoviedb.org/3';
             const main = container.querySelector('#main');
@@ -1953,11 +2373,9 @@
 
         // Game Store - Download required to play
         function openGameStore() {
-            openWindow('Game Store', '🎮', 'store');
-        }
-
-        function getStoreHTML() {
-            return `
+            const winId = openWindow('Game Store', '🎮', 'store');
+            const content = document.getElementById('content-' + winId);
+            content.innerHTML = `
                 <div class="store-container">
                     <div class="store-header">
                         <div class="store-title">nogaurdian</div>
@@ -1978,23 +2396,23 @@
                     </main>
                 </div>
             `;
+            initGameStore(content);
         }
 
-        function initStore(containerId) {
-            const container = document.getElementById(containerId);
+        function initGameStore(container) {
             const grid = container.querySelector('#gamesGridStore');
             const featured = container.querySelector('#featuredZones');
             
-            // Fetch games from API
             fetchZones();
             
             async function fetchZones() {
                 try {
                     const zonesURL = "https://cdn.jsdelivr.net/gh/gn-math/assets@main/zones.json";
-                    const coverURL = "https://cdn.jsdelivr.net/gh/gn-math/covers@main";
                     
                     const res = await fetch(zonesURL + "?t=" + Date.now());
                     const zones = await res.json();
+                    
+                    window.zonesCache = zones;
                     
                     const filteredZones = zones.filter(z =>
                         !z.name.toLowerCase().includes("suggest") &&
@@ -2015,12 +2433,10 @@
                 
                 zones.forEach((z, index) => {
                     const isDownloaded = downloadedGames.includes('zone_' + z.id);
-                    const card = createGameCard(z, isDownloaded, coverURL);
+                    const card = createGameCard(z, isDownloaded);
                     
-                    // Add to featured if it's the first one
                     if (z.featured) {
                         const featuredCard = card.cloneNode(true);
-                        // Re-attach event listeners
                         attachCardEvents(featuredCard, z, isDownloaded);
                         featured.appendChild(featuredCard);
                     }
@@ -2028,26 +2444,23 @@
                     grid.appendChild(card);
                 });
                 
-                // Search functionality
                 const searchInput = container.querySelector('#storeSearch');
                 searchInput.addEventListener('input', (e) => {
                     const value = e.target.value.toLowerCase();
                     const cards = grid.querySelectorAll('.zone-item');
-                    cards.forEach((card, idx) => {
-                        const zone = zones[idx];
-                        if (zone && zone.name.toLowerCase().includes(value)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
+                    cards.forEach((card) => {
+                        const name = card.querySelector('.game-title').textContent.toLowerCase();
+                        card.style.display = name.includes(value) ? 'block' : 'none';
                     });
                 });
             }
             
-            function createGameCard(z, isDownloaded, coverURL) {
+            function createGameCard(z, isDownloaded) {
                 const card = document.createElement('div');
                 card.className = 'zone-item';
                 card.dataset.zoneId = z.id;
+                
+                const coverURL = "https://cdn.jsdelivr.net/gh/gn-math/covers@main";
                 
                 card.innerHTML = `
                     <img src="${z.cover.replace('{COVER_URL}', coverURL)}" alt="${z.name}" onerror="this.src='https://via.placeholder.com/160x160/1a1a1a/00f7ff?text=Game'">
@@ -2078,61 +2491,81 @@
                     if (isDownloaded) {
                         launchZoneGame(z);
                     } else {
-                        downloadZoneGame(z.id, z.name, card);
+                        downloadZoneGame(z, card);
                     }
                 };
             }
             
-            function downloadZoneGame(zoneId, zoneName, cardElement) {
-                showNotification('Installing...', `${zoneName} is being downloaded...`);
+            function downloadZoneGame(z, cardElement) {
+                showNotification('Installing...', `${z.name} is being downloaded...`);
                 
                 setTimeout(() => {
-                    const gameId = 'zone_' + zoneId;
+                    const gameId = 'zone_' + z.id;
                     if (!downloadedGames.includes(gameId)) {
                         downloadedGames.push(gameId);
                         localStorage.setItem('downloadedGames', JSON.stringify(downloadedGames));
                         
-                        // Update UI
                         const overlay = cardElement.querySelector('.hover-overlay span');
                         overlay.textContent = '▶';
                         
-                        // Re-attach click event for playing
-                        cardElement.onclick = () => launchZoneGame({id: zoneId, name: zoneName});
+                        cardElement.onclick = () => launchZoneGame(z);
                         
                         renderDesktop();
                         renderStartMenu();
-                        showNotification('Installation Complete', `${zoneName} has been added to your desktop!`);
+                        showNotification('Installation Complete', `${z.name} has been added to your desktop!`);
                     }
                 }, 1500);
             }
+        }
+
+        function launchZoneGame(z) {
+            const winId = openWindow(z.name, '🎮', 'game');
+            const win = document.getElementById(winId);
+            const content = win.querySelector('.window-content');
             
-            function launchZoneGame(z) {
-                const winId = openWindow(z.name, '🎮', 'game');
-                const win = document.getElementById(winId);
-                const content = win.querySelector('.window-content');
-                
-                const htmlURL = "https://cdn.jsdelivr.net/gh/gn-math/html@main";
-                
-                fetch(z.url.replace('{HTML_URL}', htmlURL))
-                    .then(r => r.text())
-                    .then(html => {
-                        content.innerHTML = `<iframe style="width:100%;height:100%;border:none;" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-fullscreen"></iframe>`;
-                        const iframe = content.querySelector('iframe');
-                        iframe.srcdoc = html;
-                    })
-                    .catch(() => {
-                        content.innerHTML = '<div style="color:white;padding:20px;">Failed to load game</div>';
-                    });
-            }
+            const htmlURL = "https://cdn.jsdelivr.net/gh/gn-math/html@main";
+            
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            iframe.style.background = '#000';
+            iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-fullscreen';
+            
+            content.appendChild(iframe);
+            
+            fetch(z.url.replace('{HTML_URL}', htmlURL))
+                .then(r => {
+                    if (!r.ok) throw new Error('Failed to load');
+                    return r.text();
+                })
+                .then(html => {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    iframeDoc.open();
+                    iframeDoc.write(html);
+                    iframeDoc.close();
+                })
+                .catch(err => {
+                    console.error('Game load error:', err);
+                    content.innerHTML = `
+                        <div style="color:white;padding:40px;text-align:center;">
+                            <h2>Failed to load game</h2>
+                            <p>The game could not be loaded. Please try again later.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function launchGame(game) {
+            if (!game) return;
+            launchZoneGame(game);
         }
 
         // Browser
         function openBrowser() {
-            openWindow('T9 Browser', '🌐', 'browser');
-        }
-
-        function getBrowserHTML() {
-            return `
+            const winId = openWindow('T9 Browser', '🌐', 'browser');
+            const content = document.getElementById('content-' + winId);
+            content.innerHTML = `
                 <div class="browser-container">
                     <div class="browser-ui">
                         <div class="browser-tabs" id="browserTabs">
@@ -2153,10 +2586,10 @@
                     </div>
                 </div>
             `;
+            initBrowser(content);
         }
 
-        function initBrowser(containerId) {
-            const container = document.getElementById(containerId);
+        function initBrowser(container) {
             const tabsEl = container.querySelector('#browserTabs');
             const viewEl = container.querySelector('#browserView');
             const newTabBtn = container.querySelector('#browserNewTab');
@@ -2288,7 +2721,9 @@
 
         // Settings
         function openSettings() {
-            openWindow('Settings', '⚙️', 'settings');
+            const winId = openWindow('Settings', '⚙️', 'settings');
+            const content = document.getElementById('content-' + winId);
+            content.innerHTML = getSettingsHTML();
         }
 
         function getSettingsHTML() {
@@ -2316,8 +2751,22 @@
                     </div>
                     
                     <div class="settings-section">
+                        <h3>📱 Installed Apps (${downloadedApps.length})</h3>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; max-height: 150px; overflow-y: auto;">
+                            ${downloadedApps.length === 0 ? '<p style="color: rgba(255,255,255,0.5);">No apps installed</p>' : 
+                                downloadedApps.map(id => {
+                                    const app = availableApps.find(a => a.id === id);
+                                    return `<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                        <span>${app ? app.name : id}</span>
+                                        <button onclick="uninstallApp('${id}')" style="background: #ff5f57; color: white; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer;">Uninstall</button>
+                                    </div>`;
+                                }).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
                         <h3>🎮 Installed Games (${downloadedGames.length})</h3>
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; max-height: 300px; overflow-y: auto;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; max-height: 150px; overflow-y: auto;">
                             ${downloadedGames.length === 0 ? '<p style="color: rgba(255,255,255,0.5);">No games installed</p>' : 
                                 downloadedGames.map(id => {
                                     const name = id.replace('zone_', 'Game ');
@@ -2345,7 +2794,6 @@
             localStorage.removeItem('customWallpaperUrl');
             loadWallpaper();
             
-            // Refresh settings if open
             const settingsContent = document.querySelector('.settings-container');
             if (settingsContent) {
                 settingsContent.innerHTML = getSettingsHTML();
@@ -2365,7 +2813,6 @@
             loadWallpaper();
             showNotification('Success', 'Custom wallpaper applied!');
             
-            // Refresh settings
             const settingsContent = document.querySelector('.settings-container');
             if (settingsContent) {
                 settingsContent.innerHTML = getSettingsHTML();
@@ -2382,6 +2829,19 @@
             if (settingsContent) {
                 settingsContent.innerHTML = getSettingsHTML();
             }
+        }
+
+        function uninstallApp(appId) {
+            downloadedApps = downloadedApps.filter(id => id !== appId);
+            localStorage.setItem('downloadedApps', JSON.stringify(downloadedApps));
+            renderDesktop();
+            renderStartMenu();
+            
+            const settingsContent = document.querySelector('.settings-container');
+            if (settingsContent) {
+                settingsContent.innerHTML = getSettingsHTML();
+            }
+            showNotification('App Uninstalled', 'App has been removed from your system');
         }
 
         function uninstallGame(gameId) {
